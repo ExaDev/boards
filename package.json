@@ -1,4 +1,13 @@
 {
+  "dependencies": {
+    "@breadboard-ai/manifest": "https://github.com/breadboard-ai/breadboard#workspace=@breadboard-ai/manifest",
+    "@breadboard-ai/schema": "https://github.com/breadboard-ai/breadboard#workspace=@google-labs/breadboard-schema"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  },
   "name": "boards",
   "packageManager": "yarn@4.3.1",
   "repository": "https://github.com/ExaDev/boards.git"
