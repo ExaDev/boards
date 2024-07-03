@@ -1,0 +1,5 @@
+{
+  "name": "boards",
+  "packageManager": "yarn@4.3.1",
+  "repository": "https://github.com/ExaDev/boards.git"
+}
