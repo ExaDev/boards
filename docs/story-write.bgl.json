@@ -129,7 +129,7 @@
       "type": "specialist",
       "metadata": {
         "visual": {
-          "x": 202,
+          "x": 199,
           "y": 0,
           "collapsed": false
         },
@@ -152,7 +152,7 @@
       "type": "looper",
       "metadata": {
         "visual": {
-          "x": 441,
+          "x": 438,
           "y": 139,
           "collapsed": false
         },
@@ -175,7 +175,7 @@
       "type": "specialist",
       "metadata": {
         "visual": {
-          "x": 704,
+          "x": 700,
           "y": 264,
           "collapsed": false
         },
@@ -198,10 +198,12 @@
       "type": "output",
       "metadata": {
         "visual": {
-          "x": 942,
+          "x": 938,
           "y": 286,
           "collapsed": false
-        }
+        },
+        "title": "Output",
+        "logLevel": "debug"
       }
     }
   ]
