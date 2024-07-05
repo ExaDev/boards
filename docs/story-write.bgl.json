@@ -1,0 +1,208 @@
+{
+  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "title": "Blank board",
+  "description": "A blank board. Use it as a starting point for your creations.",
+  "version": "0.0.1",
+  "metadata": {
+    "comments": []
+  },
+  "edges": [
+    {
+      "from": "looper-6d67283f",
+      "to": "specialist-ca8ccfd4",
+      "in": "in",
+      "out": "loop"
+    },
+    {
+      "from": "specialist-0e7d60f8",
+      "to": "looper-6d67283f",
+      "in": "context",
+      "out": "out"
+    },
+    {
+      "from": "topic",
+      "to": "specialist-0e7d60f8",
+      "in": "in",
+      "out": "text"
+    },
+    {
+      "from": "specialist-ca8ccfd4",
+      "to": "output-cd130f74",
+      "in": "out",
+      "out": "out"
+    },
+    {
+      "from": "specialist-ca8ccfd4",
+      "to": "looper-6d67283f",
+      "out": "out",
+      "in": "context"
+    },
+    {
+      "from": "topic",
+      "to": "specialist-0e7d60f8",
+      "out": "persona",
+      "in": "persona"
+    },
+    {
+      "from": "topic",
+      "to": "specialist-ca8ccfd4",
+      "out": "persona",
+      "in": "persona"
+    },
+    {
+      "from": "topic",
+      "to": "specialist-0e7d60f8",
+      "out": "mainTask",
+      "in": "task"
+    },
+    {
+      "from": "topic",
+      "to": "looper-6d67283f",
+      "out": "subtask",
+      "in": "task"
+    }
+  ],
+  "nodes": [
+    {
+      "type": "input",
+      "id": "topic",
+      "configuration": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "object",
+              "title": "Topic",
+              "examples": [],
+              "behavior": [
+                "llm-content"
+              ],
+              "default": "{\"role\":\"user\",\"parts\":[{\"text\":\"Artificial Intelligence\"}]}",
+              "format": "text-inline"
+            },
+            "persona": {
+              "type": "object",
+              "behavior": [
+                "llm-content"
+              ],
+              "title": "Persona",
+              "examples": [],
+              "default": "{\"role\":\"user\",\"parts\":[{\"text\":\"You are an children's story book outline creator. Given topic, you are able to transform it into a chapter outline of an award-winning children's book.\\n\\nA great book contains chapters that form a story that follows the hero's journey arc, using Freitag pyramid as the delivery structure.\\n\\nThe book is written for children between 8-10.\"}]}",
+              "format": "text-inline"
+            },
+            "mainTask": {
+              "type": "object",
+              "behavior": [
+                "llm-content"
+              ],
+              "title": "Task",
+              "examples": [],
+              "default": "{\"role\":\"user\",\"parts\":[{\"text\":\"Write a five-chapter book outline.\"}]}",
+              "format": "text-inline"
+            },
+            "subtask": {
+              "type": "object",
+              "behavior": [
+                "llm-content"
+              ],
+              "title": "Subtask",
+              "examples": [],
+              "default": "{\"role\":\"user\",\"parts\":[{\"text\":\"Write a book chapter by chapter, using the supplied outline.\"}]}",
+              "format": "text-inline"
+            }
+          },
+          "required": []
+        }
+      },
+      "metadata": {
+        "visual": {
+          "x": 0,
+          "y": 128,
+          "collapsed": false
+        },
+        "title": "Topic",
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "specialist-0e7d60f8",
+      "type": "specialist",
+      "metadata": {
+        "visual": {
+          "x": 202,
+          "y": 0,
+          "collapsed": false
+        },
+        "title": "Outliner",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "Write a five-chapter book outline."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "looper-6d67283f",
+      "type": "looper",
+      "metadata": {
+        "visual": {
+          "x": 441,
+          "y": 139,
+          "collapsed": false
+        },
+        "title": "Writing Planner",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "Write a book chapter by chapter, using the supplied outline."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "specialist-ca8ccfd4",
+      "type": "specialist",
+      "metadata": {
+        "visual": {
+          "x": 704,
+          "y": 264,
+          "collapsed": false
+        },
+        "title": "Writer",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "persona": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "You are a famous children's book author. Your books are loved around the world for their kindness and warmth.\n\nEven adults love your books, because your metaphors have layers: they contain sub-stories that might be too subtle for children to pick out, but give joy to their parents.\n\nYour favorite audience is children between ages of 8 and 10."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "output-cd130f74",
+      "type": "output",
+      "metadata": {
+        "visual": {
+          "x": 942,
+          "y": 286,
+          "collapsed": false
+        }
+      }
+    }
+  ]
+}
