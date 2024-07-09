@@ -1,0 +1,312 @@
+{
+  "title": "Data Generator",
+  "metadata": {
+    "comments": []
+  },
+  "edges": [
+    {
+      "from": "input-e9a660ab",
+      "to": "validateJson-6",
+      "out": "content",
+      "in": "schema"
+    },
+    {
+      "from": "input-e9a660ab",
+      "to": "promptTemplate-4bf5070a",
+      "out": "content",
+      "in": "jsonSchema"
+    },
+    {
+      "from": "text-25f1cfcb",
+      "to": "validateJson-6",
+      "out": "text",
+      "in": "json"
+    },
+    {
+      "from": "promptTemplate-4bf5070a",
+      "to": "text-25f1cfcb",
+      "out": "prompt",
+      "in": "text"
+    },
+    {
+      "from": "input-3a79eceb",
+      "to": "text-25f1cfcb",
+      "out": "model",
+      "in": "model"
+    },
+    {
+      "from": "validateJson-6",
+      "to": "output-7114e4f1",
+      "out": "json",
+      "in": "content"
+    },
+    {
+      "from": "input-9790188c",
+      "to": "promptTemplate-07067136",
+      "out": "content",
+      "in": "style"
+    },
+    {
+      "from": "input-d6308ab5",
+      "to": "promptTemplate-07067136",
+      "out": "content",
+      "in": "instruction"
+    },
+    {
+      "from": "promptTemplate-07067136",
+      "to": "text-25f1cfcb",
+      "out": "prompt",
+      "in": "systemInstruction"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "validateJson-6",
+      "type": "validateJson",
+      "configuration": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "subtasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "The category of the subtask (e.g., 'chapter', 'verse')."
+                  },
+                  "task": {
+                    "type": "string",
+                    "description": "A clear and concise task description starting with a verb."
+                  },
+                  "index": {
+                    "type": "integer",
+                    "description": "The index of the subtask in the list of subtasks."
+                  }
+                },
+                "required": [
+                  "type",
+                  "task",
+                  "index"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "error": {
+              "type": "string",
+              "description": "Description of why you can't create subtasks from the plan."
+            }
+          },
+          "required": [
+            "subtasks"
+          ],
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "required": [
+                "subtasks"
+              ]
+            },
+            {
+              "required": [
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "description": "Validating JSON of the Plan",
+        "visual": {
+          "x": 874,
+          "y": 361,
+          "collapsed": false
+        },
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "input-e9a660ab",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": 0,
+          "y": 11,
+          "collapsed": false
+        },
+        "title": "JSON Schema",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "object",
+              "title": "JSON Schema",
+              "examples": [],
+              "behavior": [
+                "json-schema"
+              ],
+              "default": "{   \"$schema\": \"http://json-schema.org/draft-07/schema#\",   \"type\": \"object\",   \"properties\": {     \"task\": {       \"type\": \"string\"     },     \"index\": {       \"type\": \"string\"     },     \"completed\": {       \"type\": \"boolean\",       \"default\": false     },     \"subtasks\": {       \"type\": \"array\",       \"items\": {         \"$ref\": \"#/definitions/task\"       }     }   },   \"required\": [     \"task\",     \"index\"   ],   \"examples\": [     {       \"task\": \"Write a book on the fundamentals of programming\",       \"index\": \"1\",       \"completed\": false,       \"subtasks\": []     }   ],   \"definitions\": {     \"task\": {       \"type\": \"object\",       \"properties\": {         \"task\": {           \"type\": \"string\"         },         \"index\": {           \"type\": \"string\",           \"pattern\": \"^[0-9]+(\\\\.[0-9]+)*$\"         },         \"completed\": {           \"type\": \"boolean\",           \"default\": false         },         \"subtasks\": {           \"type\": \"array\",           \"items\": {             \"$ref\": \"#/definitions/task\"           }         }       },       \"required\": [         \"task\",         \"index\"       ]     }   } }"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "text-25f1cfcb",
+      "type": "text",
+      "metadata": {
+        "visual": {
+          "x": 602,
+          "y": 284,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "responseMimeType": "application/json"
+      }
+    },
+    {
+      "id": "promptTemplate-4bf5070a",
+      "type": "promptTemplate",
+      "metadata": {
+        "visual": {
+          "x": 255,
+          "y": 0,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "template": "{{jsonSchema}}"
+      }
+    },
+    {
+      "id": "output-7114e4f1",
+      "type": "output",
+      "metadata": {
+        "visual": {
+          "x": 1138,
+          "y": 372,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "object",
+              "title": "Content",
+              "examples": [],
+              "behavior": [
+                "llm-content"
+              ],
+              "default": "null"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "input",
+      "id": "input-3a79eceb",
+      "configuration": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "title": "Model",
+              "examples": [],
+              "enum": [
+                "gemini-1.5-flash-latest",
+                "gemini-1.5-pro-latest"
+              ],
+              "default": "gemini-1.5-flash-latest"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        }
+      },
+      "metadata": {
+        "visual": {
+          "x": 314,
+          "y": 191,
+          "collapsed": false
+        },
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "input-d6308ab5",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": 12,
+          "y": 383,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "string",
+              "title": "Content",
+              "examples": [],
+              "default": "Generate sample data for the given JSON schema"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "input-9790188c",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": 5,
+          "y": 180,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "string",
+              "title": "Content style",
+              "examples": [],
+              "default": "Long-form text content writing"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "promptTemplate-07067136",
+      "type": "promptTemplate",
+      "metadata": {
+        "visual": {
+          "x": 253,
+          "y": 361,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "template": "Instruction: {{instruction}}\nStyle: {{style}}"
+      }
+    }
+  ]
+}
