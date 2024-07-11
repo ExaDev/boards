@@ -1,0 +1,108 @@
+{
+  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "description": "This is a demonstration of the spread board. The spread board accepts an object and returns the spread properties of the object as well as an array of keys, an array of key, type pairs, and an array of key, type, value triples.",
+  "edges": [
+    {
+      "from": "invoke",
+      "in": "",
+      "out": "*",
+      "to": "output"
+    },
+    {
+      "from": "validateJson-4fc64dd1",
+      "to": "invoke",
+      "out": "json",
+      "in": "object"
+    },
+    {
+      "from": "promptTemplate-36cd5a31",
+      "to": "validateJson-4fc64dd1",
+      "out": "prompt",
+      "in": "json"
+    },
+    {
+      "from": "fetch-18a20ef6",
+      "to": "promptTemplate-36cd5a31",
+      "out": "response",
+      "in": "object"
+    }
+  ],
+  "metadata": {
+    "comments": []
+  },
+  "nodes": [
+    {
+      "configuration": {},
+      "id": "output",
+      "metadata": {
+        "visual": {
+          "x": 1173,
+          "y": 44,
+          "collapsed": false
+        }
+      },
+      "type": "output"
+    },
+    {
+      "configuration": {
+        "$board": {
+          "kind": "board",
+          "path": "https://exadev.github.io/boards/spread.bgl.json"
+        }
+      },
+      "id": "invoke",
+      "metadata": {
+        "visual": {
+          "x": 900,
+          "y": 0,
+          "collapsed": false
+        }
+      },
+      "type": "invoke"
+    },
+    {
+      "id": "fetch-18a20ef6",
+      "type": "fetch",
+      "metadata": {
+        "visual": {
+          "x": 0,
+          "y": 0,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "method": "GET",
+        "url": "https://exadev.github.io/boards/spread.bgl.json"
+      }
+    },
+    {
+      "id": "validateJson-4fc64dd1",
+      "type": "validateJson",
+      "metadata": {
+        "visual": {
+          "x": 594,
+          "y": 33,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "strictSchema": "on"
+      }
+    },
+    {
+      "id": "promptTemplate-36cd5a31",
+      "type": "promptTemplate",
+      "metadata": {
+        "visual": {
+          "x": 246,
+          "y": 44,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "template": "{{object}}"
+      }
+    }
+  ],
+  "title": "Spread Demo"
+}

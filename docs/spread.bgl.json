@@ -1,138 +1,141 @@
 {
   "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
-  "title": "Spread",
   "description": "This board accepts an 'object' input and returns the spread properties of the object as well as an array of keys, an array of key, type pairs, and an array of key, type, value triples.",
-  "metadata": {
-    "comments": []
-  },
   "edges": [
     {
       "from": "input-e079e0d7",
-      "to": "runJavascript-f7ab0d4b",
+      "in": "object",
       "out": "object",
-      "in": "object"
+      "to": "runJavascript-f7ab0d4b"
     },
     {
       "from": "runJavascript-f7ab0d4b",
-      "to": "output-e33e70f3",
+      "in": "",
       "out": "*",
-      "in": ""
+      "to": "output-e33e70f3"
     },
     {
       "from": "runJavascript-f7ab0d4b",
-      "to": "output-e33e70f3",
+      "in": "keys",
       "out": "keys",
-      "in": "keys"
+      "to": "output-e33e70f3"
     },
     {
       "from": "runJavascript-f7ab0d4b",
-      "to": "output-e33e70f3",
+      "in": "types",
       "out": "types",
-      "in": "types"
+      "to": "output-e33e70f3"
     },
     {
       "from": "runJavascript-f7ab0d4b",
-      "to": "output-e33e70f3",
+      "in": "keyTypeValues",
       "out": "keyTypeValues",
-      "in": "key-type-values"
+      "to": "output-e33e70f3"
     }
   ],
+  "metadata": {
+    "comments": []
+  },
   "nodes": [
     {
-      "id": "runJavascript-f7ab0d4b",
-      "type": "runJavascript",
-      "metadata": {},
       "configuration": {
-        "name": "spread",
         "code": "const spread = ({ object }) => {\n\tif (typeof object !== \"object\") {\n\t\tthrow new Error(\"Input is not an object\");\n\t}\n\tif (Object.keys(object).length === 0) {\n\t\tthrow new Error(\"Object has no properties\");\n\t}\n\tif (object.hasOwnProperty(\"keys\")) {\n\t\tthrow new Error(\"Object contains 'keys' property\");\n\t}\n\t/**\n\t * @type {Array<string>}\n\t */\n\tconst keysArray = Object.keys(object);\n\n\t/**\n\t * @type {Array<{key: string, type: string}>}\n\t */\n\tconst keyTypes = keysArray.map((key) => ({\n\t\tkey,\n\t\ttype: typeof object[key],\n\t}));\n\n\t/**\n\t * @type {Array<{key: string, type: string, value: unknown}>}\n\t */\n\tconst keyValueTypeMap = Object.entries(object).map(([key, value]) => ({\n\t\tkey,\n\t\ttype: typeof value,\n\t\tvalue,\n\t}));\n\n\treturn {\n\t\t...object,\n\t\tkeys: keysArray,\n\t\ttypes: keyTypes,\n\t\tkeyTypeValues: keyValueTypeMap,\n\t};\n};\n",
+        "name": "spread",
         "raw": "on",
         "schema": {
+          "additionalProperties": true,
           "properties": {
             "keys": {
-              "type": "array",
-              "title": "Keys",
               "examples": [],
               "items": {
                 "type": "object"
-              }
-            },
-            "types": {
-              "type": "array",
-              "title": "Key Types",
-              "items": {
-                "type": "object"
-              }
+              },
+              "title": "Keys",
+              "type": "array"
             },
             "keyTypeValues": {
-              "type": "array",
-              "title": "Key Value Type Array",
               "examples": [],
               "items": {
                 "type": "object"
-              }
+              },
+              "title": "Key Value Type Array",
+              "type": "array"
+            },
+            "types": {
+              "items": {
+                "type": "object"
+              },
+              "title": "Key Types",
+              "type": "array"
             }
           },
-          "type": "object",
-          "required": []
+          "required": [],
+          "type": "object"
         }
-      }
+      },
+      "id": "runJavascript-f7ab0d4b",
+      "metadata": {},
+      "type": "runJavascript"
     },
     {
-      "id": "input-e079e0d7",
-      "type": "input",
-      "metadata": {},
       "configuration": {
         "schema": {
+          "additionalProperties": true,
           "properties": {
             "object": {
-              "type": "object",
-              "title": "Object",
+              "default": "{}",
               "examples": [],
-              "default": "{}"
+              "title": "Object",
+              "type": "object"
             }
           },
-          "additionalProperties": true,
-          "type": "object",
-          "required": ["object"]
+          "required": [
+            "object"
+          ],
+          "type": "object"
         }
-      }
+      },
+      "id": "input-e079e0d7",
+      "metadata": {},
+      "type": "input"
     },
     {
-      "id": "output-e33e70f3",
-      "type": "output",
-      "metadata": {},
       "configuration": {
         "schema": {
           "properties": {
+            "additionalProperties": true,
             "keys": {
-              "type": "array",
+              "examples": [],
+              "items": {
+                "type": "object"
+              },
               "title": "Keys",
-              "examples": [],
-              "items": {
-                "type": "object"
-              }
-            },
-            "types": {
-              "type": "array",
-              "title": "Key Types",
-              "examples": [],
-              "items": {
-                "type": "object"
-              }
+              "type": "array"
             },
             "keyTypeValues": {
-              "type": "array",
-              "title": "Key Value Type Array",
               "examples": [],
               "items": {
                 "type": "object"
-              }
+              },
+              "title": "Key Value Type Array",
+              "type": "array"
             },
-            "additionalProperties": true
+            "types": {
+              "examples": [],
+              "items": {
+                "type": "object"
+              },
+              "title": "Key Types",
+              "type": "array"
+            }
           },
           "type": "object"
         }
-      }
+      },
+      "id": "output-e33e70f3",
+      "metadata": {},
+      "type": "output"
     }
-  ]
+  ],
+  "title": "Spread"
 }
