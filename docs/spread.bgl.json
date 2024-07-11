@@ -1,0 +1,138 @@
+{
+  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "title": "Spread",
+  "description": "This board accepts an 'object' input and returns the spread properties of the object as well as an array of keys, an array of key, type pairs, and an array of key, type, value triples.",
+  "metadata": {
+    "comments": []
+  },
+  "edges": [
+    {
+      "from": "input-e079e0d7",
+      "to": "runJavascript-f7ab0d4b",
+      "out": "object",
+      "in": "object"
+    },
+    {
+      "from": "runJavascript-f7ab0d4b",
+      "to": "output-e33e70f3",
+      "out": "*",
+      "in": ""
+    },
+    {
+      "from": "runJavascript-f7ab0d4b",
+      "to": "output-e33e70f3",
+      "out": "keys",
+      "in": "keys"
+    },
+    {
+      "from": "runJavascript-f7ab0d4b",
+      "to": "output-e33e70f3",
+      "out": "types",
+      "in": "types"
+    },
+    {
+      "from": "runJavascript-f7ab0d4b",
+      "to": "output-e33e70f3",
+      "out": "keyTypeValues",
+      "in": "key-type-values"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "runJavascript-f7ab0d4b",
+      "type": "runJavascript",
+      "metadata": {},
+      "configuration": {
+        "name": "spread",
+        "code": "const spread = ({ object }) => {\n\tif (typeof object !== \"object\") {\n\t\tthrow new Error(\"Input is not an object\");\n\t}\n\tif (Object.keys(object).length === 0) {\n\t\tthrow new Error(\"Object has no properties\");\n\t}\n\tif (object.hasOwnProperty(\"keys\")) {\n\t\tthrow new Error(\"Object contains 'keys' property\");\n\t}\n\t/**\n\t * @type {Array<string>}\n\t */\n\tconst keysArray = Object.keys(object);\n\n\t/**\n\t * @type {Array<{key: string, type: string}>}\n\t */\n\tconst keyTypes = keysArray.map((key) => ({\n\t\tkey,\n\t\ttype: typeof object[key],\n\t}));\n\n\t/**\n\t * @type {Array<{key: string, type: string, value: unknown}>}\n\t */\n\tconst keyValueTypeMap = Object.entries(object).map(([key, value]) => ({\n\t\tkey,\n\t\ttype: typeof value,\n\t\tvalue,\n\t}));\n\n\treturn {\n\t\t...object,\n\t\tkeys: keysArray,\n\t\ttypes: keyTypes,\n\t\tkeyTypeValues: keyValueTypeMap,\n\t};\n};\n",
+        "raw": "on",
+        "schema": {
+          "properties": {
+            "keys": {
+              "type": "array",
+              "title": "Keys",
+              "examples": [],
+              "items": {
+                "type": "object"
+              }
+            },
+            "types": {
+              "type": "array",
+              "title": "Key Types",
+              "items": {
+                "type": "object"
+              }
+            },
+            "keyTypeValues": {
+              "type": "array",
+              "title": "Key Value Type Array",
+              "examples": [],
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "input-e079e0d7",
+      "type": "input",
+      "metadata": {},
+      "configuration": {
+        "schema": {
+          "properties": {
+            "object": {
+              "type": "object",
+              "title": "Object",
+              "examples": [],
+              "default": "{}"
+            }
+          },
+          "additionalProperties": true,
+          "type": "object",
+          "required": ["object"]
+        }
+      }
+    },
+    {
+      "id": "output-e33e70f3",
+      "type": "output",
+      "metadata": {},
+      "configuration": {
+        "schema": {
+          "properties": {
+            "keys": {
+              "type": "array",
+              "title": "Keys",
+              "examples": [],
+              "items": {
+                "type": "object"
+              }
+            },
+            "types": {
+              "type": "array",
+              "title": "Key Types",
+              "examples": [],
+              "items": {
+                "type": "object"
+              }
+            },
+            "keyTypeValues": {
+              "type": "array",
+              "title": "Key Value Type Array",
+              "examples": [],
+              "items": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": true
+          },
+          "type": "object"
+        }
+      }
+    }
+  ]
+}
