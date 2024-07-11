@@ -1,0 +1,175 @@
+{
+	"title": "Gemini Nano Demo",
+	"description": "A very minimal example of a Gemini Nano node that picks a random question to test the capabilities of the LLM.",
+	"metadata": {
+		"comments": []
+	},
+	"edges": [
+		{
+			"from": "runJavascript-b51534f9",
+			"to": "fn-31",
+			"out": "item",
+			"in": "b"
+		},
+		{
+			"from": "input",
+			"to": "runJavascript-b51534f9",
+			"out": "array",
+			"in": "array"
+		},
+		{
+			"from": "fn-31",
+			"to": "nano-eccd3618",
+			"out": "item",
+			"in": "prompt"
+		},
+		{
+			"from": "input-91913df4",
+			"to": "fn-31",
+			"out": "",
+			"in": ""
+		},
+		{
+			"from": "input-91913df4",
+			"to": "fn-31",
+			"out": "a",
+			"in": "a"
+		},
+		{
+			"from": "fn-31",
+			"to": "output",
+			"out": "item",
+			"in": "query"
+		},
+		{
+			"from": "nano-eccd3618",
+			"to": "output",
+			"out": "text",
+			"in": "response"
+		}
+	],
+	"nodes": [
+		{
+			"type": "input",
+			"id": "input",
+			"configuration": {
+				"schema": {
+					"properties": {
+						"array": {
+							"type": "array",
+							"title": "Array",
+							"default": "[\"What is the process of photosynthesis?\",\"Define 'gravity.'\",\"Translate 'Thank you' to Spanish.\",\"Spell the word 'accommodate.'\",\"What is 50 divided by 2?\",\"Summarise the plot of a classic fairy tale like 'Cinderella.'\",\"What is the cube root of 27?\",\"Correct the grammar in the sentence: 'Him and me went to the store.'\",\"Explain the principle of natural selection in simple terms.\",\"Describe the main characters in the story 'Little Red Riding Hood.'\",\"Solve the equation x^2 - 4x + 4 = 0.\",\"Explain the importance of the Turing test in the context of Artificial Intelligence.\",\"Write a short story about a lost treasure in a hidden cave.\",\"Compare the themes of freedom and responsibility in two different novels.\",\"Describe the main differences between a compiler and an interpreter in computer programming.\",\"Discuss the potential applications of machine learning in healthcare.\",\"Compose a poem about the changing seasons.\",\"Derive the formula for the volume of a sphere.\",\"Discuss the concept of existentialism in philosophy.\",\"Analyse the benefits and challenges of renewable energy sources.\"]",
+							"examples": []
+						}
+					},
+					"type": "object",
+					"required": ["array"]
+				}
+			},
+			"metadata": {
+				"title": "Questions Array",
+				"logLevel": "debug"
+			}
+		},
+		{
+			"type": "output",
+			"id": "output",
+			"configuration": {},
+			"metadata": {
+				"title": "nano-text",
+				"logLevel": "debug"
+			}
+		},
+		{
+			"id": "nano-eccd3618",
+			"type": "nano",
+			"metadata": {}
+		},
+		{
+			"id": "fn-31",
+			"type": "runJavascript",
+			"configuration": {
+				"code": "const run = (inputs) => {\n\tif (\"a\" in inputs) {\n\t\t// if a is string then trim\n\t\tif (typeof inputs[\"a\"] === \"string\") {\n\t\t\tif (inputs[\"a\"].trim().length > 0) {\n\t\t\t\treturn { item: inputs[\"a\"] };\n\t\t\t}\n\t\t} else {\n\t\t\treturn { item: inputs[\"a\"] };\n\t\t}\n\t}\n\tif (\"b\" in inputs) {\n\t\treturn { item: inputs[\"b\"] };\n\t}\n\tthrow new Error(\"No value\");\n};\n",
+				"name": "run",
+				"raw": "on",
+				"schema": {
+					"properties": {
+						"item": {
+							"type": "string",
+							"title": "Item",
+							"examples": []
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			},
+			"metadata": {
+				"title": "Coalesce"
+			}
+		},
+		{
+			"id": "runJavascript-b51534f9",
+			"type": "runJavascript",
+			"configuration": {
+				"schema": {
+					"type": "object",
+					"properties": {
+						"item": {
+							"type": "string"
+						}
+					}
+				},
+				"array": [
+					"What is the process of photosynthesis?",
+					"Define 'gravity.'",
+					"Translate 'Thank you' to Spanish.",
+					"Spell the word 'accommodate.'",
+					"What is 50 divided by 2?",
+					"Summarise the plot of a classic fairy tale like 'Cinderella.'",
+					"What is the cube root of 27?",
+					"Correct the grammar in the sentence: 'Him and me went to the store.'",
+					"Explain the principle of natural selection in simple terms.",
+					"Describe the main characters in the story 'Little Red Riding Hood.'",
+					"Solve the equation x^2 - 4x + 4 = 0.",
+					"Explain the importance of the Turing test in the context of Artificial Intelligence.",
+					"Write a short story about a lost treasure in a hidden cave.",
+					"Compare the themes of freedom and responsibility in two different novels.",
+					"Describe the main differences between a compiler and an interpreter in computer programming.",
+					"Discuss the potential applications of machine learning in healthcare.",
+					"Compose a poem about the changing seasons.",
+					"Derive the formula for the volume of a sphere.",
+					"Discuss the concept of existentialism in philosophy.",
+					"Analyse the benefits and challenges of renewable energy sources.,"
+				],
+				"code": "const fn_29 = inputs=>{console.log({inputs});const randomIndex=Math.floor(Math.random()*inputs.array.length);return{item:inputs.array[randomIndex]}};",
+				"name": "fn_29",
+				"raw": "on"
+			},
+			"metadata": {
+				"title": "Pick random example"
+			}
+		},
+		{
+			"type": "input",
+			"id": "input-91913df4",
+			"configuration": {
+				"schema": {
+					"properties": {
+						"a": {
+							"type": "string",
+							"title": "Question",
+							"default": " "
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			},
+			"metadata": {
+				"title": "Question Override",
+				"logLevel": "debug"
+			}
+		}
+	]
+}
