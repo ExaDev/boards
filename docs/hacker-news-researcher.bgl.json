@@ -1,0 +1,3682 @@
+{
+  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "edges": [
+    {
+      "from": "input-57",
+      "in": "context",
+      "out": "context",
+      "to": "looper-60"
+    },
+    {
+      "from": "looper-60",
+      "in": "done",
+      "out": "done",
+      "to": "output-58"
+    },
+    {
+      "from": "looper-60",
+      "in": "loop",
+      "out": "loop",
+      "to": "output-61"
+    },
+    {
+      "from": "looper-60",
+      "in": "in",
+      "out": "loop",
+      "to": "specialist-59"
+    },
+    {
+      "from": "specialist-59",
+      "in": "context",
+      "out": "out",
+      "to": "looper-60"
+    }
+  ],
+  "nodes": [
+    {
+      "configuration": {
+        "schema": {
+          "properties": {
+            "context": {
+              "default": "[{\"role\":\"user\",\"parts\":[{\"text\":\"Artificial Intelligence\"}]}]",
+              "description": "What topic are you interested in?",
+              "examples": [],
+              "items": {
+                "behavior": [
+                  "llm-content"
+                ],
+                "format": "text-inline",
+                "type": "object"
+              },
+              "title": "Context",
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "id": "input-57",
+      "metadata": {
+        "title": "Input"
+      },
+      "type": "input"
+    },
+    {
+      "configuration": {
+        "schema": {
+          "properties": {
+            "done": {
+              "items": {
+                "behavior": [
+                  "llm-content"
+                ],
+                "type": "object"
+              },
+              "title": "Context out",
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "id": "output-58",
+      "metadata": {
+        "title": "Primary Output"
+      },
+      "type": "output"
+    },
+    {
+      "configuration": {
+        "schema": {
+          "properties": {
+            "loop": {
+              "items": {
+                "behavior": [
+                  "llm-content"
+                ],
+                "type": "object"
+              },
+              "title": "Loop",
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "id": "output-61",
+      "metadata": {
+        "title": "Intermediate Output"
+      },
+      "type": "output"
+    },
+    {
+      "configuration": {
+        "model": "gemini-1.5-flash-latest",
+        "task": {
+          "parts": [
+            {
+              "text": "Chat until \"##DONE##\"."
+            }
+          ]
+        }
+      },
+      "id": "looper-60",
+      "metadata": {
+        "title": "Looper"
+      },
+      "type": "looper"
+    },
+    {
+      "configuration": {
+        "model": "gemini-1.5-flash-latest",
+        "persona": {
+          "parts": [
+            {
+              "text": "You are a Hacker News Research Agent.\nRetrieve information from Hacker News using the tools provided\nBased on the user's query you will find the most relevant posts on Hacker News.\nYou will list the post titles, story urls, and discsussion urls for the most relevant results.\nFor each post, you will retrieve the most relevant comments.\nBased on the comments, summarise the factual information contained in the article\nSummarise the overall discussion and provide a brief analysis of the information.\nUse markdown to format your response.\nDo not infer or make assumptions about any information.\nWhen you have completed all of your tasks, you will reply with '##DONE##'"
+            }
+          ],
+          "role": "tool"
+        },
+        "tools": [
+          {
+            "edges": [
+              {
+                "from": "invoke-55",
+                "in": "output",
+                "out": "output",
+                "to": "output-56"
+              },
+              {
+                "from": "input-54",
+                "in": "query",
+                "out": "query",
+                "to": "invoke-55"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "output": {
+                        "items": {
+                          "properties": {
+                            "author": {
+                              "type": "string"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "num_comments": {
+                              "type": "number"
+                            },
+                            "objectID": {
+                              "type": "string"
+                            },
+                            "points": {
+                              "type": "number"
+                            },
+                            "story_id": {
+                              "type": "number"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "author",
+                            "created_at",
+                            "num_comments",
+                            "objectID",
+                            "points",
+                            "story_id",
+                            "title",
+                            "updated_at",
+                            "url",
+                            "objectType"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Results",
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "output-56",
+                "metadata": {
+                  "title": "Output"
+                },
+                "type": "output"
+              },
+              {
+                "configuration": {
+                  "$board": {
+                    "edges": [
+                      {
+                        "from": "invoke-49",
+                        "in": "output",
+                        "out": "array",
+                        "to": "output-48"
+                      },
+                      {
+                        "from": "invoke-47",
+                        "in": "array",
+                        "out": "output",
+                        "to": "invoke-49"
+                      },
+                      {
+                        "from": "input-46",
+                        "in": "query",
+                        "out": "query",
+                        "to": "invoke-47"
+                      },
+                      {
+                        "from": "input-46",
+                        "in": "tags",
+                        "out": "tags",
+                        "to": "invoke-47"
+                      }
+                    ],
+                    "graphs": {},
+                    "nodes": [
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "output": {
+                                "items": {
+                                  "properties": {
+                                    "author": {
+                                      "type": "string"
+                                    },
+                                    "created_at": {
+                                      "type": "string"
+                                    },
+                                    "num_comments": {
+                                      "type": "number"
+                                    },
+                                    "objectID": {
+                                      "type": "string"
+                                    },
+                                    "points": {
+                                      "type": "number"
+                                    },
+                                    "story_id": {
+                                      "type": "number"
+                                    },
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "updated_at": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "author",
+                                    "created_at",
+                                    "num_comments",
+                                    "objectID",
+                                    "points",
+                                    "story_id",
+                                    "title",
+                                    "updated_at",
+                                    "url",
+                                    "objectType"
+                                  ],
+                                  "type": "object"
+                                },
+                                "title": "Results",
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "output-48",
+                        "metadata": {
+                          "title": "Output"
+                        },
+                        "type": "output"
+                      },
+                      {
+                        "configuration": {
+                          "$board": {
+                            "description": "Iterate over an array and run a subgraph for each item in the array.",
+                            "edges": [
+                              {
+                                "from": "input-23",
+                                "in": "board",
+                                "out": "board",
+                                "to": "passthrough-24"
+                              },
+                              {
+                                "from": "input-23",
+                                "in": "array",
+                                "out": "array",
+                                "to": "fn-27"
+                              },
+                              {
+                                "from": "passthrough-24",
+                                "in": "board",
+                                "out": "board",
+                                "to": "passthrough-24"
+                              },
+                              {
+                                "from": "passthrough-24",
+                                "in": "item",
+                                "out": "item",
+                                "to": "invoke-25"
+                              },
+                              {
+                                "from": "passthrough-24",
+                                "in": "$board",
+                                "out": "board",
+                                "to": "invoke-25"
+                              },
+                              {
+                                "from": "fn-27",
+                                "in": "array",
+                                "out": "array",
+                                "to": "fn-27"
+                              },
+                              {
+                                "from": "fn-27",
+                                "in": "item",
+                                "out": "item",
+                                "to": "passthrough-24"
+                              },
+                              {
+                                "from": "fn-27",
+                                "in": "a",
+                                "out": "array",
+                                "to": "fn-29"
+                              },
+                              {
+                                "from": "invoke-25",
+                                "in": "item",
+                                "out": "item",
+                                "to": "fn-28"
+                              },
+                              {
+                                "from": "fn-29",
+                                "in": "array",
+                                "out": "emit",
+                                "to": "output-26"
+                              },
+                              {
+                                "from": "fn-28",
+                                "in": "",
+                                "out": "*",
+                                "to": "fn-28"
+                              },
+                              {
+                                "from": "fn-28",
+                                "in": "b",
+                                "out": "array",
+                                "to": "fn-29"
+                              }
+                            ],
+                            "graphs": {},
+                            "nodes": [
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "array": {
+                                        "examples": [
+                                          "[\"The\",\"quick\",\"brown\",\"fox\"]"
+                                        ],
+                                        "type": "array"
+                                      },
+                                      "board": {
+                                        "examples": [
+                                          "{\"edges\":[{\"from\":\"fn-4\",\"to\":\"output-5\",\"out\":\"*\",\"in\":\"\"},{\"from\":\"input-3\",\"to\":\"fn-4\",\"out\":\"item\",\"in\":\"item\"}],\"nodes\":[{\"id\":\"output-5\",\"type\":\"output\",\"configuration\":{},\"metadata\":{\"title\":\"Output\"}},{\"id\":\"fn-4\",\"type\":\"runJavascript\",\"configuration\":{\"code\":\"const fn_4 = inputs=>{const{item}=inputs;return{item:item.split(\\\"\\\").map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join(\\\"\\\")}};\",\"name\":\"fn_4\",\"raw\":true}},{\"id\":\"input-3\",\"type\":\"input\",\"configuration\":{\"schema\":{\"type\":\"object\",\"properties\":{\"item\":{\"type\":\"string\",\"title\":\"item\"}},\"required\":[\"item\"]}},\"metadata\":{\"title\":\"Input\"}}],\"graphs\":{}}"
+                                        ]
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "input-23",
+                                "metadata": {
+                                  "title": "Input"
+                                },
+                                "type": "input"
+                              },
+                              {
+                                "configuration": {},
+                                "id": "passthrough-24",
+                                "metadata": {
+                                  "title": "Passthrough"
+                                },
+                                "type": "passthrough"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_27 = inputs=>{const{array}=inputs;const[item,...rest]=array;if(item){return{array:rest,item}}return{}};",
+                                  "name": "fn_27",
+                                  "raw": true
+                                },
+                                "id": "fn-27",
+                                "metadata": {
+                                  "title": "Pop item"
+                                },
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {},
+                                "id": "invoke-25",
+                                "metadata": {
+                                  "title": "Invoke"
+                                },
+                                "type": "invoke"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_29 = inputs=>{let emit=void 0;if(!inputs.a||inputs.a.length===0){emit=inputs.b}return{emit,a:inputs.a,b:inputs.b}};",
+                                  "name": "fn_29",
+                                  "raw": true
+                                },
+                                "id": "fn-29",
+                                "metadata": {
+                                  "title": "Emitter"
+                                },
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_28 = inputs2=>{const{item,array=[]}=inputs2;return{array:[...array,item]}};",
+                                  "name": "fn_28",
+                                  "raw": true
+                                },
+                                "id": "fn-28",
+                                "metadata": {
+                                  "title": "Accumulate"
+                                },
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "array": {
+                                        "title": "array",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "output-26",
+                                "metadata": {
+                                  "title": "Output"
+                                },
+                                "type": "output"
+                              }
+                            ],
+                            "title": "Board for Each"
+                          },
+                          "board": {
+                            "board": {
+                              "edges": [
+                                {
+                                  "from": "invoke-5",
+                                  "in": "item",
+                                  "out": "object",
+                                  "to": "output-4"
+                                },
+                                {
+                                  "from": "fn-6",
+                                  "in": "object",
+                                  "out": "item",
+                                  "to": "invoke-5"
+                                },
+                                {
+                                  "from": "input-3",
+                                  "in": "item",
+                                  "out": "item",
+                                  "to": "fn-6"
+                                }
+                              ],
+                              "graphs": {},
+                              "kits": [],
+                              "nodes": [
+                                {
+                                  "configuration": {
+                                    "schema": {
+                                      "properties": {
+                                        "item": {
+                                          "title": "item",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "id": "output-4",
+                                  "type": "output"
+                                },
+                                {
+                                  "configuration": {
+                                    "$board": {
+                                      "description": "Manipulate an object by picking or omitting keys",
+                                      "edges": [
+                                        {
+                                          "from": "fn-44",
+                                          "in": "object",
+                                          "out": "object",
+                                          "to": "output-45"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "object",
+                                          "out": "object",
+                                          "to": "fn-44"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "keys",
+                                          "out": "keys",
+                                          "to": "fn-44"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "mode",
+                                          "out": "mode",
+                                          "to": "fn-44"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "strict",
+                                          "out": "strict",
+                                          "to": "fn-44"
+                                        }
+                                      ],
+                                      "graphs": {},
+                                      "nodes": [
+                                        {
+                                          "configuration": {
+                                            "schema": {
+                                              "type": "object"
+                                            }
+                                          },
+                                          "id": "output-45",
+                                          "metadata": {
+                                            "title": "Output"
+                                          },
+                                          "type": "output"
+                                        },
+                                        {
+                                          "configuration": {
+                                            "code": "const fn_44 = ({object,keys,mode=\"pick\",strict=false})=>{if(mode===\"pick\"){const result={};keys.forEach(key=>{if(strict&&!(key in object)){throw new Error(`Key \"${key}\" not found in object`)}else if(key in object){result[key]=object[key]}});return{object:result}}else{const result={...object};keys.forEach(key=>{if(strict&&!(key in object)){throw new Error(`Key \"${key}\" not found in object`)}else if(key in object){delete result[key]}});return{object:result}}};",
+                                            "name": "fn_44",
+                                            "raw": true
+                                          },
+                                          "id": "fn-44",
+                                          "metadata": {
+                                            "title": "Manipulation"
+                                          },
+                                          "type": "runJavascript"
+                                        },
+                                        {
+                                          "configuration": {
+                                            "examples": [
+                                              {
+                                                "keys": [
+                                                  "forename",
+                                                  "surname"
+                                                ],
+                                                "mode": "pick",
+                                                "object": {
+                                                  "age": 30,
+                                                  "city": "New York",
+                                                  "dateOfBirth": "1990-01-01T00:00:00.000Z",
+                                                  "forename": "John",
+                                                  "surname": "Smith"
+                                                },
+                                                "strict": false
+                                              },
+                                              {
+                                                "keys": [
+                                                  "forename",
+                                                  "surname"
+                                                ],
+                                                "mode": "omit",
+                                                "object": {
+                                                  "age": 30,
+                                                  "city": "New York",
+                                                  "dateOfBirth": "1990-01-01T00:00:00.000Z",
+                                                  "forename": "John",
+                                                  "surname": "Smith"
+                                                },
+                                                "strict": false
+                                              },
+                                              {
+                                                "keys": [
+                                                  "forename",
+                                                  "surname"
+                                                ],
+                                                "mode": "pick",
+                                                "object": {
+                                                  "age": 30,
+                                                  "dob": "1990-01-01T00:00:00.000Z",
+                                                  "location": "New York",
+                                                  "name": "John Smith"
+                                                },
+                                                "strict": true
+                                              }
+                                            ],
+                                            "schema": {
+                                              "properties": {
+                                                "keys": {
+                                                  "examples": [
+                                                    "[\"forename\",\"surname\"]"
+                                                  ],
+                                                  "items": {
+                                                    "type": "string"
+                                                  },
+                                                  "type": "array"
+                                                },
+                                                "mode": {
+                                                  "default": "pick",
+                                                  "enum": [
+                                                    "pick",
+                                                    "omit"
+                                                  ],
+                                                  "type": "string"
+                                                },
+                                                "object": {
+                                                  "examples": [
+                                                    "{\"forename\":\"John\",\"surname\":\"Smith\",\"age\":30,\"city\":\"New York\",\"dateOfBirth\":\"1990-01-01T00:00:00.000Z\"}"
+                                                  ],
+                                                  "type": "object"
+                                                },
+                                                "strict": {
+                                                  "default": "false",
+                                                  "description": "If true and a key is not found, an error will be thrown",
+                                                  "type": "boolean"
+                                                }
+                                              },
+                                              "type": "object"
+                                            }
+                                          },
+                                          "id": "input-43",
+                                          "metadata": {
+                                            "title": "Input"
+                                          },
+                                          "type": "input"
+                                        }
+                                      ],
+                                      "title": "Object Manipulator"
+                                    },
+                                    "keys": [
+                                      "author",
+                                      "created_at",
+                                      "num_comments",
+                                      "objectID",
+                                      "points",
+                                      "story_id",
+                                      "title",
+                                      "updated_at",
+                                      "url",
+                                      "objectType"
+                                    ],
+                                    "mode": "pick",
+                                    "strict": false
+                                  },
+                                  "id": "invoke-5",
+                                  "type": "invoke"
+                                },
+                                {
+                                  "configuration": {
+                                    "code": "const fn_6 = ({item})=>{return{item:{...item,objectType:item[\"_tags\"][0]}}};",
+                                    "name": "fn_6",
+                                    "raw": true
+                                  },
+                                  "id": "fn-6",
+                                  "type": "runJavascript"
+                                },
+                                {
+                                  "configuration": {
+                                    "schema": {
+                                      "properties": {
+                                        "item": {
+                                          "title": "item",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "item"
+                                      ],
+                                      "type": "object"
+                                    }
+                                  },
+                                  "id": "input-3",
+                                  "type": "input"
+                                }
+                              ]
+                            },
+                            "kind": "board"
+                          }
+                        },
+                        "id": "invoke-49",
+                        "metadata": {
+                          "title": "Manipulate elements"
+                        },
+                        "type": "invoke"
+                      },
+                      {
+                        "configuration": {
+                          "$board": {
+                            "description": "Board which returns API results based on a query using the Hacker News Angolia API",
+                            "edges": [
+                              {
+                                "from": "query",
+                                "in": "query",
+                                "out": "query",
+                                "to": "urlTemplate"
+                              },
+                              {
+                                "from": "query",
+                                "in": "page",
+                                "out": "page",
+                                "to": "urlTemplate"
+                              },
+                              {
+                                "from": "query",
+                                "in": "tags",
+                                "out": "tags",
+                                "to": "urlTemplate"
+                              },
+                              {
+                                "from": "query",
+                                "in": "limit",
+                                "out": "limit",
+                                "to": "fn-39"
+                              },
+                              {
+                                "from": "urlTemplate",
+                                "in": "url",
+                                "out": "url",
+                                "to": "fetch"
+                              },
+                              {
+                                "from": "urlTemplate",
+                                "in": "url",
+                                "out": "url",
+                                "to": "output-40"
+                              },
+                              {
+                                "from": "fn-39",
+                                "in": "output",
+                                "out": "output",
+                                "to": "output-40"
+                              },
+                              {
+                                "from": "fetch",
+                                "in": "object",
+                                "out": "response",
+                                "to": "spreadResponse"
+                              },
+                              {
+                                "from": "spreadResponse",
+                                "in": "list",
+                                "out": "hits",
+                                "to": "fn-39"
+                              }
+                            ],
+                            "graphs": {},
+                            "nodes": [
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "limit": {
+                                        "default": "5",
+                                        "description": "Limit the number of results returned by the search",
+                                        "title": "limit",
+                                        "type": "number"
+                                      },
+                                      "page": {
+                                        "default": "1",
+                                        "description": "The page number of the search results to return",
+                                        "title": "Page",
+                                        "type": "number"
+                                      },
+                                      "query": {
+                                        "default": "Artificial Intelligence",
+                                        "description": "The term to search for",
+                                        "examples": [
+                                          "Artificial Intelligence",
+                                          "Machine Learning",
+                                          "Deep Learning"
+                                        ],
+                                        "title": "Query",
+                                        "type": "string"
+                                      },
+                                      "tags": {
+                                        "description": "Filter on a specific tag",
+                                        "enum": [
+                                          "story",
+                                          "comment",
+                                          "poll",
+                                          "pollopt",
+                                          "show_hn",
+                                          "ask_hn",
+                                          "front_page"
+                                        ],
+                                        "title": "Tags",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "title": "Hacker News Algolia Search Parameters",
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "query",
+                                "type": "input"
+                              },
+                              {
+                                "configuration": {
+                                  "template": "https://hn.algolia.com/api/v1/search?query={query}&tags={tags}&page={page}"
+                                },
+                                "id": "urlTemplate",
+                                "type": "urlTemplate"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_39 = ({list,limit})=>{return{output:list.slice(0,limit)}};",
+                                  "name": "fn_39",
+                                  "raw": true
+                                },
+                                "id": "fn-39",
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {
+                                  "method": "GET"
+                                },
+                                "id": "fetch",
+                                "type": "fetch"
+                              },
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "output": {
+                                        "items": {
+                                          "properties": {
+                                            "_highlightResult": {
+                                              "properties": {
+                                                "author": {
+                                                  "properties": {
+                                                    "matchedWords": {
+                                                      "items": {},
+                                                      "type": "array"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string"
+                                                    },
+                                                    "value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "matchLevel",
+                                                    "matchedWords",
+                                                    "value"
+                                                  ],
+                                                  "type": "object"
+                                                },
+                                                "title": {
+                                                  "properties": {
+                                                    "fullyHighlighted": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "matchedWords": {
+                                                      "items": {
+                                                        "type": "string"
+                                                      },
+                                                      "type": "array"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string"
+                                                    },
+                                                    "value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "fullyHighlighted",
+                                                    "matchLevel",
+                                                    "matchedWords",
+                                                    "value"
+                                                  ],
+                                                  "type": "object"
+                                                },
+                                                "url": {
+                                                  "properties": {
+                                                    "fullyHighlighted": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "matchedWords": {
+                                                      "items": {
+                                                        "type": "string"
+                                                      },
+                                                      "type": "array"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string"
+                                                    },
+                                                    "value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "fullyHighlighted",
+                                                    "matchLevel",
+                                                    "matchedWords",
+                                                    "value"
+                                                  ],
+                                                  "type": "object"
+                                                }
+                                              },
+                                              "required": [
+                                                "author",
+                                                "title",
+                                                "url"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "_tags": {
+                                              "items": {
+                                                "type": "string"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "author": {
+                                              "type": "string"
+                                            },
+                                            "children": {
+                                              "items": {
+                                                "type": "number"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "created_at": {
+                                              "type": "string"
+                                            },
+                                            "created_at_i": {
+                                              "type": "number"
+                                            },
+                                            "num_comments": {
+                                              "type": "number"
+                                            },
+                                            "objectID": {
+                                              "type": "string"
+                                            },
+                                            "points": {
+                                              "type": "number"
+                                            },
+                                            "story_id": {
+                                              "type": "number"
+                                            },
+                                            "title": {
+                                              "type": "string"
+                                            },
+                                            "updated_at": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "_highlightResult",
+                                            "_tags",
+                                            "author",
+                                            "children",
+                                            "created_at",
+                                            "created_at_i",
+                                            "num_comments",
+                                            "objectID",
+                                            "points",
+                                            "story_id",
+                                            "title",
+                                            "updated_at",
+                                            "url"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "title": "Hacker News Search Results",
+                                        "type": "array"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "output-40",
+                                "metadata": {
+                                  "title": "Output"
+                                },
+                                "type": "output"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const spreadResponse = inputs=>{const object=inputs.object;if(typeof object!==\"object\"){throw new Error(`object is of type ${typeof object} not object`)}return{...object}};",
+                                  "name": "spreadResponse",
+                                  "raw": true
+                                },
+                                "id": "spreadResponse",
+                                "type": "runJavascript"
+                              }
+                            ],
+                            "title": "Hacker News Angolia Search",
+                            "version": "0.0.1"
+                          }
+                        },
+                        "id": "invoke-47",
+                        "metadata": {
+                          "title": "Invoke Full Search"
+                        },
+                        "type": "invoke"
+                      },
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "query": {
+                                "default": "Artificial Intelligence",
+                                "description": "The term to search for",
+                                "examples": [
+                                  "Artificial Intelligence",
+                                  "Machine Learning",
+                                  "Deep Learning"
+                                ],
+                                "title": "Query",
+                                "type": "string"
+                              },
+                              "tags": {
+                                "description": "Filter on a specific tag",
+                                "enum": [
+                                  "story",
+                                  "comment",
+                                  "poll",
+                                  "pollopt",
+                                  "show_hn",
+                                  "ask_hn",
+                                  "front_page"
+                                ],
+                                "title": "Tags",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "input-46",
+                        "metadata": {
+                          "title": "Input"
+                        },
+                        "type": "input"
+                      }
+                    ],
+                    "title": "Hacker News Simplified Algolia Search"
+                  },
+                  "tags": "story"
+                },
+                "id": "invoke-55",
+                "metadata": {
+                  "title": "Invoke Full Search"
+                },
+                "type": "invoke"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "query": {
+                        "default": "Artificial Intelligence",
+                        "description": "The term to search for",
+                        "examples": [
+                          "Artificial Intelligence",
+                          "Machine Learning",
+                          "Deep Learning"
+                        ],
+                        "title": "Query",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "input-54",
+                "metadata": {
+                  "title": "Input"
+                },
+                "type": "input"
+              }
+            ],
+            "title": "Hacker News Simplified Algolia Story Search"
+          },
+          {
+            "edges": [
+              {
+                "from": "invoke-52",
+                "in": "output",
+                "out": "output",
+                "to": "output-53"
+              },
+              {
+                "from": "input-51",
+                "in": "query",
+                "out": "query",
+                "to": "invoke-52"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "output": {
+                        "items": {
+                          "properties": {
+                            "author": {
+                              "type": "string"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "num_comments": {
+                              "type": "number"
+                            },
+                            "objectID": {
+                              "type": "string"
+                            },
+                            "points": {
+                              "type": "number"
+                            },
+                            "story_id": {
+                              "type": "number"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "author",
+                            "created_at",
+                            "num_comments",
+                            "objectID",
+                            "points",
+                            "story_id",
+                            "title",
+                            "updated_at",
+                            "url",
+                            "objectType"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Results",
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "output-53",
+                "metadata": {
+                  "title": "Output"
+                },
+                "type": "output"
+              },
+              {
+                "configuration": {
+                  "$board": {
+                    "edges": [
+                      {
+                        "from": "invoke-49",
+                        "in": "output",
+                        "out": "array",
+                        "to": "output-48"
+                      },
+                      {
+                        "from": "invoke-47",
+                        "in": "array",
+                        "out": "output",
+                        "to": "invoke-49"
+                      },
+                      {
+                        "from": "input-46",
+                        "in": "query",
+                        "out": "query",
+                        "to": "invoke-47"
+                      },
+                      {
+                        "from": "input-46",
+                        "in": "tags",
+                        "out": "tags",
+                        "to": "invoke-47"
+                      }
+                    ],
+                    "graphs": {},
+                    "nodes": [
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "output": {
+                                "items": {
+                                  "properties": {
+                                    "author": {
+                                      "type": "string"
+                                    },
+                                    "created_at": {
+                                      "type": "string"
+                                    },
+                                    "num_comments": {
+                                      "type": "number"
+                                    },
+                                    "objectID": {
+                                      "type": "string"
+                                    },
+                                    "points": {
+                                      "type": "number"
+                                    },
+                                    "story_id": {
+                                      "type": "number"
+                                    },
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "updated_at": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "author",
+                                    "created_at",
+                                    "num_comments",
+                                    "objectID",
+                                    "points",
+                                    "story_id",
+                                    "title",
+                                    "updated_at",
+                                    "url",
+                                    "objectType"
+                                  ],
+                                  "type": "object"
+                                },
+                                "title": "Results",
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "output-48",
+                        "metadata": {
+                          "title": "Output"
+                        },
+                        "type": "output"
+                      },
+                      {
+                        "configuration": {
+                          "$board": {
+                            "description": "Iterate over an array and run a subgraph for each item in the array.",
+                            "edges": [
+                              {
+                                "from": "input-23",
+                                "in": "board",
+                                "out": "board",
+                                "to": "passthrough-24"
+                              },
+                              {
+                                "from": "input-23",
+                                "in": "array",
+                                "out": "array",
+                                "to": "fn-27"
+                              },
+                              {
+                                "from": "passthrough-24",
+                                "in": "board",
+                                "out": "board",
+                                "to": "passthrough-24"
+                              },
+                              {
+                                "from": "passthrough-24",
+                                "in": "item",
+                                "out": "item",
+                                "to": "invoke-25"
+                              },
+                              {
+                                "from": "passthrough-24",
+                                "in": "$board",
+                                "out": "board",
+                                "to": "invoke-25"
+                              },
+                              {
+                                "from": "fn-27",
+                                "in": "array",
+                                "out": "array",
+                                "to": "fn-27"
+                              },
+                              {
+                                "from": "fn-27",
+                                "in": "item",
+                                "out": "item",
+                                "to": "passthrough-24"
+                              },
+                              {
+                                "from": "fn-27",
+                                "in": "a",
+                                "out": "array",
+                                "to": "fn-29"
+                              },
+                              {
+                                "from": "invoke-25",
+                                "in": "item",
+                                "out": "item",
+                                "to": "fn-28"
+                              },
+                              {
+                                "from": "fn-29",
+                                "in": "array",
+                                "out": "emit",
+                                "to": "output-26"
+                              },
+                              {
+                                "from": "fn-28",
+                                "in": "",
+                                "out": "*",
+                                "to": "fn-28"
+                              },
+                              {
+                                "from": "fn-28",
+                                "in": "b",
+                                "out": "array",
+                                "to": "fn-29"
+                              }
+                            ],
+                            "graphs": {},
+                            "nodes": [
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "array": {
+                                        "examples": [
+                                          "[\"The\",\"quick\",\"brown\",\"fox\"]"
+                                        ],
+                                        "type": "array"
+                                      },
+                                      "board": {
+                                        "examples": [
+                                          "{\"edges\":[{\"from\":\"fn-4\",\"to\":\"output-5\",\"out\":\"*\",\"in\":\"\"},{\"from\":\"input-3\",\"to\":\"fn-4\",\"out\":\"item\",\"in\":\"item\"}],\"nodes\":[{\"id\":\"output-5\",\"type\":\"output\",\"configuration\":{},\"metadata\":{\"title\":\"Output\"}},{\"id\":\"fn-4\",\"type\":\"runJavascript\",\"configuration\":{\"code\":\"const fn_4 = inputs=>{const{item}=inputs;return{item:item.split(\\\"\\\").map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join(\\\"\\\")}};\",\"name\":\"fn_4\",\"raw\":true}},{\"id\":\"input-3\",\"type\":\"input\",\"configuration\":{\"schema\":{\"type\":\"object\",\"properties\":{\"item\":{\"type\":\"string\",\"title\":\"item\"}},\"required\":[\"item\"]}},\"metadata\":{\"title\":\"Input\"}}],\"graphs\":{}}"
+                                        ]
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "input-23",
+                                "metadata": {
+                                  "title": "Input"
+                                },
+                                "type": "input"
+                              },
+                              {
+                                "configuration": {},
+                                "id": "passthrough-24",
+                                "metadata": {
+                                  "title": "Passthrough"
+                                },
+                                "type": "passthrough"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_27 = inputs=>{const{array}=inputs;const[item,...rest]=array;if(item){return{array:rest,item}}return{}};",
+                                  "name": "fn_27",
+                                  "raw": true
+                                },
+                                "id": "fn-27",
+                                "metadata": {
+                                  "title": "Pop item"
+                                },
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {},
+                                "id": "invoke-25",
+                                "metadata": {
+                                  "title": "Invoke"
+                                },
+                                "type": "invoke"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_29 = inputs=>{let emit=void 0;if(!inputs.a||inputs.a.length===0){emit=inputs.b}return{emit,a:inputs.a,b:inputs.b}};",
+                                  "name": "fn_29",
+                                  "raw": true
+                                },
+                                "id": "fn-29",
+                                "metadata": {
+                                  "title": "Emitter"
+                                },
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_28 = inputs2=>{const{item,array=[]}=inputs2;return{array:[...array,item]}};",
+                                  "name": "fn_28",
+                                  "raw": true
+                                },
+                                "id": "fn-28",
+                                "metadata": {
+                                  "title": "Accumulate"
+                                },
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "array": {
+                                        "title": "array",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "output-26",
+                                "metadata": {
+                                  "title": "Output"
+                                },
+                                "type": "output"
+                              }
+                            ],
+                            "title": "Board for Each"
+                          },
+                          "board": {
+                            "board": {
+                              "edges": [
+                                {
+                                  "from": "invoke-5",
+                                  "in": "item",
+                                  "out": "object",
+                                  "to": "output-4"
+                                },
+                                {
+                                  "from": "fn-6",
+                                  "in": "object",
+                                  "out": "item",
+                                  "to": "invoke-5"
+                                },
+                                {
+                                  "from": "input-3",
+                                  "in": "item",
+                                  "out": "item",
+                                  "to": "fn-6"
+                                }
+                              ],
+                              "graphs": {},
+                              "kits": [],
+                              "nodes": [
+                                {
+                                  "configuration": {
+                                    "schema": {
+                                      "properties": {
+                                        "item": {
+                                          "title": "item",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "id": "output-4",
+                                  "type": "output"
+                                },
+                                {
+                                  "configuration": {
+                                    "$board": {
+                                      "description": "Manipulate an object by picking or omitting keys",
+                                      "edges": [
+                                        {
+                                          "from": "fn-44",
+                                          "in": "object",
+                                          "out": "object",
+                                          "to": "output-45"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "object",
+                                          "out": "object",
+                                          "to": "fn-44"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "keys",
+                                          "out": "keys",
+                                          "to": "fn-44"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "mode",
+                                          "out": "mode",
+                                          "to": "fn-44"
+                                        },
+                                        {
+                                          "from": "input-43",
+                                          "in": "strict",
+                                          "out": "strict",
+                                          "to": "fn-44"
+                                        }
+                                      ],
+                                      "graphs": {},
+                                      "nodes": [
+                                        {
+                                          "configuration": {
+                                            "schema": {
+                                              "type": "object"
+                                            }
+                                          },
+                                          "id": "output-45",
+                                          "metadata": {
+                                            "title": "Output"
+                                          },
+                                          "type": "output"
+                                        },
+                                        {
+                                          "configuration": {
+                                            "code": "const fn_44 = ({object,keys,mode=\"pick\",strict=false})=>{if(mode===\"pick\"){const result={};keys.forEach(key=>{if(strict&&!(key in object)){throw new Error(`Key \"${key}\" not found in object`)}else if(key in object){result[key]=object[key]}});return{object:result}}else{const result={...object};keys.forEach(key=>{if(strict&&!(key in object)){throw new Error(`Key \"${key}\" not found in object`)}else if(key in object){delete result[key]}});return{object:result}}};",
+                                            "name": "fn_44",
+                                            "raw": true
+                                          },
+                                          "id": "fn-44",
+                                          "metadata": {
+                                            "title": "Manipulation"
+                                          },
+                                          "type": "runJavascript"
+                                        },
+                                        {
+                                          "configuration": {
+                                            "examples": [
+                                              {
+                                                "keys": [
+                                                  "forename",
+                                                  "surname"
+                                                ],
+                                                "mode": "pick",
+                                                "object": {
+                                                  "age": 30,
+                                                  "city": "New York",
+                                                  "dateOfBirth": "1990-01-01T00:00:00.000Z",
+                                                  "forename": "John",
+                                                  "surname": "Smith"
+                                                },
+                                                "strict": false
+                                              },
+                                              {
+                                                "keys": [
+                                                  "forename",
+                                                  "surname"
+                                                ],
+                                                "mode": "omit",
+                                                "object": {
+                                                  "age": 30,
+                                                  "city": "New York",
+                                                  "dateOfBirth": "1990-01-01T00:00:00.000Z",
+                                                  "forename": "John",
+                                                  "surname": "Smith"
+                                                },
+                                                "strict": false
+                                              },
+                                              {
+                                                "keys": [
+                                                  "forename",
+                                                  "surname"
+                                                ],
+                                                "mode": "pick",
+                                                "object": {
+                                                  "age": 30,
+                                                  "dob": "1990-01-01T00:00:00.000Z",
+                                                  "location": "New York",
+                                                  "name": "John Smith"
+                                                },
+                                                "strict": true
+                                              }
+                                            ],
+                                            "schema": {
+                                              "properties": {
+                                                "keys": {
+                                                  "examples": [
+                                                    "[\"forename\",\"surname\"]"
+                                                  ],
+                                                  "items": {
+                                                    "type": "string"
+                                                  },
+                                                  "type": "array"
+                                                },
+                                                "mode": {
+                                                  "default": "pick",
+                                                  "enum": [
+                                                    "pick",
+                                                    "omit"
+                                                  ],
+                                                  "type": "string"
+                                                },
+                                                "object": {
+                                                  "examples": [
+                                                    "{\"forename\":\"John\",\"surname\":\"Smith\",\"age\":30,\"city\":\"New York\",\"dateOfBirth\":\"1990-01-01T00:00:00.000Z\"}"
+                                                  ],
+                                                  "type": "object"
+                                                },
+                                                "strict": {
+                                                  "default": "false",
+                                                  "description": "If true and a key is not found, an error will be thrown",
+                                                  "type": "boolean"
+                                                }
+                                              },
+                                              "type": "object"
+                                            }
+                                          },
+                                          "id": "input-43",
+                                          "metadata": {
+                                            "title": "Input"
+                                          },
+                                          "type": "input"
+                                        }
+                                      ],
+                                      "title": "Object Manipulator"
+                                    },
+                                    "keys": [
+                                      "author",
+                                      "created_at",
+                                      "num_comments",
+                                      "objectID",
+                                      "points",
+                                      "story_id",
+                                      "title",
+                                      "updated_at",
+                                      "url",
+                                      "objectType"
+                                    ],
+                                    "mode": "pick",
+                                    "strict": false
+                                  },
+                                  "id": "invoke-5",
+                                  "type": "invoke"
+                                },
+                                {
+                                  "configuration": {
+                                    "code": "const fn_6 = ({item})=>{return{item:{...item,objectType:item[\"_tags\"][0]}}};",
+                                    "name": "fn_6",
+                                    "raw": true
+                                  },
+                                  "id": "fn-6",
+                                  "type": "runJavascript"
+                                },
+                                {
+                                  "configuration": {
+                                    "schema": {
+                                      "properties": {
+                                        "item": {
+                                          "title": "item",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "item"
+                                      ],
+                                      "type": "object"
+                                    }
+                                  },
+                                  "id": "input-3",
+                                  "type": "input"
+                                }
+                              ]
+                            },
+                            "kind": "board"
+                          }
+                        },
+                        "id": "invoke-49",
+                        "metadata": {
+                          "title": "Manipulate elements"
+                        },
+                        "type": "invoke"
+                      },
+                      {
+                        "configuration": {
+                          "$board": {
+                            "description": "Board which returns API results based on a query using the Hacker News Angolia API",
+                            "edges": [
+                              {
+                                "from": "query",
+                                "in": "query",
+                                "out": "query",
+                                "to": "urlTemplate"
+                              },
+                              {
+                                "from": "query",
+                                "in": "page",
+                                "out": "page",
+                                "to": "urlTemplate"
+                              },
+                              {
+                                "from": "query",
+                                "in": "tags",
+                                "out": "tags",
+                                "to": "urlTemplate"
+                              },
+                              {
+                                "from": "query",
+                                "in": "limit",
+                                "out": "limit",
+                                "to": "fn-39"
+                              },
+                              {
+                                "from": "urlTemplate",
+                                "in": "url",
+                                "out": "url",
+                                "to": "fetch"
+                              },
+                              {
+                                "from": "urlTemplate",
+                                "in": "url",
+                                "out": "url",
+                                "to": "output-40"
+                              },
+                              {
+                                "from": "fn-39",
+                                "in": "output",
+                                "out": "output",
+                                "to": "output-40"
+                              },
+                              {
+                                "from": "fetch",
+                                "in": "object",
+                                "out": "response",
+                                "to": "spreadResponse"
+                              },
+                              {
+                                "from": "spreadResponse",
+                                "in": "list",
+                                "out": "hits",
+                                "to": "fn-39"
+                              }
+                            ],
+                            "graphs": {},
+                            "nodes": [
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "limit": {
+                                        "default": "5",
+                                        "description": "Limit the number of results returned by the search",
+                                        "title": "limit",
+                                        "type": "number"
+                                      },
+                                      "page": {
+                                        "default": "1",
+                                        "description": "The page number of the search results to return",
+                                        "title": "Page",
+                                        "type": "number"
+                                      },
+                                      "query": {
+                                        "default": "Artificial Intelligence",
+                                        "description": "The term to search for",
+                                        "examples": [
+                                          "Artificial Intelligence",
+                                          "Machine Learning",
+                                          "Deep Learning"
+                                        ],
+                                        "title": "Query",
+                                        "type": "string"
+                                      },
+                                      "tags": {
+                                        "description": "Filter on a specific tag",
+                                        "enum": [
+                                          "story",
+                                          "comment",
+                                          "poll",
+                                          "pollopt",
+                                          "show_hn",
+                                          "ask_hn",
+                                          "front_page"
+                                        ],
+                                        "title": "Tags",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "title": "Hacker News Algolia Search Parameters",
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "query",
+                                "type": "input"
+                              },
+                              {
+                                "configuration": {
+                                  "template": "https://hn.algolia.com/api/v1/search?query={query}&tags={tags}&page={page}"
+                                },
+                                "id": "urlTemplate",
+                                "type": "urlTemplate"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const fn_39 = ({list,limit})=>{return{output:list.slice(0,limit)}};",
+                                  "name": "fn_39",
+                                  "raw": true
+                                },
+                                "id": "fn-39",
+                                "type": "runJavascript"
+                              },
+                              {
+                                "configuration": {
+                                  "method": "GET"
+                                },
+                                "id": "fetch",
+                                "type": "fetch"
+                              },
+                              {
+                                "configuration": {
+                                  "schema": {
+                                    "properties": {
+                                      "output": {
+                                        "items": {
+                                          "properties": {
+                                            "_highlightResult": {
+                                              "properties": {
+                                                "author": {
+                                                  "properties": {
+                                                    "matchedWords": {
+                                                      "items": {},
+                                                      "type": "array"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string"
+                                                    },
+                                                    "value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "matchLevel",
+                                                    "matchedWords",
+                                                    "value"
+                                                  ],
+                                                  "type": "object"
+                                                },
+                                                "title": {
+                                                  "properties": {
+                                                    "fullyHighlighted": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "matchedWords": {
+                                                      "items": {
+                                                        "type": "string"
+                                                      },
+                                                      "type": "array"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string"
+                                                    },
+                                                    "value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "fullyHighlighted",
+                                                    "matchLevel",
+                                                    "matchedWords",
+                                                    "value"
+                                                  ],
+                                                  "type": "object"
+                                                },
+                                                "url": {
+                                                  "properties": {
+                                                    "fullyHighlighted": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "matchedWords": {
+                                                      "items": {
+                                                        "type": "string"
+                                                      },
+                                                      "type": "array"
+                                                    },
+                                                    "matchLevel": {
+                                                      "type": "string"
+                                                    },
+                                                    "value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "fullyHighlighted",
+                                                    "matchLevel",
+                                                    "matchedWords",
+                                                    "value"
+                                                  ],
+                                                  "type": "object"
+                                                }
+                                              },
+                                              "required": [
+                                                "author",
+                                                "title",
+                                                "url"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "_tags": {
+                                              "items": {
+                                                "type": "string"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "author": {
+                                              "type": "string"
+                                            },
+                                            "children": {
+                                              "items": {
+                                                "type": "number"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "created_at": {
+                                              "type": "string"
+                                            },
+                                            "created_at_i": {
+                                              "type": "number"
+                                            },
+                                            "num_comments": {
+                                              "type": "number"
+                                            },
+                                            "objectID": {
+                                              "type": "string"
+                                            },
+                                            "points": {
+                                              "type": "number"
+                                            },
+                                            "story_id": {
+                                              "type": "number"
+                                            },
+                                            "title": {
+                                              "type": "string"
+                                            },
+                                            "updated_at": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "_highlightResult",
+                                            "_tags",
+                                            "author",
+                                            "children",
+                                            "created_at",
+                                            "created_at_i",
+                                            "num_comments",
+                                            "objectID",
+                                            "points",
+                                            "story_id",
+                                            "title",
+                                            "updated_at",
+                                            "url"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "title": "Hacker News Search Results",
+                                        "type": "array"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                },
+                                "id": "output-40",
+                                "metadata": {
+                                  "title": "Output"
+                                },
+                                "type": "output"
+                              },
+                              {
+                                "configuration": {
+                                  "code": "const spreadResponse = inputs=>{const object=inputs.object;if(typeof object!==\"object\"){throw new Error(`object is of type ${typeof object} not object`)}return{...object}};",
+                                  "name": "spreadResponse",
+                                  "raw": true
+                                },
+                                "id": "spreadResponse",
+                                "type": "runJavascript"
+                              }
+                            ],
+                            "title": "Hacker News Angolia Search",
+                            "version": "0.0.1"
+                          }
+                        },
+                        "id": "invoke-47",
+                        "metadata": {
+                          "title": "Invoke Full Search"
+                        },
+                        "type": "invoke"
+                      },
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "query": {
+                                "default": "Artificial Intelligence",
+                                "description": "The term to search for",
+                                "examples": [
+                                  "Artificial Intelligence",
+                                  "Machine Learning",
+                                  "Deep Learning"
+                                ],
+                                "title": "Query",
+                                "type": "string"
+                              },
+                              "tags": {
+                                "description": "Filter on a specific tag",
+                                "enum": [
+                                  "story",
+                                  "comment",
+                                  "poll",
+                                  "pollopt",
+                                  "show_hn",
+                                  "ask_hn",
+                                  "front_page"
+                                ],
+                                "title": "Tags",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "input-46",
+                        "metadata": {
+                          "title": "Input"
+                        },
+                        "type": "input"
+                      }
+                    ],
+                    "title": "Hacker News Simplified Algolia Search"
+                  },
+                  "tags": "comment"
+                },
+                "id": "invoke-52",
+                "metadata": {
+                  "title": "Invoke Full Search"
+                },
+                "type": "invoke"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "query": {
+                        "default": "Artificial Intelligence",
+                        "description": "The term to search for",
+                        "examples": [
+                          "Artificial Intelligence",
+                          "Machine Learning",
+                          "Deep Learning"
+                        ],
+                        "title": "Query",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "input-51",
+                "metadata": {
+                  "title": "Input"
+                },
+                "type": "input"
+              }
+            ],
+            "title": "Hacker News Simplified Algolia Comment Search"
+          },
+          {
+            "description": "Fetch a single item from the Hacker News Algolia API",
+            "edges": [
+              {
+                "from": "input-35",
+                "in": "OBJECT_ID",
+                "out": "OBJECT_ID",
+                "to": "urlTemplate-36"
+              },
+              {
+                "from": "urlTemplate-36",
+                "in": "url",
+                "out": "url",
+                "to": "fetch-37"
+              },
+              {
+                "from": "fetch-37",
+                "in": "object",
+                "out": "response",
+                "to": "spreadResponse"
+              },
+              {
+                "from": "spreadResponse",
+                "in": "",
+                "out": "*",
+                "to": "output-38"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "OBJECT_ID": {
+                        "description": "ID of object to fetch from Hacker News Algolia API",
+                        "examples": [
+                          "39788322"
+                        ],
+                        "title": "Object ID",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "id": "input-35",
+                "metadata": {
+                  "title": "Input"
+                },
+                "type": "input"
+              },
+              {
+                "configuration": {
+                  "template": "https://hn.algolia.com/api/v1/items/{OBJECT_ID}"
+                },
+                "id": "urlTemplate-36",
+                "metadata": {
+                  "title": "URL Template "
+                },
+                "type": "urlTemplate"
+              },
+              {
+                "configuration": {
+                  "method": "GET"
+                },
+                "id": "fetch-37",
+                "metadata": {
+                  "title": "Fetch"
+                },
+                "type": "fetch"
+              },
+              {
+                "configuration": {
+                  "code": "const spreadResponse = inputs=>{const object=inputs.object;if(typeof object!==\"object\"){throw new Error(`object is of type ${typeof object} not object`)}return{...object}};",
+                  "name": "spreadResponse",
+                  "raw": true
+                },
+                "id": "spreadResponse",
+                "metadata": {
+                  "title": "Spread Response"
+                },
+                "type": "runJavascript"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "author": {
+                        "type": "string"
+                      },
+                      "children": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "created_at_i": {
+                        "type": "number"
+                      },
+                      "id": {
+                        "type": "number"
+                      },
+                      "options": {
+                        "items": {},
+                        "type": "array"
+                      },
+                      "parent_id": {
+                        "type": "number"
+                      },
+                      "points": {
+                        "type": "number"
+                      },
+                      "story_id": {
+                        "type": "number"
+                      },
+                      "text": {},
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "author",
+                      "children",
+                      "created_at",
+                      "created_at_i",
+                      "id",
+                      "options",
+                      "parent_id",
+                      "points",
+                      "story_id",
+                      "text",
+                      "title",
+                      "type",
+                      "url"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "id": "output-38",
+                "metadata": {
+                  "title": "Output"
+                },
+                "type": "output"
+              }
+            ],
+            "title": "Hacker News Algolia Items"
+          },
+          {
+            "edges": [
+              {
+                "from": "invoke-49",
+                "in": "output",
+                "out": "array",
+                "to": "output-48"
+              },
+              {
+                "from": "invoke-47",
+                "in": "array",
+                "out": "output",
+                "to": "invoke-49"
+              },
+              {
+                "from": "input-46",
+                "in": "query",
+                "out": "query",
+                "to": "invoke-47"
+              },
+              {
+                "from": "input-46",
+                "in": "tags",
+                "out": "tags",
+                "to": "invoke-47"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "output": {
+                        "items": {
+                          "properties": {
+                            "author": {
+                              "type": "string"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "num_comments": {
+                              "type": "number"
+                            },
+                            "objectID": {
+                              "type": "string"
+                            },
+                            "points": {
+                              "type": "number"
+                            },
+                            "story_id": {
+                              "type": "number"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "author",
+                            "created_at",
+                            "num_comments",
+                            "objectID",
+                            "points",
+                            "story_id",
+                            "title",
+                            "updated_at",
+                            "url",
+                            "objectType"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Results",
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "output-48",
+                "metadata": {
+                  "title": "Output"
+                },
+                "type": "output"
+              },
+              {
+                "configuration": {
+                  "$board": {
+                    "description": "Iterate over an array and run a subgraph for each item in the array.",
+                    "edges": [
+                      {
+                        "from": "input-23",
+                        "in": "board",
+                        "out": "board",
+                        "to": "passthrough-24"
+                      },
+                      {
+                        "from": "input-23",
+                        "in": "array",
+                        "out": "array",
+                        "to": "fn-27"
+                      },
+                      {
+                        "from": "passthrough-24",
+                        "in": "board",
+                        "out": "board",
+                        "to": "passthrough-24"
+                      },
+                      {
+                        "from": "passthrough-24",
+                        "in": "item",
+                        "out": "item",
+                        "to": "invoke-25"
+                      },
+                      {
+                        "from": "passthrough-24",
+                        "in": "$board",
+                        "out": "board",
+                        "to": "invoke-25"
+                      },
+                      {
+                        "from": "fn-27",
+                        "in": "array",
+                        "out": "array",
+                        "to": "fn-27"
+                      },
+                      {
+                        "from": "fn-27",
+                        "in": "item",
+                        "out": "item",
+                        "to": "passthrough-24"
+                      },
+                      {
+                        "from": "fn-27",
+                        "in": "a",
+                        "out": "array",
+                        "to": "fn-29"
+                      },
+                      {
+                        "from": "invoke-25",
+                        "in": "item",
+                        "out": "item",
+                        "to": "fn-28"
+                      },
+                      {
+                        "from": "fn-29",
+                        "in": "array",
+                        "out": "emit",
+                        "to": "output-26"
+                      },
+                      {
+                        "from": "fn-28",
+                        "in": "",
+                        "out": "*",
+                        "to": "fn-28"
+                      },
+                      {
+                        "from": "fn-28",
+                        "in": "b",
+                        "out": "array",
+                        "to": "fn-29"
+                      }
+                    ],
+                    "graphs": {},
+                    "nodes": [
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "array": {
+                                "examples": [
+                                  "[\"The\",\"quick\",\"brown\",\"fox\"]"
+                                ],
+                                "type": "array"
+                              },
+                              "board": {
+                                "examples": [
+                                  "{\"edges\":[{\"from\":\"fn-4\",\"to\":\"output-5\",\"out\":\"*\",\"in\":\"\"},{\"from\":\"input-3\",\"to\":\"fn-4\",\"out\":\"item\",\"in\":\"item\"}],\"nodes\":[{\"id\":\"output-5\",\"type\":\"output\",\"configuration\":{},\"metadata\":{\"title\":\"Output\"}},{\"id\":\"fn-4\",\"type\":\"runJavascript\",\"configuration\":{\"code\":\"const fn_4 = inputs=>{const{item}=inputs;return{item:item.split(\\\"\\\").map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join(\\\"\\\")}};\",\"name\":\"fn_4\",\"raw\":true}},{\"id\":\"input-3\",\"type\":\"input\",\"configuration\":{\"schema\":{\"type\":\"object\",\"properties\":{\"item\":{\"type\":\"string\",\"title\":\"item\"}},\"required\":[\"item\"]}},\"metadata\":{\"title\":\"Input\"}}],\"graphs\":{}}"
+                                ]
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "input-23",
+                        "metadata": {
+                          "title": "Input"
+                        },
+                        "type": "input"
+                      },
+                      {
+                        "configuration": {},
+                        "id": "passthrough-24",
+                        "metadata": {
+                          "title": "Passthrough"
+                        },
+                        "type": "passthrough"
+                      },
+                      {
+                        "configuration": {
+                          "code": "const fn_27 = inputs=>{const{array}=inputs;const[item,...rest]=array;if(item){return{array:rest,item}}return{}};",
+                          "name": "fn_27",
+                          "raw": true
+                        },
+                        "id": "fn-27",
+                        "metadata": {
+                          "title": "Pop item"
+                        },
+                        "type": "runJavascript"
+                      },
+                      {
+                        "configuration": {},
+                        "id": "invoke-25",
+                        "metadata": {
+                          "title": "Invoke"
+                        },
+                        "type": "invoke"
+                      },
+                      {
+                        "configuration": {
+                          "code": "const fn_29 = inputs=>{let emit=void 0;if(!inputs.a||inputs.a.length===0){emit=inputs.b}return{emit,a:inputs.a,b:inputs.b}};",
+                          "name": "fn_29",
+                          "raw": true
+                        },
+                        "id": "fn-29",
+                        "metadata": {
+                          "title": "Emitter"
+                        },
+                        "type": "runJavascript"
+                      },
+                      {
+                        "configuration": {
+                          "code": "const fn_28 = inputs2=>{const{item,array=[]}=inputs2;return{array:[...array,item]}};",
+                          "name": "fn_28",
+                          "raw": true
+                        },
+                        "id": "fn-28",
+                        "metadata": {
+                          "title": "Accumulate"
+                        },
+                        "type": "runJavascript"
+                      },
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "array": {
+                                "title": "array",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "output-26",
+                        "metadata": {
+                          "title": "Output"
+                        },
+                        "type": "output"
+                      }
+                    ],
+                    "title": "Board for Each"
+                  },
+                  "board": {
+                    "board": {
+                      "edges": [
+                        {
+                          "from": "invoke-5",
+                          "in": "item",
+                          "out": "object",
+                          "to": "output-4"
+                        },
+                        {
+                          "from": "fn-6",
+                          "in": "object",
+                          "out": "item",
+                          "to": "invoke-5"
+                        },
+                        {
+                          "from": "input-3",
+                          "in": "item",
+                          "out": "item",
+                          "to": "fn-6"
+                        }
+                      ],
+                      "graphs": {},
+                      "kits": [],
+                      "nodes": [
+                        {
+                          "configuration": {
+                            "schema": {
+                              "properties": {
+                                "item": {
+                                  "title": "item",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "id": "output-4",
+                          "type": "output"
+                        },
+                        {
+                          "configuration": {
+                            "$board": {
+                              "description": "Manipulate an object by picking or omitting keys",
+                              "edges": [
+                                {
+                                  "from": "fn-44",
+                                  "in": "object",
+                                  "out": "object",
+                                  "to": "output-45"
+                                },
+                                {
+                                  "from": "input-43",
+                                  "in": "object",
+                                  "out": "object",
+                                  "to": "fn-44"
+                                },
+                                {
+                                  "from": "input-43",
+                                  "in": "keys",
+                                  "out": "keys",
+                                  "to": "fn-44"
+                                },
+                                {
+                                  "from": "input-43",
+                                  "in": "mode",
+                                  "out": "mode",
+                                  "to": "fn-44"
+                                },
+                                {
+                                  "from": "input-43",
+                                  "in": "strict",
+                                  "out": "strict",
+                                  "to": "fn-44"
+                                }
+                              ],
+                              "graphs": {},
+                              "nodes": [
+                                {
+                                  "configuration": {
+                                    "schema": {
+                                      "type": "object"
+                                    }
+                                  },
+                                  "id": "output-45",
+                                  "metadata": {
+                                    "title": "Output"
+                                  },
+                                  "type": "output"
+                                },
+                                {
+                                  "configuration": {
+                                    "code": "const fn_44 = ({object,keys,mode=\"pick\",strict=false})=>{if(mode===\"pick\"){const result={};keys.forEach(key=>{if(strict&&!(key in object)){throw new Error(`Key \"${key}\" not found in object`)}else if(key in object){result[key]=object[key]}});return{object:result}}else{const result={...object};keys.forEach(key=>{if(strict&&!(key in object)){throw new Error(`Key \"${key}\" not found in object`)}else if(key in object){delete result[key]}});return{object:result}}};",
+                                    "name": "fn_44",
+                                    "raw": true
+                                  },
+                                  "id": "fn-44",
+                                  "metadata": {
+                                    "title": "Manipulation"
+                                  },
+                                  "type": "runJavascript"
+                                },
+                                {
+                                  "configuration": {
+                                    "examples": [
+                                      {
+                                        "keys": [
+                                          "forename",
+                                          "surname"
+                                        ],
+                                        "mode": "pick",
+                                        "object": {
+                                          "age": 30,
+                                          "city": "New York",
+                                          "dateOfBirth": "1990-01-01T00:00:00.000Z",
+                                          "forename": "John",
+                                          "surname": "Smith"
+                                        },
+                                        "strict": false
+                                      },
+                                      {
+                                        "keys": [
+                                          "forename",
+                                          "surname"
+                                        ],
+                                        "mode": "omit",
+                                        "object": {
+                                          "age": 30,
+                                          "city": "New York",
+                                          "dateOfBirth": "1990-01-01T00:00:00.000Z",
+                                          "forename": "John",
+                                          "surname": "Smith"
+                                        },
+                                        "strict": false
+                                      },
+                                      {
+                                        "keys": [
+                                          "forename",
+                                          "surname"
+                                        ],
+                                        "mode": "pick",
+                                        "object": {
+                                          "age": 30,
+                                          "dob": "1990-01-01T00:00:00.000Z",
+                                          "location": "New York",
+                                          "name": "John Smith"
+                                        },
+                                        "strict": true
+                                      }
+                                    ],
+                                    "schema": {
+                                      "properties": {
+                                        "keys": {
+                                          "examples": [
+                                            "[\"forename\",\"surname\"]"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "type": "array"
+                                        },
+                                        "mode": {
+                                          "default": "pick",
+                                          "enum": [
+                                            "pick",
+                                            "omit"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        "object": {
+                                          "examples": [
+                                            "{\"forename\":\"John\",\"surname\":\"Smith\",\"age\":30,\"city\":\"New York\",\"dateOfBirth\":\"1990-01-01T00:00:00.000Z\"}"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "strict": {
+                                          "default": "false",
+                                          "description": "If true and a key is not found, an error will be thrown",
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "id": "input-43",
+                                  "metadata": {
+                                    "title": "Input"
+                                  },
+                                  "type": "input"
+                                }
+                              ],
+                              "title": "Object Manipulator"
+                            },
+                            "keys": [
+                              "author",
+                              "created_at",
+                              "num_comments",
+                              "objectID",
+                              "points",
+                              "story_id",
+                              "title",
+                              "updated_at",
+                              "url",
+                              "objectType"
+                            ],
+                            "mode": "pick",
+                            "strict": false
+                          },
+                          "id": "invoke-5",
+                          "type": "invoke"
+                        },
+                        {
+                          "configuration": {
+                            "code": "const fn_6 = ({item})=>{return{item:{...item,objectType:item[\"_tags\"][0]}}};",
+                            "name": "fn_6",
+                            "raw": true
+                          },
+                          "id": "fn-6",
+                          "type": "runJavascript"
+                        },
+                        {
+                          "configuration": {
+                            "schema": {
+                              "properties": {
+                                "item": {
+                                  "title": "item",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "item"
+                              ],
+                              "type": "object"
+                            }
+                          },
+                          "id": "input-3",
+                          "type": "input"
+                        }
+                      ]
+                    },
+                    "kind": "board"
+                  }
+                },
+                "id": "invoke-49",
+                "metadata": {
+                  "title": "Manipulate elements"
+                },
+                "type": "invoke"
+              },
+              {
+                "configuration": {
+                  "$board": {
+                    "description": "Board which returns API results based on a query using the Hacker News Angolia API",
+                    "edges": [
+                      {
+                        "from": "query",
+                        "in": "query",
+                        "out": "query",
+                        "to": "urlTemplate"
+                      },
+                      {
+                        "from": "query",
+                        "in": "page",
+                        "out": "page",
+                        "to": "urlTemplate"
+                      },
+                      {
+                        "from": "query",
+                        "in": "tags",
+                        "out": "tags",
+                        "to": "urlTemplate"
+                      },
+                      {
+                        "from": "query",
+                        "in": "limit",
+                        "out": "limit",
+                        "to": "fn-39"
+                      },
+                      {
+                        "from": "urlTemplate",
+                        "in": "url",
+                        "out": "url",
+                        "to": "fetch"
+                      },
+                      {
+                        "from": "urlTemplate",
+                        "in": "url",
+                        "out": "url",
+                        "to": "output-40"
+                      },
+                      {
+                        "from": "fn-39",
+                        "in": "output",
+                        "out": "output",
+                        "to": "output-40"
+                      },
+                      {
+                        "from": "fetch",
+                        "in": "object",
+                        "out": "response",
+                        "to": "spreadResponse"
+                      },
+                      {
+                        "from": "spreadResponse",
+                        "in": "list",
+                        "out": "hits",
+                        "to": "fn-39"
+                      }
+                    ],
+                    "graphs": {},
+                    "nodes": [
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "limit": {
+                                "default": "5",
+                                "description": "Limit the number of results returned by the search",
+                                "title": "limit",
+                                "type": "number"
+                              },
+                              "page": {
+                                "default": "1",
+                                "description": "The page number of the search results to return",
+                                "title": "Page",
+                                "type": "number"
+                              },
+                              "query": {
+                                "default": "Artificial Intelligence",
+                                "description": "The term to search for",
+                                "examples": [
+                                  "Artificial Intelligence",
+                                  "Machine Learning",
+                                  "Deep Learning"
+                                ],
+                                "title": "Query",
+                                "type": "string"
+                              },
+                              "tags": {
+                                "description": "Filter on a specific tag",
+                                "enum": [
+                                  "story",
+                                  "comment",
+                                  "poll",
+                                  "pollopt",
+                                  "show_hn",
+                                  "ask_hn",
+                                  "front_page"
+                                ],
+                                "title": "Tags",
+                                "type": "string"
+                              }
+                            },
+                            "title": "Hacker News Algolia Search Parameters",
+                            "type": "object"
+                          }
+                        },
+                        "id": "query",
+                        "type": "input"
+                      },
+                      {
+                        "configuration": {
+                          "template": "https://hn.algolia.com/api/v1/search?query={query}&tags={tags}&page={page}"
+                        },
+                        "id": "urlTemplate",
+                        "type": "urlTemplate"
+                      },
+                      {
+                        "configuration": {
+                          "code": "const fn_39 = ({list,limit})=>{return{output:list.slice(0,limit)}};",
+                          "name": "fn_39",
+                          "raw": true
+                        },
+                        "id": "fn-39",
+                        "type": "runJavascript"
+                      },
+                      {
+                        "configuration": {
+                          "method": "GET"
+                        },
+                        "id": "fetch",
+                        "type": "fetch"
+                      },
+                      {
+                        "configuration": {
+                          "schema": {
+                            "properties": {
+                              "output": {
+                                "items": {
+                                  "properties": {
+                                    "_highlightResult": {
+                                      "properties": {
+                                        "author": {
+                                          "properties": {
+                                            "matchedWords": {
+                                              "items": {},
+                                              "type": "array"
+                                            },
+                                            "matchLevel": {
+                                              "type": "string"
+                                            },
+                                            "value": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "matchLevel",
+                                            "matchedWords",
+                                            "value"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "title": {
+                                          "properties": {
+                                            "fullyHighlighted": {
+                                              "type": "boolean"
+                                            },
+                                            "matchedWords": {
+                                              "items": {
+                                                "type": "string"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "matchLevel": {
+                                              "type": "string"
+                                            },
+                                            "value": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "fullyHighlighted",
+                                            "matchLevel",
+                                            "matchedWords",
+                                            "value"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "url": {
+                                          "properties": {
+                                            "fullyHighlighted": {
+                                              "type": "boolean"
+                                            },
+                                            "matchedWords": {
+                                              "items": {
+                                                "type": "string"
+                                              },
+                                              "type": "array"
+                                            },
+                                            "matchLevel": {
+                                              "type": "string"
+                                            },
+                                            "value": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "fullyHighlighted",
+                                            "matchLevel",
+                                            "matchedWords",
+                                            "value"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "author",
+                                        "title",
+                                        "url"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "_tags": {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "author": {
+                                      "type": "string"
+                                    },
+                                    "children": {
+                                      "items": {
+                                        "type": "number"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "created_at": {
+                                      "type": "string"
+                                    },
+                                    "created_at_i": {
+                                      "type": "number"
+                                    },
+                                    "num_comments": {
+                                      "type": "number"
+                                    },
+                                    "objectID": {
+                                      "type": "string"
+                                    },
+                                    "points": {
+                                      "type": "number"
+                                    },
+                                    "story_id": {
+                                      "type": "number"
+                                    },
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "updated_at": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "_highlightResult",
+                                    "_tags",
+                                    "author",
+                                    "children",
+                                    "created_at",
+                                    "created_at_i",
+                                    "num_comments",
+                                    "objectID",
+                                    "points",
+                                    "story_id",
+                                    "title",
+                                    "updated_at",
+                                    "url"
+                                  ],
+                                  "type": "object"
+                                },
+                                "title": "Hacker News Search Results",
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "id": "output-40",
+                        "metadata": {
+                          "title": "Output"
+                        },
+                        "type": "output"
+                      },
+                      {
+                        "configuration": {
+                          "code": "const spreadResponse = inputs=>{const object=inputs.object;if(typeof object!==\"object\"){throw new Error(`object is of type ${typeof object} not object`)}return{...object}};",
+                          "name": "spreadResponse",
+                          "raw": true
+                        },
+                        "id": "spreadResponse",
+                        "type": "runJavascript"
+                      }
+                    ],
+                    "title": "Hacker News Angolia Search",
+                    "version": "0.0.1"
+                  }
+                },
+                "id": "invoke-47",
+                "metadata": {
+                  "title": "Invoke Full Search"
+                },
+                "type": "invoke"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "query": {
+                        "default": "Artificial Intelligence",
+                        "description": "The term to search for",
+                        "examples": [
+                          "Artificial Intelligence",
+                          "Machine Learning",
+                          "Deep Learning"
+                        ],
+                        "title": "Query",
+                        "type": "string"
+                      },
+                      "tags": {
+                        "description": "Filter on a specific tag",
+                        "enum": [
+                          "story",
+                          "comment",
+                          "poll",
+                          "pollopt",
+                          "show_hn",
+                          "ask_hn",
+                          "front_page"
+                        ],
+                        "title": "Tags",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "input-46",
+                "metadata": {
+                  "title": "Input"
+                },
+                "type": "input"
+              }
+            ],
+            "title": "Hacker News Simplified Algolia Search"
+          },
+          {
+            "description": "Board which returns story contents using the Hacker News Firebase API",
+            "edges": [
+              {
+                "from": "main",
+                "in": "output",
+                "out": "output",
+                "to": "output-2"
+              },
+              {
+                "from": "spreadResponse",
+                "in": "",
+                "out": "*",
+                "to": "main"
+              },
+              {
+                "from": "fetch",
+                "in": "object",
+                "out": "response",
+                "to": "spreadResponse"
+              },
+              {
+                "from": "urlTemplate",
+                "in": "url",
+                "out": "url",
+                "to": "fetch"
+              },
+              {
+                "from": "storyID",
+                "in": "storyID",
+                "out": "storyID",
+                "to": "urlTemplate"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "output": {
+                        "title": "output",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "output-2",
+                "type": "output"
+              },
+              {
+                "configuration": {},
+                "id": "main",
+                "type": "output"
+              },
+              {
+                "configuration": {
+                  "code": "const spreadResponse = inputs=>{const object=inputs.object;if(typeof object!==\"object\"){throw new Error(`object is of type ${typeof object} not object`)}return{...object}};",
+                  "name": "spreadResponse",
+                  "raw": true
+                },
+                "id": "spreadResponse",
+                "type": "runJavascript"
+              },
+              {
+                "configuration": {
+                  "method": "GET"
+                },
+                "id": "fetch",
+                "type": "fetch"
+              },
+              {
+                "configuration": {
+                  "template": "https://hacker-news.firebaseio.com/v0/item/{storyID}.json"
+                },
+                "id": "urlTemplate",
+                "type": "urlTemplate"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "storyID": {
+                        "default": "39788322",
+                        "description": "Hacker News Story ID to extract",
+                        "title": "Story ID",
+                        "type": "number"
+                      }
+                    },
+                    "title": "Hacker News Story ID"
+                  },
+                  "type": "number"
+                },
+                "id": "storyID",
+                "type": "input"
+              }
+            ],
+            "title": "Hacker News Firebase API Story by ID",
+            "version": "0.0.1"
+          },
+          {
+            "description": "Board which returns the top story ID using the Hacker News Firebase API",
+            "edges": [
+              {
+                "from": "main",
+                "in": "output",
+                "out": "output",
+                "to": "output-2"
+              },
+              {
+                "from": "fn-3",
+                "in": "",
+                "out": "*",
+                "to": "main"
+              },
+              {
+                "from": "fetch",
+                "in": "list",
+                "out": "response",
+                "to": "fn-3"
+              },
+              {
+                "from": "limit",
+                "in": "limit",
+                "out": "limit",
+                "to": "fn-3"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "output": {
+                        "title": "output",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "output-2",
+                "type": "output"
+              },
+              {
+                "configuration": {},
+                "id": "main",
+                "type": "output"
+              },
+              {
+                "configuration": {
+                  "code": "const fn_3 = ({list,limit})=>{return{output:list.slice(0,limit)}};",
+                  "name": "fn_3",
+                  "raw": true
+                },
+                "id": "fn-3",
+                "type": "runJavascript"
+              },
+              {
+                "configuration": {
+                  "method": "GET",
+                  "url": "https://hacker-news.firebaseio.com/v0/topstories.json"
+                },
+                "id": "fetch",
+                "type": "fetch"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "limit": {
+                        "default": "1",
+                        "description": "The Number of Hacker News Story ID's to return",
+                        "title": "Story Limit",
+                        "type": "number"
+                      }
+                    },
+                    "title": "Hacker News Story"
+                  },
+                  "type": "number"
+                },
+                "id": "limit",
+                "type": "input"
+              }
+            ],
+            "title": "Hacker News Firebase API Story IDs",
+            "version": "0.0.1"
+          },
+          {
+            "description": "Board which returns API results based on a query using the Hacker News Angolia API",
+            "edges": [
+              {
+                "from": "query",
+                "in": "query",
+                "out": "query",
+                "to": "urlTemplate"
+              },
+              {
+                "from": "query",
+                "in": "page",
+                "out": "page",
+                "to": "urlTemplate"
+              },
+              {
+                "from": "query",
+                "in": "tags",
+                "out": "tags",
+                "to": "urlTemplate"
+              },
+              {
+                "from": "query",
+                "in": "limit",
+                "out": "limit",
+                "to": "fn-39"
+              },
+              {
+                "from": "urlTemplate",
+                "in": "url",
+                "out": "url",
+                "to": "fetch"
+              },
+              {
+                "from": "urlTemplate",
+                "in": "url",
+                "out": "url",
+                "to": "output-40"
+              },
+              {
+                "from": "fn-39",
+                "in": "output",
+                "out": "output",
+                "to": "output-40"
+              },
+              {
+                "from": "fetch",
+                "in": "object",
+                "out": "response",
+                "to": "spreadResponse"
+              },
+              {
+                "from": "spreadResponse",
+                "in": "list",
+                "out": "hits",
+                "to": "fn-39"
+              }
+            ],
+            "graphs": {},
+            "nodes": [
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "limit": {
+                        "default": "5",
+                        "description": "Limit the number of results returned by the search",
+                        "title": "limit",
+                        "type": "number"
+                      },
+                      "page": {
+                        "default": "1",
+                        "description": "The page number of the search results to return",
+                        "title": "Page",
+                        "type": "number"
+                      },
+                      "query": {
+                        "default": "Artificial Intelligence",
+                        "description": "The term to search for",
+                        "examples": [
+                          "Artificial Intelligence",
+                          "Machine Learning",
+                          "Deep Learning"
+                        ],
+                        "title": "Query",
+                        "type": "string"
+                      },
+                      "tags": {
+                        "description": "Filter on a specific tag",
+                        "enum": [
+                          "story",
+                          "comment",
+                          "poll",
+                          "pollopt",
+                          "show_hn",
+                          "ask_hn",
+                          "front_page"
+                        ],
+                        "title": "Tags",
+                        "type": "string"
+                      }
+                    },
+                    "title": "Hacker News Algolia Search Parameters",
+                    "type": "object"
+                  }
+                },
+                "id": "query",
+                "type": "input"
+              },
+              {
+                "configuration": {
+                  "template": "https://hn.algolia.com/api/v1/search?query={query}&tags={tags}&page={page}"
+                },
+                "id": "urlTemplate",
+                "type": "urlTemplate"
+              },
+              {
+                "configuration": {
+                  "code": "const fn_39 = ({list,limit})=>{return{output:list.slice(0,limit)}};",
+                  "name": "fn_39",
+                  "raw": true
+                },
+                "id": "fn-39",
+                "type": "runJavascript"
+              },
+              {
+                "configuration": {
+                  "method": "GET"
+                },
+                "id": "fetch",
+                "type": "fetch"
+              },
+              {
+                "configuration": {
+                  "schema": {
+                    "properties": {
+                      "output": {
+                        "items": {
+                          "properties": {
+                            "_highlightResult": {
+                              "properties": {
+                                "author": {
+                                  "properties": {
+                                    "matchedWords": {
+                                      "items": {},
+                                      "type": "array"
+                                    },
+                                    "matchLevel": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "matchLevel",
+                                    "matchedWords",
+                                    "value"
+                                  ],
+                                  "type": "object"
+                                },
+                                "title": {
+                                  "properties": {
+                                    "fullyHighlighted": {
+                                      "type": "boolean"
+                                    },
+                                    "matchedWords": {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "matchLevel": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "fullyHighlighted",
+                                    "matchLevel",
+                                    "matchedWords",
+                                    "value"
+                                  ],
+                                  "type": "object"
+                                },
+                                "url": {
+                                  "properties": {
+                                    "fullyHighlighted": {
+                                      "type": "boolean"
+                                    },
+                                    "matchedWords": {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "matchLevel": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "fullyHighlighted",
+                                    "matchLevel",
+                                    "matchedWords",
+                                    "value"
+                                  ],
+                                  "type": "object"
+                                }
+                              },
+                              "required": [
+                                "author",
+                                "title",
+                                "url"
+                              ],
+                              "type": "object"
+                            },
+                            "_tags": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "author": {
+                              "type": "string"
+                            },
+                            "children": {
+                              "items": {
+                                "type": "number"
+                              },
+                              "type": "array"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "created_at_i": {
+                              "type": "number"
+                            },
+                            "num_comments": {
+                              "type": "number"
+                            },
+                            "objectID": {
+                              "type": "string"
+                            },
+                            "points": {
+                              "type": "number"
+                            },
+                            "story_id": {
+                              "type": "number"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "_highlightResult",
+                            "_tags",
+                            "author",
+                            "children",
+                            "created_at",
+                            "created_at_i",
+                            "num_comments",
+                            "objectID",
+                            "points",
+                            "story_id",
+                            "title",
+                            "updated_at",
+                            "url"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Hacker News Search Results",
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "id": "output-40",
+                "metadata": {
+                  "title": "Output"
+                },
+                "type": "output"
+              },
+              {
+                "configuration": {
+                  "code": "const spreadResponse = inputs=>{const object=inputs.object;if(typeof object!==\"object\"){throw new Error(`object is of type ${typeof object} not object`)}return{...object}};",
+                  "name": "spreadResponse",
+                  "raw": true
+                },
+                "id": "spreadResponse",
+                "type": "runJavascript"
+              }
+            ],
+            "title": "Hacker News Angolia Search",
+            "version": "0.0.1"
+          }
+        ]
+      },
+      "id": "specialist-59",
+      "metadata": {
+        "title": "Hacker News Research Agent"
+      },
+      "type": "specialist"
+    }
+  ],
+  "title": "Hacker News Research Agent"
+}
