@@ -1,6 +1,6 @@
 {
 	"title": "Gemini Nano Demo",
-	"description": "A very minimal example of a Gemini Nano node that picks a random question to test the capabilities of the LLM.",
+	"description": "A very minimal example of a Gemini Nano node that picks a random question to test the capabilities of the LLM.\nChrome 127+ required.",
 	"metadata": {
 		"comments": []
 	},
