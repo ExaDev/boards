@@ -1,0 +1,125 @@
+{
+	"$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+	"title": "Coalesce Demo",
+	"description": "This is a simple example of how to use the coalesce board to select the first non-empty value from a list of keys.",
+	"metadata": {
+		"comments": []
+	},
+	"edges": [
+		{
+			"from": "invoke-50c7cb39",
+			"to": "output",
+			"out": "*",
+			"in": ""
+		},
+		{
+			"from": "input-5208a6e5",
+			"to": "invoke-50c7cb39",
+			"out": "keys",
+			"in": "keys"
+		},
+		{
+			"from": "input-a36e3a43",
+			"to": "invoke-50c7cb39",
+			"out": "b",
+			"in": "b"
+		},
+		{
+			"from": "input-3c2ca25d",
+			"to": "invoke-50c7cb39",
+			"out": "a",
+			"in": "a"
+		}
+	],
+	"nodes": [
+		{
+			"type": "output",
+			"id": "output",
+			"configuration": {
+				"schema": {
+					"properties": {
+						"context": {
+							"type": "object",
+							"title": "Context",
+							"examples": []
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			},
+			"metadata": {}
+		},
+		{
+			"id": "invoke-50c7cb39",
+			"type": "invoke",
+			"metadata": {},
+			"configuration": {
+				"$board": {
+					"kind": "board",
+					"path": "https://exadev.github.io/boards/coalesce.bgl.json"
+				}
+			}
+		},
+		{
+			"id": "input-a36e3a43",
+			"type": "input",
+			"metadata": {},
+			"configuration": {
+				"schema": {
+					"properties": {
+						"b": {
+							"type": "object",
+							"title": "B",
+							"examples": [],
+							"default": "Bar"
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			}
+		},
+		{
+			"id": "input-3c2ca25d",
+			"type": "input",
+			"metadata": {},
+			"configuration": {
+				"schema": {
+					"properties": {
+						"a": {
+							"type": "string",
+							"title": "A",
+							"examples": [],
+							"default": " "
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			}
+		},
+		{
+			"id": "input-5208a6e5",
+			"type": "input",
+			"metadata": {},
+			"configuration": {
+				"schema": {
+					"properties": {
+						"keys": {
+							"type": "array",
+							"title": "Keys",
+							"examples": [],
+							"items": {
+								"type": "string"
+							},
+							"default": "[\"a\",\"b\"]"
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			}
+		}
+	]
+}
