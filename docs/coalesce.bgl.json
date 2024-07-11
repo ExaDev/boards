@@ -13,12 +13,6 @@
 			"in": ""
 		},
 		{
-			"from": "input-83717bfc",
-			"to": "fn-31",
-			"out": "",
-			"in": ""
-		},
-		{
 			"from": "fn-31",
 			"to": "output-14b295f8",
 			"out": "key",
