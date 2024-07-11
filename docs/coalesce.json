@@ -1,0 +1,86 @@
+{
+	"$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+	"title": "Coalesce",
+	"description": "This board coalesces the first non-null, non-undefined, non-empty array, non-empty string, or non-empty object value found in an object for a given set of keys. If no keys are provided, all keys except for the 'keys' key are considered.",
+	"metadata": {
+		"comments": []
+	},
+	"edges": [
+		{
+			"from": "input-83717bfc",
+			"to": "fn-31",
+			"out": "*",
+			"in": ""
+		},
+		{
+			"from": "input-83717bfc",
+			"to": "fn-31",
+			"out": "",
+			"in": ""
+		},
+		{
+			"from": "fn-31",
+			"to": "output-14b295f8",
+			"out": "key",
+			"in": "key"
+		},
+		{
+			"from": "fn-31",
+			"to": "output-14b295f8",
+			"out": "value",
+			"in": "value"
+		},
+		{
+			"from": "fn-31",
+			"to": "output-14b295f8",
+			"out": "type",
+			"in": "type"
+		}
+	],
+	"nodes": [
+		{
+			"id": "fn-31",
+			"type": "runJavascript",
+			"configuration": {
+				"code": "/**\n *\n * @param {object} inputs - The object containing the values to be coalesced\n * @param {string[]} keys - The keys to be coalesced in the order they should be considered\n * @returns {object} - The first key-value pair found in the object that is not null, undefined, an empty array, an empty string, or an empty object\n * @throws {Error} - If no valid value is found for any of the provided keys in the provided object\n *\n */\nconst coalesce = (inputs, keys) => {\n\tconst { keys: keysProperty, ...inputsWithoutKeys } = inputs;\n\tinputs = inputsWithoutKeys;\n\n\tif (!keys || keys.length === 0) {\n\t\tkeys = Object.keys(inputs);\n\t}\n\n\tfor (let key of keys) {\n\t\tif (key in inputs) {\n\t\t\tconsole.debug(`Found value for key ${key}`);\n\t\t\tif (inputs[key] === null || inputs[key] === undefined) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tif (inputs[key] instanceof Array && inputs[key].length === 0) {\n\t\t\t\tconsole.debug(`Value for key ${key} is an empty array`);\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tif (typeof inputs[key] === \"string\" && inputs[key].trim() === \"\") {\n\t\t\t\tconsole.debug(`Value for key ${key} is an empty string`);\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tif (\n\t\t\t\ttypeof inputs[key] === \"object\" &&\n\t\t\t\tObject.keys(inputs[key]).length === 0\n\t\t\t) {\n\t\t\t\tconsole.debug(`Value for key ${key} is an empty object`);\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tconsole.debug(`Returning value for key ${key}`);\n\t\t\treturn { key: key, value: inputs[key], type: typeof inputs[key] };\n\t\t}\n\t}\n\tconst keyString = `[ ${keys.map((key) => `'${key}'`).join(\", \")} ]`;\n\tconst providedKeys = `[ ${Object.keys(inputs)\n\t\t.map((key) => `'${key}'`)\n\t\t.join(\", \")} ]`;\n\tthrow new Error(\n\t\t`No valid value found for any of the provided keys ${keyString} in the provided object with keys ${providedKeys}`\n\t);\n};",
+				"name": "coalesce",
+				"raw": "on",
+				"schema": {
+					"properties": {
+						"key": {
+							"type": "string",
+							"title": "Key",
+							"examples": []
+						},
+						"value": {
+							"type": "string",
+							"title": "Value",
+							"examples": []
+						},
+						"type": {
+							"type": "string",
+							"title": "Type",
+							"examples": []
+						}
+					},
+					"type": "object",
+					"required": []
+				}
+			},
+			"metadata": {
+				"logLevel": "debug"
+			}
+		},
+		{
+			"id": "output-14b295f8",
+			"type": "output",
+			"metadata": {}
+		},
+		{
+			"id": "input-83717bfc",
+			"type": "input",
+			"metadata": {},
+			"configuration": {}
+		}
+	]
+}
