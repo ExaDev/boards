@@ -13,19 +13,19 @@
 			"in": ""
 		},
 		{
-			"from": "input-5208a6e5",
+			"from": "input-keys",
 			"to": "invoke-50c7cb39",
 			"out": "keys",
 			"in": "keys"
 		},
 		{
-			"from": "input-a36e3a43",
+			"from": "input-b",
 			"to": "invoke-50c7cb39",
 			"out": "b",
 			"in": "b"
 		},
 		{
-			"from": "input-3c2ca25d",
+			"from": "input-a",
 			"to": "invoke-50c7cb39",
 			"out": "a",
 			"in": "a"
@@ -38,11 +38,6 @@
 			"configuration": {
 				"schema": {
 					"properties": {
-						"context": {
-							"type": "object",
-							"title": "Context",
-							"examples": []
-						}
 					},
 					"type": "object",
 					"required": []
@@ -62,7 +57,7 @@
 			}
 		},
 		{
-			"id": "input-a36e3a43",
+			"id": "input-b",
 			"type": "input",
 			"metadata": {},
 			"configuration": {
@@ -81,7 +76,7 @@
 			}
 		},
 		{
-			"id": "input-3c2ca25d",
+			"id": "input-a",
 			"type": "input",
 			"metadata": {},
 			"configuration": {
@@ -100,7 +95,7 @@
 			}
 		},
 		{
-			"id": "input-5208a6e5",
+			"id": "input-keys",
 			"type": "input",
 			"metadata": {},
 			"configuration": {
