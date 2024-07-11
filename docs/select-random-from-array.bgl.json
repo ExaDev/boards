@@ -1,0 +1,73 @@
+{
+  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "description": "This boards selects a random item from an array.",
+  "edges": [
+    {
+      "from": "runJavascript-af9cbc58",
+      "in": "item",
+      "out": "item",
+      "to": "output-f5164157"
+    },
+    {
+      "from": "input-5ccbf981",
+      "in": "array",
+      "out": "array",
+      "to": "runJavascript-af9cbc58"
+    }
+  ],
+  "metadata": {
+    "comments": []
+  },
+  "nodes": [
+    {
+      "configuration": {
+        "code": "const run = (inputs) => {\n\tconsole.log({ inputs });\n\tconst randomIndex = Math.floor(Math.random() * inputs.array.length);\n  const selected = inputs.array[randomIndex];\n\treturn { item: selected };\n};\n",
+        "name": "run",
+        "raw": "on",
+        "schema": {
+          "properties": {
+            "item": {
+              "examples": [],
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "id": "runJavascript-af9cbc58",
+      "metadata": {
+        "logLevel": "debug"
+      },
+      "type": "runJavascript"
+    },
+    {
+      "id": "output-f5164157",
+      "metadata": {},
+      "type": "output"
+    },
+    {
+      "configuration": {
+        "schema": {
+          "properties": {
+            "array": {
+              "default": "[\"What is the process of photosynthesis?\",\"Define 'gravity.'\",\"Translate 'Thank you' to Spanish.\",\"Spell the word 'accommodate.'\",\"What is 50 divided by 2?\",\"Summarise the plot of a classic fairy tale like 'Cinderella.'\",\"What is the cube root of 27?\",\"Correct the grammar in the sentence: 'Him and me went to the store.'\",\"Explain the principle of natural selection in simple terms.\",\"Describe the main characters in the story 'Little Red Riding Hood.'\",\"Solve the equation x^2 - 4x + 4 = 0.\",\"Explain the importance of the Turing test in the context of Artificial Intelligence.\",\"Write a short story about a lost treasure in a hidden cave.\",\"Compare the themes of freedom and responsibility in two different novels.\",\"Describe the main differences between a compiler and an interpreter in computer programming.\",\"Discuss the potential applications of machine learning in healthcare.\",\"Compose a poem about the changing seasons.\",\"Derive the formula for the volume of a sphere.\",\"Discuss the concept of existentialism in philosophy.\",\"Analyse the benefits and challenges of renewable energy sources.\"]",
+              "examples": [],
+              "title": "Array",
+              "type": "array"
+            }
+          },
+          "required": [
+            "array"
+          ],
+          "type": "object"
+        }
+      },
+      "id": "input-5ccbf981",
+      "metadata": {},
+      "type": "input"
+    }
+  ],
+  "title": "Random from Array",
+  "version": "0.0.1"
+}
