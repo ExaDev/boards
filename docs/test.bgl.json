@@ -1,5 +1,42 @@
 {
-  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
-  "edges": [],
-  "nodes": []
+  "title": "Blank board",
+  "description": "A blank board. Use it as a starting point for your creations.",
+  "version": "0.0.1",
+  "metadata": {
+    "comments": []
+  },
+  "edges": [
+    {
+      "from": "input",
+      "to": "output",
+      "out": "*",
+      "in": ""
+    }
+  ],
+  "nodes": [
+    {
+      "type": "input",
+      "id": "input",
+      "configuration": {},
+      "metadata": {
+        "visual": {
+          "x": 0,
+          "y": 11,
+          "collapsed": false
+        }
+      }
+    },
+    {
+      "type": "output",
+      "id": "output",
+      "configuration": {},
+      "metadata": {
+        "visual": {
+          "x": 215,
+          "y": 0,
+          "collapsed": false
+        }
+      }
+    }
+  ]
 }
