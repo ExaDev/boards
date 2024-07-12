@@ -1,0 +1,100 @@
+{
+	"$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "title": "Basic Caller",
+  "metadata": {
+    "comments": []
+  },
+  "edges": [
+    {
+      "from": "text-8211a3ab",
+      "to": "output",
+      "out": "*",
+      "in": ""
+    },
+    {
+      "from": "runJavascript-c9224534",
+      "to": "text-8211a3ab",
+      "out": "result",
+      "in": "text"
+    },
+    {
+      "from": "input",
+      "to": "runJavascript-c9224534",
+      "out": "*",
+      "in": ""
+    }
+  ],
+  "nodes": [
+    {
+      "type": "input",
+      "id": "input",
+      "configuration": {},
+      "metadata": {
+        "visual": {
+          "x": 0,
+          "y": 99,
+          "collapsed": false
+        }
+      }
+    },
+    {
+      "type": "output",
+      "id": "output",
+      "configuration": {},
+      "metadata": {
+        "visual": {
+          "x": 820,
+          "y": 99,
+          "collapsed": false
+        }
+      }
+    },
+    {
+      "id": "text-8211a3ab",
+      "type": "text",
+      "metadata": {
+        "visual": {
+          "x": 548,
+          "y": 0,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "responseMimeType": "text/plain",
+        "model": "gemini-1.5-flash-latest"
+      }
+    },
+    {
+      "id": "runJavascript-c9224534",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 229,
+          "y": 44,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "name": "run",
+        "code": "const run = (inputs) => ({\n    result: JSON.stringify(inputs)\n})",
+        "raw": "on",
+        "schema": {
+          "properties": {
+            "result": {
+              "type": "object",
+              "behavior": [
+                "llm-content"
+              ],
+              "title": "Result",
+              "examples": [],
+              "default": "null",
+              "format": "text-inline"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    }
+  ]
+}
