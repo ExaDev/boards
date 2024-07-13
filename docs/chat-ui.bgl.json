@@ -25,12 +25,6 @@
     },
     {
       "from": "input",
-      "to": "fetch-4846047c",
-      "out": "headers",
-      "in": "headers"
-    },
-    {
-      "from": "input",
       "to": "urlTemplate-9e5537d9",
       "out": "*",
       "in": ""
@@ -43,18 +37,6 @@
       "configuration": {
         "schema": {
           "properties": {
-            "template": {
-              "type": "string",
-              "title": "Template",
-              "examples": [],
-              "default": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}"
-            },
-            "headers": {
-              "type": "object",
-              "title": "Headers",
-              "examples": [],
-              "default": "{}"
-            },
             "body": {
               "type": "object",
               "title": "Body",
