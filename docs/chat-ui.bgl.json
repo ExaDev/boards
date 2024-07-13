@@ -19,15 +19,33 @@
     },
     {
       "from": "input",
+      "to": "passthrough-e78045df",
+      "out": "*",
+      "in": ""
+    },
+    {
+      "from": "passthrough-e78045df",
       "to": "fetch-4846047c",
       "out": "body",
       "in": "body"
     },
     {
-      "from": "input",
+      "from": "passthrough-e78045df",
       "to": "urlTemplate-9e5537d9",
       "out": "*",
       "in": ""
+    },
+    {
+      "from": "input",
+      "to": "passthrough-e78045df",
+      "out": "apiKey",
+      "in": "api-key"
+    },
+    {
+      "from": "input",
+      "to": "passthrough-e78045df",
+      "out": "body",
+      "in": "body"
     }
   ],
   "nodes": [
@@ -59,7 +77,7 @@
       "metadata": {
         "visual": {
           "x": 0,
-          "y": 128,
+          "y": 150,
           "collapsed": false
         }
       }
@@ -70,7 +88,7 @@
       "configuration": {},
       "metadata": {
         "visual": {
-          "x": 748,
+          "x": 1070,
           "y": 161,
           "collapsed": false
         }
@@ -81,7 +99,7 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 502,
+          "x": 824,
           "y": 106,
           "collapsed": false
         }
@@ -95,15 +113,26 @@
       "type": "urlTemplate",
       "metadata": {
         "visual": {
-          "x": 201,
+          "x": 523,
           "y": 0,
           "collapsed": false
         }
       },
       "configuration": {
-        "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}",
+        "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={api-key}",
         "method": "generateContent",
         "model": "gemini-1.5-flash"
+      }
+    },
+    {
+      "id": "passthrough-e78045df",
+      "type": "passthrough",
+      "metadata": {
+        "visual": {
+          "x": 217,
+          "y": 139,
+          "collapsed": false
+        }
       }
     }
   ]
