@@ -1,25 +1,37 @@
 {
-	"$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
+  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
   "title": "Basic Caller",
   "metadata": {
     "comments": []
   },
   "edges": [
     {
-      "from": "text-8211a3ab",
+      "from": "urlTemplate-9e5537d9",
+      "to": "fetch-4846047c",
+      "out": "url",
+      "in": "url"
+    },
+    {
+      "from": "fetch-4846047c",
       "to": "output",
       "out": "*",
       "in": ""
     },
     {
-      "from": "runJavascript-c9224534",
-      "to": "text-8211a3ab",
-      "out": "result",
-      "in": "text"
+      "from": "input",
+      "to": "fetch-4846047c",
+      "out": "body",
+      "in": "body"
     },
     {
       "from": "input",
-      "to": "runJavascript-c9224534",
+      "to": "fetch-4846047c",
+      "out": "headers",
+      "in": "headers"
+    },
+    {
+      "from": "input",
+      "to": "urlTemplate-9e5537d9",
       "out": "*",
       "in": ""
     }
@@ -28,11 +40,44 @@
     {
       "type": "input",
       "id": "input",
-      "configuration": {},
+      "configuration": {
+        "schema": {
+          "properties": {
+            "template": {
+              "type": "string",
+              "title": "Template",
+              "examples": [],
+              "default": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}"
+            },
+            "headers": {
+              "type": "object",
+              "title": "Headers",
+              "examples": [],
+              "default": "{}"
+            },
+            "body": {
+              "type": "object",
+              "title": "Body",
+              "examples": [],
+              "default": "{     \"contents\": [         {             \"role\": \"user\",             \"parts\": [                 {                     \"text\": \"Hello World\"                 }             ]         }     ],     \"safetySettings\": [         {             \"category\": \"HARM_CATEGORY_SEXUALLY_EXPLICIT\",             \"threshold\": \"BLOCK_NONE\"         },         {             \"category\": \"HARM_CATEGORY_HARASSMENT\",             \"threshold\": \"BLOCK_NONE\"         },         {             \"category\": \"HARM_CATEGORY_DANGEROUS_CONTENT\",             \"threshold\": \"BLOCK_NONE\"         }     ],     \"generationConfig\": {         \"responseMimeType\": \"application/json\"     } }"
+            },
+            "apiKey": {
+              "type": "string",
+              "title": "API Key",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": [
+            "apiKey",
+            "body"
+          ]
+        }
+      },
       "metadata": {
         "visual": {
           "x": 0,
-          "y": 99,
+          "y": 128,
           "collapsed": false
         }
       }
@@ -43,57 +88,40 @@
       "configuration": {},
       "metadata": {
         "visual": {
-          "x": 820,
-          "y": 99,
+          "x": 748,
+          "y": 161,
           "collapsed": false
         }
       }
     },
     {
-      "id": "text-8211a3ab",
-      "type": "text",
+      "id": "fetch-4846047c",
+      "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 548,
+          "x": 502,
+          "y": 106,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "method": "POST"
+      }
+    },
+    {
+      "id": "urlTemplate-9e5537d9",
+      "type": "urlTemplate",
+      "metadata": {
+        "visual": {
+          "x": 201,
           "y": 0,
           "collapsed": false
         }
       },
       "configuration": {
-        "responseMimeType": "text/plain",
-        "model": "gemini-1.5-flash-latest"
-      }
-    },
-    {
-      "id": "runJavascript-c9224534",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 229,
-          "y": 44,
-          "collapsed": false
-        }
-      },
-      "configuration": {
-        "name": "run",
-        "code": "const run = (inputs) => ({\n    result: JSON.stringify(inputs)\n})",
-        "raw": "on",
-        "schema": {
-          "properties": {
-            "result": {
-              "type": "object",
-              "behavior": [
-                "llm-content"
-              ],
-              "title": "Result",
-              "examples": [],
-              "default": "null",
-              "format": "text-inline"
-            }
-          },
-          "type": "object",
-          "required": []
-        }
+        "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}",
+        "method": "generateContent",
+        "model": "gemini-1.5-flash"
       }
     }
   ]
