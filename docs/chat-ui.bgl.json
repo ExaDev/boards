@@ -6,12 +6,6 @@
   },
   "edges": [
     {
-      "from": "urlTemplate-9e5537d9",
-      "to": "fetch-4846047c",
-      "out": "url",
-      "in": "url"
-    },
-    {
       "from": "fetch-4846047c",
       "to": "output",
       "out": "*",
@@ -24,10 +18,28 @@
       "in": "apiKey"
     },
     {
+      "from": "urlTemplate-9e5537d9",
+      "to": "passthrough-39d44e47",
+      "out": "url",
+      "in": "url"
+    },
+    {
       "from": "input",
+      "to": "passthrough-39d44e47",
+      "out": "body",
+      "in": "body"
+    },
+    {
+      "from": "passthrough-39d44e47",
       "to": "fetch-4846047c",
       "out": "body",
       "in": "body"
+    },
+    {
+      "from": "passthrough-39d44e47",
+      "to": "fetch-4846047c",
+      "out": "url",
+      "in": "url"
     }
   ],
   "nodes": [
@@ -70,7 +82,7 @@
       "configuration": {},
       "metadata": {
         "visual": {
-          "x": 764,
+          "x": 1073,
           "y": 161,
           "collapsed": false
         }
@@ -81,7 +93,7 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 518,
+          "x": 827,
           "y": 106,
           "collapsed": false
         }
@@ -104,6 +116,17 @@
         "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}",
         "method": "generateContent",
         "model": "gemini-1.5-flash"
+      }
+    },
+    {
+      "id": "passthrough-39d44e47",
+      "type": "passthrough",
+      "metadata": {
+        "visual": {
+          "x": 518,
+          "y": 139,
+          "collapsed": false
+        }
       }
     }
   ]
