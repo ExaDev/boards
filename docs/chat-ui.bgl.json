@@ -19,31 +19,13 @@
     },
     {
       "from": "input",
-      "to": "passthrough-e78045df",
-      "out": "*",
-      "in": ""
-    },
-    {
-      "from": "passthrough-e78045df",
-      "to": "fetch-4846047c",
-      "out": "body",
-      "in": "body"
-    },
-    {
-      "from": "passthrough-e78045df",
       "to": "urlTemplate-9e5537d9",
-      "out": "*",
-      "in": ""
-    },
-    {
-      "from": "input",
-      "to": "passthrough-e78045df",
       "out": "apiKey",
-      "in": "api-key"
+      "in": "apiKey"
     },
     {
       "from": "input",
-      "to": "passthrough-e78045df",
+      "to": "fetch-4846047c",
       "out": "body",
       "in": "body"
     }
@@ -88,7 +70,7 @@
       "configuration": {},
       "metadata": {
         "visual": {
-          "x": 1070,
+          "x": 764,
           "y": 161,
           "collapsed": false
         }
@@ -99,7 +81,7 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 824,
+          "x": 518,
           "y": 106,
           "collapsed": false
         }
@@ -113,26 +95,15 @@
       "type": "urlTemplate",
       "metadata": {
         "visual": {
-          "x": 523,
+          "x": 217,
           "y": 0,
           "collapsed": false
         }
       },
       "configuration": {
-        "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={api-key}",
+        "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}",
         "method": "generateContent",
         "model": "gemini-1.5-flash"
-      }
-    },
-    {
-      "id": "passthrough-e78045df",
-      "type": "passthrough",
-      "metadata": {
-        "visual": {
-          "x": 217,
-          "y": 139,
-          "collapsed": false
-        }
       }
     }
   ]
