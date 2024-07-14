@@ -1,77 +1,31 @@
 {
-  "$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/schema/breadboard.schema.json",
   "title": "Basic Caller",
   "metadata": {
     "comments": []
   },
   "edges": [
     {
-      "from": "fetch-4846047c",
+      "from": "text-8211a3ab",
       "to": "output",
       "out": "*",
       "in": ""
     },
     {
       "from": "input",
-      "to": "urlTemplate-9e5537d9",
-      "out": "apiKey",
-      "in": "apiKey"
-    },
-    {
-      "from": "urlTemplate-9e5537d9",
-      "to": "passthrough-39d44e47",
-      "out": "url",
-      "in": "url"
-    },
-    {
-      "from": "input",
-      "to": "passthrough-39d44e47",
-      "out": "body",
-      "in": "body"
-    },
-    {
-      "from": "passthrough-39d44e47",
-      "to": "fetch-4846047c",
-      "out": "body",
-      "in": "body"
-    },
-    {
-      "from": "passthrough-39d44e47",
-      "to": "fetch-4846047c",
-      "out": "url",
-      "in": "url"
+      "to": "text-8211a3ab",
+      "out": "*",
+      "in": ""
     }
   ],
   "nodes": [
     {
       "type": "input",
       "id": "input",
-      "configuration": {
-        "schema": {
-          "properties": {
-            "body": {
-              "type": "object",
-              "title": "Body",
-              "examples": [],
-              "default": "{     \"contents\": [         {             \"role\": \"user\",             \"parts\": [                 {                     \"text\": \"Hello World\"                 }             ]         }     ],     \"safetySettings\": [         {             \"category\": \"HARM_CATEGORY_SEXUALLY_EXPLICIT\",             \"threshold\": \"BLOCK_NONE\"         },         {             \"category\": \"HARM_CATEGORY_HARASSMENT\",             \"threshold\": \"BLOCK_NONE\"         },         {             \"category\": \"HARM_CATEGORY_DANGEROUS_CONTENT\",             \"threshold\": \"BLOCK_NONE\"         }     ],     \"generationConfig\": {         \"responseMimeType\": \"application/json\"     } }"
-            },
-            "apiKey": {
-              "type": "string",
-              "title": "API Key",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": [
-            "apiKey",
-            "body"
-          ]
-        }
-      },
+      "configuration": {},
       "metadata": {
         "visual": {
           "x": 0,
-          "y": 150,
+          "y": 99,
           "collapsed": false
         }
       }
@@ -82,51 +36,25 @@
       "configuration": {},
       "metadata": {
         "visual": {
-          "x": 1073,
-          "y": 161,
+          "x": 446,
+          "y": 99,
           "collapsed": false
         }
       }
     },
     {
-      "id": "fetch-4846047c",
-      "type": "fetch",
+      "id": "text-8211a3ab",
+      "type": "text",
       "metadata": {
         "visual": {
-          "x": 827,
-          "y": 106,
-          "collapsed": false
-        }
-      },
-      "configuration": {
-        "method": "POST"
-      }
-    },
-    {
-      "id": "urlTemplate-9e5537d9",
-      "type": "urlTemplate",
-      "metadata": {
-        "visual": {
-          "x": 217,
+          "x": 174,
           "y": 0,
           "collapsed": false
         }
       },
       "configuration": {
-        "template": "https://generativelanguage.googleapis.com/v1beta/models/{model}:{method}?key={apiKey}",
-        "method": "generateContent",
-        "model": "gemini-1.5-flash"
-      }
-    },
-    {
-      "id": "passthrough-39d44e47",
-      "type": "passthrough",
-      "metadata": {
-        "visual": {
-          "x": 518,
-          "y": 139,
-          "collapsed": false
-        }
+        "responseMimeType": "text/plain",
+        "model": "gemini-1.5-flash-latest"
       }
     }
   ]
