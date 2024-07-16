@@ -12,7 +12,7 @@
   "packageManager": "yarn@4.3.1",
   "repository": "https://github.com/ExaDev/boards.git",
   "scripts": {
-    "start": "node --import tsx ./buildManifest.ts"
+    "start": "node --import tsx ./src/index.ts"
   },
   "type": "module"
 }
