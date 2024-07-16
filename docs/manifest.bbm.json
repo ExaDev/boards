@@ -3,6 +3,15 @@
 	"title": "ExaDev Board Manifest",
 	"manifests": [
 		{
+			"title": "Breadboard AI Boards",
+			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/manifest.bbm.json",
+			"boards": [
+				{
+					"reference": "../../../../breadboard-ai/breadboard/main/boards/components/convert-string-to-json/index.json"
+				}
+			]
+		},
+		{
 			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/manifest.bbm.json",
 			"title": "Raw GitHub URL Manifest",
 			"manifests": [],
@@ -140,6 +149,75 @@
 				},
 				{
 					"reference": "https://exadev.github.io/boards/test.bgl.json",
+					"title": "Blank board"
+				}
+			]
+		},
+		{
+			"manifests": [],
+			"boards": [
+				{
+					"reference": "business-review-reply-generator-demo.bgl.json",
+					"title": "Business Review Replier Demo"
+				},
+				{
+					"reference": "business-review-reply-generator.bgl.json",
+					"title": "Bussiness Review Reply Generator"
+				},
+				{
+					"reference": "chat-ui.bgl.json",
+					"title": "Basic Caller"
+				},
+				{
+					"reference": "coalesce.bgl.json",
+					"title": "Coalesce"
+				},
+				{
+					"reference": "coalesce.demo.bgl.json",
+					"title": "Coalesce Demo"
+				},
+				{
+					"reference": "exam-coach.bgl.json",
+					"title": "IELTS-exam-practice"
+				},
+				{
+					"reference": "gemini-nano-demo.bgl.json",
+					"title": "Gemini Nano Demo"
+				},
+				{
+					"reference": "hacker-news-researcher.bgl.json",
+					"title": "Hacker News Research Agent"
+				},
+				{
+					"reference": "looper.bgl.json",
+					"title": "Looper"
+				},
+				{
+					"reference": "put-object-property.bgl.json",
+					"title": "put-object-property.bgl.json"
+				},
+				{
+					"reference": "sample-data-generator.bgl.json",
+					"title": "Data Generator"
+				},
+				{
+					"reference": "select-random-from-array.bgl.json",
+					"title": "Random from Array"
+				},
+				{
+					"reference": "spread.bgl.json",
+					"title": "Spread"
+				},
+				{
+					"reference": "spread.demo.bgl.json",
+					"title": "Spread Demo"
+				},
+				{
+					"reference": "story-write.bgl.json",
+					"title": "Blank board"
+				},
+				{
+					"reference": "test.bgl.json",
 					"title": "Blank board"
 				}
 			]
