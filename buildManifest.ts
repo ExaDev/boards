@@ -55,6 +55,7 @@ async function main() {
 	const rawGithubManifestUrl = makeRawGitHubUrl({
 		org: "ExaDev",
 		repo: "boards",
+    dir: "docs",
 		file: manifestFileName,
 	});
 

@@ -4,15 +4,15 @@
 	"manifests": [
 		{
 			"title": "Breadboard AI Boards",
-			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/manifest.bbm.json",
+			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/manifest.bbm.json",
 			"boards": [
 				{
-					"reference": "../../../breadboard-ai/breadboard/main/boards/components/convert-string-to-json/index.json"
+					"reference": "../../../../breadboard-ai/breadboard/main/boards/components/convert-string-to-json/index.json"
 				}
 			]
 		},
 		{
-			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/manifest.bbm.json",
+			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/manifest.bbm.json",
 			"title": "Raw GitHub URL Manifest",
 			"manifests": [],
 			"boards": [
@@ -157,67 +157,67 @@
 			"manifests": [],
 			"boards": [
 				{
-					"reference": "docs/business-review-reply-generator-demo.bgl.json",
+					"reference": "business-review-reply-generator-demo.bgl.json",
 					"title": "Business Review Replier Demo"
 				},
 				{
-					"reference": "docs/business-review-reply-generator.bgl.json",
+					"reference": "business-review-reply-generator.bgl.json",
 					"title": "Bussiness Review Reply Generator"
 				},
 				{
-					"reference": "docs/chat-ui.bgl.json",
+					"reference": "chat-ui.bgl.json",
 					"title": "Basic Caller"
 				},
 				{
-					"reference": "docs/coalesce.bgl.json",
+					"reference": "coalesce.bgl.json",
 					"title": "Coalesce"
 				},
 				{
-					"reference": "docs/coalesce.demo.bgl.json",
+					"reference": "coalesce.demo.bgl.json",
 					"title": "Coalesce Demo"
 				},
 				{
-					"reference": "docs/exam-coach.bgl.json",
+					"reference": "exam-coach.bgl.json",
 					"title": "IELTS-exam-practice"
 				},
 				{
-					"reference": "docs/gemini-nano-demo.bgl.json",
+					"reference": "gemini-nano-demo.bgl.json",
 					"title": "Gemini Nano Demo"
 				},
 				{
-					"reference": "docs/hacker-news-researcher.bgl.json",
+					"reference": "hacker-news-researcher.bgl.json",
 					"title": "Hacker News Research Agent"
 				},
 				{
-					"reference": "docs/looper.bgl.json",
+					"reference": "looper.bgl.json",
 					"title": "Looper"
 				},
 				{
-					"reference": "docs/put-object-property.bgl.json",
+					"reference": "put-object-property.bgl.json",
 					"title": "put-object-property.bgl.json"
 				},
 				{
-					"reference": "docs/sample-data-generator.bgl.json",
+					"reference": "sample-data-generator.bgl.json",
 					"title": "Data Generator"
 				},
 				{
-					"reference": "docs/select-random-from-array.bgl.json",
+					"reference": "select-random-from-array.bgl.json",
 					"title": "Random from Array"
 				},
 				{
-					"reference": "docs/spread.bgl.json",
+					"reference": "spread.bgl.json",
 					"title": "Spread"
 				},
 				{
-					"reference": "docs/spread.demo.bgl.json",
+					"reference": "spread.demo.bgl.json",
 					"title": "Spread Demo"
 				},
 				{
-					"reference": "docs/story-write.bgl.json",
+					"reference": "story-write.bgl.json",
 					"title": "Blank board"
 				},
 				{
-					"reference": "docs/test.bgl.json",
+					"reference": "test.bgl.json",
 					"title": "Blank board"
 				}
 			]
