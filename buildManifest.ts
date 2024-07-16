@@ -3,6 +3,7 @@
 export { };
   import { GraphDescriptor } from "@google-labs/breadboard";
   import {
+    BoardReference,
     BreadboardManifest,
     ResourceReference,
   } from "breadboard/packages/manifest/src/index";
@@ -51,17 +52,19 @@ async function main() {
 	const manifestDest = path.join(absoluteDestDir, manifestFileName);
 
 	const baseUrl = "https://raw.githubusercontent.com/ExaDev/boards/main/";
+	const rawGithubManifestUrl = makeRawGitHubUrl({
+		org: "ExaDev",
+		repo: "boards",
+		dir: "docs",
+		file: manifestFileName,
+	});
+
 	const rawGitHubUrlManifest: BreadboardManifest = makeManifest({
 		boardFiles: files,
 		boardPathResolver: (file) =>
 			createUrlFromPath(absoluteBaseDir, file, baseUrl, baseDir),
 		title: "Raw GitHub URL Manifest",
-    reference: makeRawGitHubUrl({
-      org: "ExaDev",
-      repo: "boards",
-      dir: "docs",
-      file: manifestFileName,
-    }),
+		reference: rawGithubManifestUrl,
 	});
 	const gitHubIoUrlManifest: BreadboardManifest = makeManifest({
 		boardFiles: files,
@@ -79,9 +82,42 @@ async function main() {
 		}),
 	});
 
+	const relativeManifest = makeManifest({
+		boardFiles: files,
+		boardPathResolver: (file) => {
+			const url = createUrlFromPath(absoluteBaseDir, file, baseUrl, baseDir);
+			const mappedUrl = relativeUri({
+				source: rawGithubManifestUrl,
+				target: url,
+			});
+			return mappedUrl;
+		},
+	});
+	const breadboardAiRepoBoards: BreadboardManifest = {
+		title: "Breadboard AI Boards",
+		reference: rawGithubManifestUrl,
+		boards: [
+			"https://raw.githubusercontent.com/breadboard-ai/breadboard/main/boards/components/convert-string-to-json/index.json",
+		].map(
+			(url): BoardReference => ({
+				reference: relativeUri({
+					source: rawGithubManifestUrl,
+					target: url,
+				}),
+				// title: new URL(url).pathname.split("/").pop(),
+			})
+		),
+	};
+	relativeManifest.boards = relativeManifest.boards.concat();
+
 	const combinedManifest: BreadboardManifest = makeManifest({
 		boardFiles: files,
-		manifests: [rawGitHubUrlManifest, gitHubIoUrlManifest],
+		manifests: [
+			breadboardAiRepoBoards,
+			rawGitHubUrlManifest,
+			gitHubIoUrlManifest,
+			relativeManifest,
+		],
 		boardPathResolver: (file) =>
 			path.relative(absoluteDestDir, file.absolutePath),
 		title: "ExaDev Board Manifest",
@@ -92,6 +128,7 @@ async function main() {
 			file: "bbm.schema.json",
 		}),
 	});
+
 	fs.writeFileSync(manifestDest, JSON.stringify(combinedManifest, null, "\t"));
 }
 
@@ -225,4 +262,52 @@ function makeGitHubIoUrl({
 			.filter(nonEmptyString)
 			.join("/")}`
 	).toString();
+}
+
+function relativeUri({
+	source,
+	target,
+}: {
+	source: string;
+	target: string;
+}): string {
+	const sourceURL = new URL(source);
+	const targetURL = new URL(target);
+
+	// Ensure both URLs are of the same origin
+	if (sourceURL.origin !== targetURL.origin) {
+		throw new Error(
+			`Source and target URLs must have the same origin ${sourceURL.origin} !== ${targetURL.origin}`
+		);
+	}
+
+	if (sourceURL.protocol !== targetURL.protocol) {
+		throw new Error(`Source and target URLs must have the same protocol ${sourceURL.protocol} !== ${targetURL.protocol}`);
+	}
+	const protocol = sourceURL.protocol;
+
+	const sourcePathSegments = sourceURL.pathname.split("/");
+	const targetPathSegments = targetURL.pathname.split("/");
+
+	// Remove empty segments caused by leading/trailing slashes
+	const sourcePath = sourcePathSegments.filter((segment) => segment);
+	const targetPath = targetPathSegments.filter((segment) => segment);
+
+	// Find the common path length
+	let commonLength = 0;
+	while (
+		commonLength < sourcePath.length &&
+		commonLength < targetPath.length &&
+		sourcePath[commonLength] === targetPath[commonLength]
+	) {
+		commonLength++;
+	}
+
+	// Calculate the relative path
+	const upSegments = sourcePath.length - commonLength - 1;
+	const downSegments = targetPath.slice(commonLength);
+
+	const relativePath = "../".repeat(upSegments) + downSegments.join("/");
+
+	return relativePath;
 }
