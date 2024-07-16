@@ -55,7 +55,6 @@ async function main() {
 	const rawGithubManifestUrl = makeRawGitHubUrl({
 		org: "ExaDev",
 		repo: "boards",
-		dir: "docs",
 		file: manifestFileName,
 	});
 
@@ -229,7 +228,7 @@ function nonEmptyString(val: string): boolean {
 function makeRawGitHubUrl({
 	org,
 	repo,
-	dir = "/",
+	dir,
 	file,
 	ref = "main",
 }: {
