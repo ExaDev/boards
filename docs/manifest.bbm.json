@@ -1,0 +1,214 @@
+{
+	"$schema": "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/manifest/bbm.schema.json",
+	"title": "ExaDev Board Manifest",
+	"manifests": [
+		{
+			"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/manifest.bbm.json",
+			"title": "Raw GitHub URL Manifest",
+			"manifests": [],
+			"boards": [
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/business-review-reply-generator-demo.bgl.json",
+					"title": "Business Review Replier Demo"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/business-review-reply-generator.bgl.json",
+					"title": "Bussiness Review Reply Generator"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/chat-ui.bgl.json",
+					"title": "Basic Caller"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/coalesce.bgl.json",
+					"title": "Coalesce"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/coalesce.demo.bgl.json",
+					"title": "Coalesce Demo"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/exam-coach.bgl.json",
+					"title": "IELTS-exam-practice"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/gemini-nano-demo.bgl.json",
+					"title": "Gemini Nano Demo"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/hacker-news-researcher.bgl.json",
+					"title": "Hacker News Research Agent"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/looper.bgl.json",
+					"title": "Looper"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/put-object-property.bgl.json",
+					"title": "put-object-property.bgl.json"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/sample-data-generator.bgl.json",
+					"title": "Data Generator"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/select-random-from-array.bgl.json",
+					"title": "Random from Array"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/spread.bgl.json",
+					"title": "Spread"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/spread.demo.bgl.json",
+					"title": "Spread Demo"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/story-write.bgl.json",
+					"title": "Blank board"
+				},
+				{
+					"reference": "https://raw.githubusercontent.com/ExaDev/boards/main/docs/test.bgl.json",
+					"title": "Blank board"
+				}
+			]
+		},
+		{
+			"reference": "https://exadev.github.io/boards/manifest.bbm.json",
+			"title": "GitHub.io URL Manifest",
+			"manifests": [],
+			"boards": [
+				{
+					"reference": "https://exadev.github.io/boards/business-review-reply-generator-demo.bgl.json",
+					"title": "Business Review Replier Demo"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/business-review-reply-generator.bgl.json",
+					"title": "Bussiness Review Reply Generator"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/chat-ui.bgl.json",
+					"title": "Basic Caller"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/coalesce.bgl.json",
+					"title": "Coalesce"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/coalesce.demo.bgl.json",
+					"title": "Coalesce Demo"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/exam-coach.bgl.json",
+					"title": "IELTS-exam-practice"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/gemini-nano-demo.bgl.json",
+					"title": "Gemini Nano Demo"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/hacker-news-researcher.bgl.json",
+					"title": "Hacker News Research Agent"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/looper.bgl.json",
+					"title": "Looper"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/put-object-property.bgl.json",
+					"title": "put-object-property.bgl.json"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/sample-data-generator.bgl.json",
+					"title": "Data Generator"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/select-random-from-array.bgl.json",
+					"title": "Random from Array"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/spread.bgl.json",
+					"title": "Spread"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/spread.demo.bgl.json",
+					"title": "Spread Demo"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/story-write.bgl.json",
+					"title": "Blank board"
+				},
+				{
+					"reference": "https://exadev.github.io/boards/test.bgl.json",
+					"title": "Blank board"
+				}
+			]
+		}
+	],
+	"boards": [
+		{
+			"reference": "business-review-reply-generator-demo.bgl.json",
+			"title": "Business Review Replier Demo"
+		},
+		{
+			"reference": "business-review-reply-generator.bgl.json",
+			"title": "Bussiness Review Reply Generator"
+		},
+		{
+			"reference": "chat-ui.bgl.json",
+			"title": "Basic Caller"
+		},
+		{
+			"reference": "coalesce.bgl.json",
+			"title": "Coalesce"
+		},
+		{
+			"reference": "coalesce.demo.bgl.json",
+			"title": "Coalesce Demo"
+		},
+		{
+			"reference": "exam-coach.bgl.json",
+			"title": "IELTS-exam-practice"
+		},
+		{
+			"reference": "gemini-nano-demo.bgl.json",
+			"title": "Gemini Nano Demo"
+		},
+		{
+			"reference": "hacker-news-researcher.bgl.json",
+			"title": "Hacker News Research Agent"
+		},
+		{
+			"reference": "looper.bgl.json",
+			"title": "Looper"
+		},
+		{
+			"reference": "put-object-property.bgl.json",
+			"title": "put-object-property.bgl.json"
+		},
+		{
+			"reference": "sample-data-generator.bgl.json",
+			"title": "Data Generator"
+		},
+		{
+			"reference": "select-random-from-array.bgl.json",
+			"title": "Random from Array"
+		},
+		{
+			"reference": "spread.bgl.json",
+			"title": "Spread"
+		},
+		{
+			"reference": "spread.demo.bgl.json",
+			"title": "Spread Demo"
+		},
+		{
+			"reference": "story-write.bgl.json",
+			"title": "Blank board"
+		},
+		{
+			"reference": "test.bgl.json",
+			"title": "Blank board"
+		}
+	]
+}
