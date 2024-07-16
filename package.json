@@ -1,14 +1,18 @@
 {
   "dependencies": {
-    "@breadboard-ai/manifest": "https://github.com/breadboard-ai/breadboard#workspace=@breadboard-ai/manifest",
-    "@breadboard-ai/schema": "https://github.com/breadboard-ai/breadboard#workspace=@google-labs/breadboard-schema"
+    "@google-labs/breadboard": "^0.22.0",
+    "breadboard": "https://github.com/breadboard-ai/breadboard"
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
+    "@types/node": "^20.14.10",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   },
   "name": "boards",
   "packageManager": "yarn@4.3.1",
-  "repository": "https://github.com/ExaDev/boards.git"
+  "repository": "https://github.com/ExaDev/boards.git",
+  "scripts": {
+    "start": "node --import tsx ./buildManifest.ts"
+  },
+  "type": "module"
 }

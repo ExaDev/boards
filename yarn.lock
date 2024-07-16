@@ -5,22 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@breadboard-ai/manifest@https://github.com/breadboard-ai/breadboard#workspace=@breadboard-ai/manifest":
-  version: 0.2.0
-  resolution: "@breadboard-ai/manifest@https://github.com/breadboard-ai/breadboard.git#workspace=%40breadboard-ai%2Fmanifest&commit=9d4ea07a168f04fb6855c0343745f428eb0be1f2"
+"@breadboard-ai/build@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@breadboard-ai/build@npm:0.7.0"
   dependencies:
     "@google-labs/breadboard": "npm:^0.21.0"
-    "@google-labs/breadboard-schema": "npm:^1.5.0"
-  checksum: 10c0/ebe42cd4ab213a7cb1dbbb6039b7c3eef3e926fd67476c1759ab9655fd312fbf33ecb1494389f8d050df2264d325b490d76354d089cb7847b2008e909de9b32d
-  languageName: node
-  linkType: hard
-
-"@breadboard-ai/schema@https://github.com/breadboard-ai/breadboard#workspace=@google-labs/breadboard-schema":
-  version: 1.5.0
-  resolution: "@breadboard-ai/schema@https://github.com/breadboard-ai/breadboard.git#workspace=%40google-labs%2Fbreadboard-schema&commit=9d4ea07a168f04fb6855c0343745f428eb0be1f2"
-  dependencies:
     "@types/json-schema": "npm:^7.0.15"
-  checksum: 10c0/db485f76aa6f006b2b7cf9a63874a18e1495f8b67252b90c553e0d2226083d36894dc55e97399073201c8dc7bb943e79a929370a95c150d4493fb8a792d156aa
+  checksum: 10c0/c9082253a3a6584be2d61926060257f3d145751ca3b3e4ca46d5247c1a95dcae1b3dab20955e9893793238cf9add526ed780597f78c2efc40bba7b69ad669cdb
   languageName: node
   linkType: hard
 
@@ -192,12 +183,41 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google-labs/breadboard-schema@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "@google-labs/breadboard-schema@npm:1.5.1"
+  dependencies:
+    "@types/json-schema": "npm:^7.0.15"
+  checksum: 10c0/2c4b2de801a8e85b4f7ac1803db700eea4308ed6e087cd81f58da51a7b128023d1c6c02065ecbbe4bc2b4aa28ce5f10384bfd4a3f17076e5a1209463debe3692
+  languageName: node
+  linkType: hard
+
 "@google-labs/breadboard@npm:^0.21.0":
   version: 0.21.0
   resolution: "@google-labs/breadboard@npm:0.21.0"
   dependencies:
     "@google-labs/breadboard-schema": "npm:^1.5.0"
   checksum: 10c0/8d3646671ba175287d69dbf25d8a3354490fe2738fb6d974333286bdb2cd1cb5a241c3a279dba29b60bae1bdc8fb4282a5053eb2f61a231c80481d335be64d74
+  languageName: node
+  linkType: hard
+
+"@google-labs/breadboard@npm:^0.22.0":
+  version: 0.22.0
+  resolution: "@google-labs/breadboard@npm:0.22.0"
+  dependencies:
+    "@google-labs/breadboard-schema": "npm:^1.5.1"
+    json-schema: "npm:^0.4.0"
+  checksum: 10c0/d7aa4222ec0e2f8a4ae574aa2b4b1602b44442d1ad4bfd89ae57ad548f3c9d96c8174741c289501a1ecfe8c26f6357de408008330f304802f1dfe0c0fe3ac91e
+  languageName: node
+  linkType: hard
+
+"@google-labs/core-kit@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "@google-labs/core-kit@npm:0.10.1"
+  dependencies:
+    "@breadboard-ai/build": "npm:0.7.0"
+    "@google-labs/breadboard": "npm:^0.21.0"
+  checksum: 10c0/f9cc4d81ddfbf8d0bd0fe1f5931dac126501856576d335183bece505a8f05b59c555c189f96c4b90d0ffd692d8d66098665134fcc0825d381ed6a5113d59d275
   languageName: node
   linkType: hard
 
@@ -244,6 +264,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-darwin-arm64@npm:^4.16.4":
+  version: 4.18.1
+  resolution: "@rollup/rollup-darwin-arm64@npm:4.18.1"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-gnu@npm:^4.18.1":
+  version: 4.18.1
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.18.1"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.15":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
@@ -251,12 +285,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.14.9":
-  version: 20.14.9
-  resolution: "@types/node@npm:20.14.9"
+"@types/node@npm:^20.14.10":
+  version: 20.14.10
+  resolution: "@types/node@npm:20.14.10"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/911ffa444dc032897f4a23ed580c67903bd38ea1c5ec99b1d00fa10b83537a3adddef8e1f29710cbdd8e556a61407ed008e06537d834e48caf449ce59f87d387
+  checksum: 10c0/0b06cff14365c2d0085dc16cc8cbea5c40ec09cfc1fea966be9eeecf35562760bfde8f88e86de6edfaf394501236e229d9c1084fad04fb4dec472ae245d8ae69
   languageName: node
   linkType: hard
 
@@ -327,9 +361,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "boards@workspace:."
   dependencies:
-    "@breadboard-ai/manifest": "https://github.com/breadboard-ai/breadboard#workspace=@breadboard-ai/manifest"
-    "@breadboard-ai/schema": "https://github.com/breadboard-ai/breadboard#workspace=@google-labs/breadboard-schema"
-    "@types/node": "npm:^20.14.9"
+    "@google-labs/breadboard": "npm:^0.22.0"
+    "@types/node": "npm:^20.14.10"
+    breadboard: "https://github.com/breadboard-ai/breadboard"
     tsx: "npm:^4.16.2"
     typescript: "npm:^5.5.3"
   languageName: unknown
@@ -341,6 +375,25 @@ __metadata:
   dependencies:
     balanced-match: "npm:^1.0.0"
   checksum: 10c0/b358f2fe060e2d7a87aa015979ecea07f3c37d4018f8d6deb5bd4c229ad3a0384fe6029bb76cd8be63c81e516ee52d1a0673edbe2023d53a5191732ae3c3e49f
+  languageName: node
+  linkType: hard
+
+"breadboard@https://github.com/breadboard-ai/breadboard":
+  version: 0.0.1
+  resolution: "breadboard@https://github.com/breadboard-ai/breadboard.git#commit=e534b107738dc67a07d9360761c4bb00db3bbd3e"
+  dependencies:
+    "@google-labs/core-kit": "npm:^0.10.1"
+    "@rollup/rollup-darwin-arm64": "npm:^4.16.4"
+    "@rollup/rollup-linux-x64-gnu": "npm:^4.18.1"
+    json-schema: "npm:^0.4.0"
+    litegraph.js: "npm:^0.7.18"
+    prettier: "npm:^3.3.2"
+  dependenciesMeta:
+    "@rollup/rollup-darwin-arm64":
+      optional: true
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
+  checksum: 10c0/65d7d6d1528d75d6571fc064f384c12007844ab3441b36c0ee205bff96b5e69ba237eea2fc6b5c961a136189d532a2225acee0a311e3f0f26b07d8b1182cd94b
   languageName: node
   linkType: hard
 
@@ -735,6 +788,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-schema@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "json-schema@npm:0.4.0"
+  checksum: 10c0/d4a637ec1d83544857c1c163232f3da46912e971d5bf054ba44fdb88f07d8d359a462b4aec46f2745efbc57053365608d88bc1d7b1729f7b4fc3369765639ed3
+  languageName: node
+  linkType: hard
+
+"litegraph.js@npm:^0.7.18":
+  version: 0.7.18
+  resolution: "litegraph.js@npm:0.7.18"
+  checksum: 10c0/c77edcf19fa4031115e54130a58a82d4e66d44cb81ff002b5db90f381856f08129f9fba7568bf5c456b25542e24d8192737cae34aead14eb62de402de2cad0ad
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.3.0
   resolution: "lru-cache@npm:10.3.0"
@@ -939,6 +1006,15 @@ __metadata:
     lru-cache: "npm:^10.2.0"
     minipass: "npm:^5.0.0 || ^6.0.2 || ^7.0.0"
   checksum: 10c0/32a13711a2a505616ae1cc1b5076801e453e7aae6ac40ab55b388bb91b9d0547a52f5aaceff710ea400205f18691120d4431e520afbe4266b836fadede15872d
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^3.3.2":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10c0/b85828b08e7505716324e4245549b9205c0cacb25342a030ba8885aba2039a115dbcf75a0b7ca3b37bc9d101ee61fab8113fc69ca3359f2a226f1ecc07ad2e26
   languageName: node
   linkType: hard
 
