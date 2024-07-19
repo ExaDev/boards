@@ -1,1 +1,17 @@
+on:
+  workflow_dispatch:
+  push:
 
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    name: Upload docs directory artifacts
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Upload docs directory
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs
