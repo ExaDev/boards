@@ -107,10 +107,10 @@ export async function dereferenceManifest(
 			)
 		);
 	}
-	if (!(Array.isArray(manifest.manifests) && manifest.manifests.length)) {
+	if (!Array.isArray(manifest.manifests) || !manifest.manifests.length) {
 		manifest.manifests = [];
 	}
-	if (!(Array.isArray(manifest.boards) && manifest.boards.length)) {
+	if (!Array.isArray(manifest.boards) || !manifest.boards.length) {
 		manifest.boards = [];
 	}
 
