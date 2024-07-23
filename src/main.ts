@@ -1,8 +1,12 @@
-import { BoardReference, BreadboardManifest, } from "breadboard/packages/manifest/src";
+import {
+	BoardReference,
+	BreadboardManifest,
+} from "breadboard/packages/manifest/src";
 import fs from "fs";
 import path from "path";
 import { AbsoluteContentBgl } from "./types";
 import { GitHubRepoData } from "./types/GitHubRepoData";
+import { dereferenceManifest } from "./util/dereference";
 import { getBoards } from "./util/getBoards";
 import { makeManifest } from "./util/makeManifest";
 import { createUrlFromPath } from "./util/url/createUrlFromPath";
@@ -99,6 +103,7 @@ export async function main() {
 	////////////////////////////////////////
 	const combinedManifest: BreadboardManifest = makeManifest({
 		boardFiles: files,
+		reference: "https://exadev.github.io/boards/manifest.bbm.json",
 		manifests: [
 			breadboardAiRepoBoards,
 			rawGitHubUrlManifest,
@@ -117,4 +122,14 @@ export async function main() {
 	});
 	////////////////////////////////////////
 	fs.writeFileSync(manifestDest, JSON.stringify(combinedManifest, null, "\t"));
+	////////////////////////////////////////
+	console.log("\n");
+	console.log("=".repeat(80));
+	console.log("\n");
+	const dereferenced = await dereferenceManifest(combinedManifest, 10);
+	console.log({ dereferenced });
+	fs.writeFileSync(
+		"dereferenced.json",
+		JSON.stringify(dereferenced, null, "\t")
+	);
 }
