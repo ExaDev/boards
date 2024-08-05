@@ -1,0 +1,405 @@
+{
+  "title": "Quiz Master",
+  "description": "Quiz Master board: A board for quizzing yourself on a topic!",
+  "version": "0.0.1",
+  "nodes": [
+    {
+      "id": "input-a988945c",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": -119.99999999999955,
+          "y": -188,
+          "collapsed": false
+        },
+        "title": "Question Count",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "number",
+              "title": "Number",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "input-ab565b74",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": -283.9999999999998,
+          "y": -123,
+          "collapsed": false
+        },
+        "title": "Question Topic",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "string",
+              "title": "String",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "promptTemplate-2538e043",
+      "type": "promptTemplate",
+      "metadata": {
+        "visual": {
+          "x": 63.000000000000455,
+          "y": -166,
+          "collapsed": false
+        },
+        "title": "Prompt Templater",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "template": "Generate {{number}} multiple choice questions with their answers about {{topic}}"
+      }
+    },
+    {
+      "id": "runJavascript-050f9c6d",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 285.00000000000034,
+          "y": -253.99999999999997,
+          "collapsed": false
+        },
+        "title": "Text to Context",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "outputSchema": {
+          "properties": {
+            "context": {
+              "type": "object",
+              "behavior": [
+                "llm-content"
+              ],
+              "title": "context",
+              "examples": [],
+              "default": "null",
+              "format": "text-inline"
+            }
+          },
+          "type": "object",
+          "required": []
+        },
+        "code": "const textToContext = ({ text, role = \"user\" }) => ({\n\tcontext: [\n\t\t{ role, parts: [{ text }] },\n\t],\n});",
+        "name": "textToContext",
+        "raw": true
+      }
+    },
+    {
+      "id": "looper-84142214",
+      "type": "looper",
+      "metadata": {
+        "visual": {
+          "x": 584,
+          "y": -231,
+          "collapsed": false
+        },
+        "title": "Question Generator",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "looper-f813a09a",
+      "type": "looper",
+      "metadata": {
+        "visual": {
+          "x": 955,
+          "y": -210,
+          "collapsed": false
+        },
+        "title": "Question Handler",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "You are a question handler in a quiz game. serve each question until there are no more left and tally a score.\n"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "specialist-9b87726a",
+      "type": "specialist",
+      "metadata": {
+        "visual": {
+          "x": 813.0000000000003,
+          "y": 113,
+          "collapsed": false
+        },
+        "title": "Question Asker",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "persona": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "You are a cheesy quiz game show host."
+            }
+          ]
+        },
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "Read out the question for the user to answer"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "human-9f532850",
+      "type": "human",
+      "metadata": {
+        "visual": {
+          "x": 1071,
+          "y": 133,
+          "collapsed": false
+        },
+        "title": "Answer",
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "specialist-3a65b163",
+      "type": "specialist",
+      "metadata": {
+        "visual": {
+          "x": 1351,
+          "y": 157,
+          "collapsed": false
+        },
+        "title": "Question Validator",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "persona": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "You check the answers for a multi choice quiz. You must not get it wrong."
+            }
+          ]
+        },
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "You have received an answer from the user, validate it."
+            }
+          ]
+        },
+        "tools": [
+          "https://raw.githubusercontent.com/breadboard-ai/breadboard/main/packages/website/src/static/boards/kits/example-search-wikipedia.bgl.json"
+        ]
+      }
+    },
+    {
+      "id": "specialist-a88c5428",
+      "type": "specialist",
+      "metadata": {
+        "visual": {
+          "x": 1304,
+          "y": -189,
+          "collapsed": false
+        },
+        "title": "End Host",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "persona": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "You are a cheesy quiz game show host."
+            }
+          ]
+        },
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "Congratulate the player to a differing level of enthusiasm based on their score."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "output-c1565261",
+      "type": "output",
+      "metadata": {
+        "visual": {
+          "x": 1646.0000000000002,
+          "y": -167,
+          "collapsed": false
+        }
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "object",
+              "title": "Content",
+              "examples": [],
+              "behavior": [
+                "llm-content"
+              ],
+              "default": "null"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "output-533036ba",
+      "type": "output",
+      "metadata": {
+        "visual": {
+          "x": 1610,
+          "y": 179.00000000000003,
+          "collapsed": false
+        },
+        "title": "Output",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "object",
+              "title": "Content",
+              "examples": [],
+              "behavior": [
+                "llm-content"
+              ],
+              "default": "null"
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "input-ab565b74",
+      "to": "promptTemplate-2538e043",
+      "out": "content",
+      "in": "topic"
+    },
+    {
+      "from": "input-a988945c",
+      "to": "promptTemplate-2538e043",
+      "out": "content",
+      "in": "number"
+    },
+    {
+      "from": "promptTemplate-2538e043",
+      "to": "runJavascript-050f9c6d",
+      "out": "prompt",
+      "in": "text"
+    },
+    {
+      "from": "runJavascript-050f9c6d",
+      "to": "looper-84142214",
+      "out": "context",
+      "in": "context"
+    },
+    {
+      "from": "looper-84142214",
+      "to": "looper-84142214",
+      "out": "loop",
+      "in": "context"
+    },
+    {
+      "from": "looper-84142214",
+      "to": "looper-f813a09a",
+      "out": "done",
+      "in": "context"
+    },
+    {
+      "from": "looper-f813a09a",
+      "to": "specialist-9b87726a",
+      "out": "loop",
+      "in": "in"
+    },
+    {
+      "from": "specialist-3a65b163",
+      "to": "looper-f813a09a",
+      "out": "out",
+      "in": "context"
+    },
+    {
+      "from": "specialist-9b87726a",
+      "to": "human-9f532850",
+      "out": "out",
+      "in": "context"
+    },
+    {
+      "from": "human-9f532850",
+      "to": "specialist-3a65b163",
+      "out": "context",
+      "in": "in"
+    },
+    {
+      "from": "looper-f813a09a",
+      "to": "specialist-a88c5428",
+      "out": "done",
+      "in": "in"
+    },
+    {
+      "from": "specialist-a88c5428",
+      "to": "output-c1565261",
+      "out": "out",
+      "in": "content"
+    },
+    {
+      "from": "specialist-3a65b163",
+      "to": "output-533036ba",
+      "out": "out",
+      "in": "content"
+    }
+  ],
+  "metadata": {
+    "comments": []
+  }
+}
