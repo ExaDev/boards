@@ -2,10 +2,520 @@
   "title": "Breadboard PR Bot",
   "description": "A board for automating PR comments.",
   "version": "0.0.1",
-  "metadata": {
-    "comments": [],
-    "tags": []
-  },
+  "nodes": [
+    {
+      "type": "input",
+      "id": "input-2a3ac976",
+      "configuration": {
+        "schema": {
+          "properties": {
+            "context": {
+              "type": "string",
+              "title": "Context",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      },
+      "metadata": {
+        "visual": {
+          "x": 2920.0000000000014,
+          "y": 304.9999999999998,
+          "collapsed": "expanded"
+        },
+        "title": "Enter the Project Owner",
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "fetch-ac09ad11",
+      "type": "fetch",
+      "metadata": {
+        "visual": {
+          "x": 3865.9281336280524,
+          "y": -243.63290367869968,
+          "collapsed": "expanded"
+        },
+        "title": "Fetch the Pull Request",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "method": "GET",
+        "raw": false
+      }
+    },
+    {
+      "type": "input",
+      "id": "input-f3f2fde4",
+      "configuration": {
+        "schema": {
+          "properties": {
+            "context": {
+              "type": "string",
+              "title": "Context",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      },
+      "metadata": {
+        "visual": {
+          "x": 2951,
+          "y": 710.0000000000005,
+          "collapsed": "expanded"
+        },
+        "title": "Enter the Project Name",
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "urlTemplate-cc5d6a88",
+      "type": "urlTemplate",
+      "metadata": {
+        "visual": {
+          "x": 3486.635164878052,
+          "y": -89.343841178699,
+          "collapsed": "expanded"
+        },
+        "title": "Create API URL - Get Pull Request Files",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "template": "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}"
+      }
+    },
+    {
+      "id": "input-119f0a9e",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": 2937,
+          "y": 499,
+          "collapsed": "expanded"
+        },
+        "title": "Enter the PR Number",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "string",
+              "title": "Content",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "runJavascript-eb185adf",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 4303,
+          "y": -415.00000000000006,
+          "collapsed": "expanded"
+        },
+        "title": "Get the Diff URL",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "name": "run",
+        "code": "function run(response) {\n  return response.response.diff_url;\n}",
+        "outputSchema": {
+          "properties": {
+            "property-1": {
+              "type": "string",
+              "title": "result",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "fetch-0d1d0f86",
+      "type": "fetch",
+      "metadata": {
+        "visual": {
+          "x": 4624.000000000002,
+          "y": -556,
+          "collapsed": "expanded"
+        },
+        "title": "Fetch the Diff",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "method": "GET"
+      }
+    },
+    {
+      "id": "specialist-c485b394",
+      "type": "specialist",
+      "metadata": {
+        "visual": {
+          "x": 5296,
+          "y": -173.0000000000001,
+          "collapsed": "advanced"
+        },
+        "title": "Pr Reviewer",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "persona": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "- You are a senior developer performing a code review for a pull request.\n- Your expertise lies in identifying issues related to code quality, potential errors, and bad practices. You will focus on improving the code by giving constructive feedback. You will not do so by using a new diff, but by listing comments. Only ever come up with comments and never modify code."
+            }
+          ]
+        },
+        "task": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "- Review the provided diff without making any code modifications.\n- Your output should consist of comments that point out issues, bad practices, or potential improvements in the code.\n- Use the exact schema `[ { filePath, lineNumber, comment }]` for your feedback.\n- **Do not output a new or modified diff**, and do not provide code changes. Your response should only include comments and corresponding line numbers."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "runJavascript-824161d2",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 5602,
+          "y": -573,
+          "collapsed": "expanded"
+        },
+        "title": "Get Cleaned Response",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "code": "function run(out) {\n    let jsonString = out.out[1].parts[0].text.toString();\n    jsonString = jsonString.replace(/^```json\\n/, '').replace(/\\n```$/, '');\n    let parsedData = JSON.parse(jsonString);\n    let result = parsedData.map(entry => [entry.filePath, entry.lineNumber, entry.comment]);\n    \n    return result;\n}",
+        "name": "run"
+      }
+    },
+    {
+      "id": "fn-19",
+      "type": "runJavascript",
+      "configuration": {
+        "code": "const fn_19 = inputs=>{const{array}=inputs;const[item,...rest]=array;if(item){return{array:rest,item}}return{}};",
+        "name": "fn_19",
+        "raw": true
+      },
+      "metadata": {
+        "title": "Pop Item Loop",
+        "visual": {
+          "x": 6222.999999999998,
+          "y": -518,
+          "collapsed": "advanced"
+        },
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "runJavascript-7d40a8cf",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 6722,
+          "y": -582,
+          "collapsed": "advanced"
+        },
+        "title": "Get Line Number",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "code": "function run(item) {\n  return item.item[1]\n}",
+        "outputSchema": {
+          "properties": {
+            "property-1": {
+              "type": "number",
+              "title": "Result",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "runJavascript-cc650623",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 6726.000000000003,
+          "y": -919.0000000000001,
+          "collapsed": "advanced"
+        },
+        "title": "Get File Path",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "code": "function run(item) {\n  return item.item[0]\n}",
+        "outputSchema": {
+          "properties": {
+            "property-1": {
+              "type": "string",
+              "title": "Result",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "runJavascript-7d4c7ff2",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 6722.999999999998,
+          "y": -222,
+          "collapsed": "expanded"
+        },
+        "title": "Get Comment",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "code": "function run(item) {\n  return item.item[2]\n}",
+        "outputSchema": {
+          "properties": {
+            "property-1": {
+              "type": "string",
+              "title": "Result",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "urlTemplate-ceb1dee3",
+      "type": "urlTemplate",
+      "metadata": {
+        "visual": {
+          "x": 5935.000000000001,
+          "y": 524.0000000000009,
+          "collapsed": "expanded"
+        },
+        "title": "Create API URL - Get Pull Request Files",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "template": "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/comments"
+      }
+    },
+    {
+      "id": "fetch-bcaf8a06",
+      "type": "fetch",
+      "metadata": {
+        "visual": {
+          "x": 7719.000000000002,
+          "y": -380.99999999999994,
+          "collapsed": "expanded"
+        },
+        "title": "Create the Comment",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "method": "POST",
+        "raw": false
+      }
+    },
+    {
+      "id": "fetch-3fd35df5",
+      "type": "fetch",
+      "metadata": {
+        "visual": {
+          "x": 4684.999999999999,
+          "y": -978.9999999999999,
+          "collapsed": "advanced"
+        },
+        "title": "Fetch the Commits",
+        "logLevel": "debug"
+      }
+    },
+    {
+      "id": "runJavascript-c7dff0f8",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 4309.000000000004,
+          "y": -794.9999999999998,
+          "collapsed": "expanded"
+        },
+        "title": "Get the Commits URL",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "name": "run",
+        "code": "function run(response) {\n  return response.response.commits_url;\n}",
+        "outputSchema": {
+          "properties": {
+            "property-1": {
+              "type": "string",
+              "title": "result",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "runJavascript-7cbd3678",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 4994,
+          "y": -1037.9999999999995,
+          "collapsed": "expanded"
+        },
+        "title": "Get Cleaned Response",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "code": "function run(response) {\n    return response.response[0].sha;\n}"
+      }
+    },
+    {
+      "id": "input-f610812d",
+      "type": "input",
+      "metadata": {
+        "visual": {
+          "x": 3468.0000000000023,
+          "y": -1164,
+          "collapsed": "advanced"
+        },
+        "title": "Enter your Personal Access Token",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "schema": {
+          "properties": {
+            "content": {
+              "type": "string",
+              "title": "Content",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": []
+        }
+      }
+    },
+    {
+      "id": "runJavascript-67183987",
+      "type": "runJavascript",
+      "metadata": {
+        "visual": {
+          "x": 3843.000000000002,
+          "y": -1305.9999999999995,
+          "collapsed": "expanded"
+        },
+        "title": "Create Header",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "code": "\nfunction run(pat) {\n  var payload = {\n        \"Accept\": \"application/vnd.github+json\",\n        \"Authorization\": `Bearer ${pat.pat}`,\n        \"X-GitHub-Api-Version\": \"2022-11-28\",\n        \"Content-Type\": \"application/json\"\n  };    \n  return payload;\n}",
+        "outputSchema": {
+          "properties": {
+            "property-1": {
+              "type": "object",
+              "title": "Result",
+              "examples": [],
+              "behavior": [
+                "json-schema"
+              ]
+            }
+          },
+          "type": "object",
+          "required": []
+        },
+        "inputSchema": {
+          "properties": {
+            "pat": {
+              "type": "string",
+              "title": "pat",
+              "examples": []
+            }
+          },
+          "type": "object",
+          "required": [
+            "pat"
+          ]
+        },
+        "name": "run"
+      }
+    },
+    {
+      "id": "passthrough-06e8ba0c",
+      "type": "passthrough",
+      "metadata": {
+        "visual": {
+          "x": 7801.000000000002,
+          "y": 99.99999999999989,
+          "collapsed": "expanded"
+        }
+      }
+    },
+    {
+      "id": "content-a259e5dd",
+      "type": "content",
+      "metadata": {
+        "visual": {
+          "x": 5013,
+          "y": -507.00000000000006,
+          "collapsed": "advanced"
+        },
+        "title": "Text to Context",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "template": {
+          "role": "user",
+          "parts": [
+            {
+              "text": "diff: {{diff}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "jsonata-4fd539fd",
+      "type": "jsonata",
+      "metadata": {
+        "visual": {
+          "x": 7197,
+          "y": -760,
+          "collapsed": "expanded"
+        },
+        "title": "Create Body",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "expression": "{   \"body\": comment,   \"commit_id\": commitid,   \"path\": path,   \"line\": line }"
+      }
+    }
+  ],
   "edges": [
     {
       "from": "urlTemplate-cc5d6a88",
@@ -42,18 +552,6 @@
       "to": "fetch-0d1d0f86",
       "in": "url",
       "out": "result"
-    },
-    {
-      "from": "fetch-0d1d0f86",
-      "to": "content-61fe82a3",
-      "in": "template",
-      "out": "response"
-    },
-    {
-      "from": "content-61fe82a3",
-      "to": "specialist-c485b394",
-      "in": "in",
-      "out": "prompt"
     },
     {
       "from": "specialist-c485b394",
@@ -110,24 +608,6 @@
       "in": "url"
     },
     {
-      "from": "runJavascript-7d40a8cf",
-      "to": "runJavascript-95bd84ac",
-      "out": "result",
-      "in": "line"
-    },
-    {
-      "from": "runJavascript-cc650623",
-      "to": "runJavascript-95bd84ac",
-      "out": "result",
-      "in": "path"
-    },
-    {
-      "from": "runJavascript-95bd84ac",
-      "to": "fetch-bcaf8a06",
-      "out": "result",
-      "in": "body"
-    },
-    {
       "from": "fetch-ac09ad11",
       "to": "runJavascript-c7dff0f8",
       "out": "response",
@@ -182,538 +662,56 @@
       "in": "array"
     },
     {
-      "from": "runJavascript-7cbd3678",
-      "to": "runJavascript-95bd84ac",
+      "from": "runJavascript-67183987",
+      "to": "fetch-ac09ad11",
       "out": "result",
-      "in": "commit"
+      "in": "headers"
+    },
+    {
+      "from": "content-a259e5dd",
+      "to": "specialist-c485b394",
+      "out": "prompt",
+      "in": "in"
+    },
+    {
+      "from": "fetch-0d1d0f86",
+      "to": "content-a259e5dd",
+      "out": "response",
+      "in": "p-diff"
+    },
+    {
+      "from": "runJavascript-cc650623",
+      "to": "jsonata-4fd539fd",
+      "out": "result",
+      "in": "path"
+    },
+    {
+      "from": "runJavascript-7d40a8cf",
+      "to": "jsonata-4fd539fd",
+      "out": "result",
+      "in": "line"
+    },
+    {
+      "from": "runJavascript-7cbd3678",
+      "to": "jsonata-4fd539fd",
+      "out": "result",
+      "in": "commitid"
+    },
+    {
+      "from": "jsonata-4fd539fd",
+      "to": "fetch-bcaf8a06",
+      "out": "result",
+      "in": "body"
     },
     {
       "from": "runJavascript-7d4c7ff2",
-      "to": "runJavascript-95bd84ac",
+      "to": "jsonata-4fd539fd",
       "out": "result",
-      "in": "body"
+      "in": "comment"
     }
   ],
-  "nodes": [
-    {
-      "type": "input",
-      "id": "input-2a3ac976",
-      "configuration": {
-        "schema": {
-          "properties": {
-            "context": {
-              "type": "string",
-              "title": "Context",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      },
-      "metadata": {
-        "visual": {
-          "x": 2920,
-          "y": 305,
-          "collapsed": "expanded"
-        },
-        "title": "Enter the Project Owner",
-        "logLevel": "debug"
-      }
-    },
-    {
-      "id": "fetch-ac09ad11",
-      "type": "fetch",
-      "metadata": {
-        "visual": {
-          "x": 3865.928133628051,
-          "y": -243.63290367869968,
-          "collapsed": "expanded"
-        },
-        "title": "Fetch the Pull Request",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "method": "GET",
-        "raw": false
-      }
-    },
-    {
-      "type": "input",
-      "id": "input-f3f2fde4",
-      "configuration": {
-        "schema": {
-          "properties": {
-            "context": {
-              "type": "string",
-              "title": "Context",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      },
-      "metadata": {
-        "visual": {
-          "x": 2951,
-          "y": 710,
-          "collapsed": "expanded"
-        },
-        "title": "Enter the Project Name",
-        "logLevel": "debug"
-      }
-    },
-    {
-      "id": "urlTemplate-cc5d6a88",
-      "type": "urlTemplate",
-      "metadata": {
-        "visual": {
-          "x": 3486.6351648780505,
-          "y": -89.343841178699,
-          "collapsed": "expanded"
-        },
-        "title": "Create API URL - Get Pull Request Files",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "template": "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}"
-      }
-    },
-    {
-      "id": "input-119f0a9e",
-      "type": "input",
-      "metadata": {
-        "visual": {
-          "x": 2937,
-          "y": 499,
-          "collapsed": "expanded"
-        },
-        "title": "Enter the PR Number",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "schema": {
-          "properties": {
-            "content": {
-              "type": "string",
-              "title": "Content",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "runJavascript-eb185adf",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 4303,
-          "y": -415,
-          "collapsed": "expanded"
-        },
-        "title": "Get the Diff URL",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "name": "run",
-        "code": "function run(response) {\n  var splitString = response.response.diff_url.split(\"/\");\n  return \"https://patch-diff.githubusercontent.com/raw/\" + splitString[3] + \"/\" + splitString[4] + \"/pull/\" + splitString[6];\n}",
-        "outputSchema": {
-          "properties": {
-            "property-1": {
-              "type": "string",
-              "title": "result",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "fetch-0d1d0f86",
-      "type": "fetch",
-      "metadata": {
-        "visual": {
-          "x": 4684,
-          "y": -561.0000000000002,
-          "collapsed": "advanced"
-        },
-        "title": "Fetch the Diff",
-        "logLevel": "debug"
-      }
-    },
-    {
-      "id": "specialist-c485b394",
-      "type": "specialist",
-      "metadata": {
-        "visual": {
-          "x": 5286.928133628051,
-          "y": -463.6329036787,
-          "collapsed": "advanced"
-        },
-        "title": "Pr Reviewer",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "persona": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "- You are a senior developer performing a code review for a pull request.\n- Your expertise lies in identifying issues related to code quality, potential errors, and bad practices. You will focus on improving the code by giving constructive feedback. You will not do so by using a new diff, but by listing comments. Only ever come up with comments and never modify code."
-            }
-          ]
-        },
-        "task": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "- Review the provided diff without making any code modifications.\n- Your output should consist of comments that point out issues, bad practices, or potential improvements in the code.\n- Use the exact schema `[ { filePath, lineNumber, comment }]` for your feedback.\n- **Do not output a new or modified diff**, and do not provide code changes. Your response should only include comments and corresponding line numbers."
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "content-61fe82a3",
-      "type": "content",
-      "metadata": {
-        "visual": {
-          "x": 4972.928133628053,
-          "y": -503.63290367869945,
-          "collapsed": "expanded"
-        },
-        "title": "Turn the file into LLM Context",
-        "logLevel": "debug"
-      }
-    },
-    {
-      "id": "runJavascript-824161d2",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 5601.999999999999,
-          "y": -569,
-          "collapsed": "expanded"
-        },
-        "title": "Get Cleaned Response",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "function run(out) {\n    let jsonString = out.out[1].parts[0].text;\n    jsonString = jsonString.replace(/^```json\\n/, '').replace(/\\n```$/, '');\n    let parsedData = JSON.parse(jsonString);\n    let result = parsedData.map(entry => [entry.filePath, entry.lineNumber, entry.comment]);\n    \n    return result;\n}"
-      }
-    },
-    {
-      "id": "fn-19",
-      "type": "runJavascript",
-      "configuration": {
-        "code": "const fn_19 = inputs=>{const{array}=inputs;const[item,...rest]=array;if(item){return{array:rest,item}}return{}};",
-        "name": "fn_19",
-        "raw": true
-      },
-      "metadata": {
-        "title": "Pop Item Loop",
-        "visual": {
-          "x": 6223,
-          "y": -517.9999999999998,
-          "collapsed": "advanced"
-        },
-        "logLevel": "debug"
-      }
-    },
-    {
-      "id": "runJavascript-7d40a8cf",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 6722,
-          "y": -582.0000000000002,
-          "collapsed": "advanced"
-        },
-        "title": "Get Line Number",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "function run(item) {\n  return item.item[1]\n}",
-        "outputSchema": {
-          "properties": {
-            "property-1": {
-              "type": "number",
-              "title": "Result",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "runJavascript-cc650623",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 6726.000000000001,
-          "y": -919.0000000000002,
-          "collapsed": "advanced"
-        },
-        "title": "Get File Path",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "function run(item) {\n  return item.item[0]\n}",
-        "outputSchema": {
-          "properties": {
-            "property-1": {
-              "type": "string",
-              "title": "Result",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "runJavascript-7d4c7ff2",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 6723,
-          "y": -222,
-          "collapsed": "expanded"
-        },
-        "title": "Get Comment",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "function run(item) {\n  return item.item[2]\n}",
-        "outputSchema": {
-          "properties": {
-            "property-1": {
-              "type": "string",
-              "title": "Result",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "urlTemplate-ceb1dee3",
-      "type": "urlTemplate",
-      "metadata": {
-        "visual": {
-          "x": 5934.999999999999,
-          "y": 524,
-          "collapsed": "expanded"
-        },
-        "title": "Create API URL - Get Pull Request Files",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "template": "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/comments"
-      }
-    },
-    {
-      "id": "fetch-bcaf8a06",
-      "type": "fetch",
-      "metadata": {
-        "visual": {
-          "x": 7719,
-          "y": -381,
-          "collapsed": "expanded"
-        },
-        "title": "Create the Comment",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "method": "POST",
-        "raw": false
-      }
-    },
-    {
-      "id": "runJavascript-95bd84ac",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 7246,
-          "y": -837,
-          "collapsed": "expanded"
-        },
-        "title": "Create Body",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "\nfunction run(path, line, comment, commit_id) {\n  payload = {\n        \"body\": comment,\n        \"commit_id\": commit_id,\n        \"path\": path,\n        \"line\": line\n  };\n        \n    return payload.path;\n}",
-        "outputSchema": {
-          "properties": {
-            "result": {
-              "type": "object",
-              "behavior": [
-                "json-schema"
-              ],
-              "title": "Result",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        },
-        "inputSchema": {
-          "properties": {
-            "commit": {
-              "type": "string",
-              "title": "commit_id",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "fetch-3fd35df5",
-      "type": "fetch",
-      "metadata": {
-        "visual": {
-          "x": 4685,
-          "y": -979,
-          "collapsed": "advanced"
-        },
-        "title": "Fetch the Commits",
-        "logLevel": "debug"
-      }
-    },
-    {
-      "id": "runJavascript-c7dff0f8",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 4309.000000000001,
-          "y": -795.0000000000001,
-          "collapsed": "expanded"
-        },
-        "title": "Get the Commits URL",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "name": "run",
-        "code": "function run(response) {\n  return response.response.commits_url;\n}",
-        "outputSchema": {
-          "properties": {
-            "property-1": {
-              "type": "string",
-              "title": "result",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "runJavascript-7cbd3678",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 4994,
-          "y": -1038,
-          "collapsed": "expanded"
-        },
-        "title": "Get Cleaned Response",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "function run(response) {\n    return response.response[0].sha;\n}"
-      }
-    },
-    {
-      "id": "input-f610812d",
-      "type": "input",
-      "metadata": {
-        "visual": {
-          "x": 3468,
-          "y": -1124,
-          "collapsed": "expanded"
-        },
-        "title": "Enter your Personal Access Token",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "schema": {
-          "properties": {
-            "content": {
-              "type": "string",
-              "title": "Content",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "runJavascript-67183987",
-      "type": "runJavascript",
-      "metadata": {
-        "visual": {
-          "x": 4127,
-          "y": -1309.0000000000002,
-          "collapsed": "expanded"
-        },
-        "title": "Create Header",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "code": "\nfunction run(pat) {\n  payload = {\n        \"Accept\": \"application/vnd.github+json\",\n        \"Authorization\": pat,\n        \"X-GitHub-Api-Version\": \"2022-11-28\",\n        \"Content-Type\": \"application/json\"\n  };\n    \n    json_header = JSON.stringify(payload);\n    \n    return payload;\n}",
-        "outputSchema": {
-          "properties": {
-            "property-1": {
-              "type": "object",
-              "title": "Result",
-              "examples": [],
-              "behavior": [
-                "json-schema"
-              ]
-            }
-          },
-          "type": "object",
-          "required": []
-        },
-        "inputSchema": {
-          "properties": {
-            "pat": {
-              "type": "string",
-              "title": "pat",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
-      }
-    },
-    {
-      "id": "passthrough-06e8ba0c",
-      "type": "passthrough",
-      "metadata": {
-        "visual": {
-          "x": 7801,
-          "y": 100,
-          "collapsed": "expanded"
-        }
-      }
-    }
-  ]
+  "metadata": {
+    "comments": [],
+    "tags": []
+  }
 }
