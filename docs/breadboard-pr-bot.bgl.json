@@ -1,6 +1,6 @@
 {
-  "title": "Breadboard PR Bot",
-  "description": "A board for automating PR comments.",
+  "title": "GitHub PR Bot",
+  "description": "A PR reviewer bot made using Breadboard",
   "version": "0.0.1",
   "nodes": [
     {
@@ -21,8 +21,8 @@
       },
       "metadata": {
         "visual": {
-          "x": 2920.0000000000014,
-          "y": 304.9999999999998,
+          "x": -483,
+          "y": -566,
           "collapsed": "expanded"
         },
         "title": "Enter the Project Owner",
@@ -34,8 +34,8 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 3865.9281336280524,
-          "y": -243.63290367869968,
+          "x": 722.5375086280501,
+          "y": -854.3438411786992,
           "collapsed": "expanded"
         },
         "title": "Fetch the Pull Request",
@@ -64,8 +64,8 @@
       },
       "metadata": {
         "visual": {
-          "x": 2951,
-          "y": 710.0000000000005,
+          "x": -478,
+          "y": -236,
           "collapsed": "expanded"
         },
         "title": "Enter the Project Name",
@@ -77,8 +77,8 @@
       "type": "urlTemplate",
       "metadata": {
         "visual": {
-          "x": 3486.635164878052,
-          "y": -89.343841178699,
+          "x": 226.99999999999955,
+          "y": -699.9999999999998,
           "collapsed": "expanded"
         },
         "title": "Create API URL - Get Pull Request Files",
@@ -93,8 +93,8 @@
       "type": "input",
       "metadata": {
         "visual": {
-          "x": 2937,
-          "y": 499,
+          "x": -474,
+          "y": -419,
           "collapsed": "expanded"
         },
         "title": "Enter the PR Number",
@@ -119,8 +119,8 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 4303,
-          "y": -415.00000000000006,
+          "x": 1188.6093749999986,
+          "y": -575.7109374999998,
           "collapsed": "expanded"
         },
         "title": "Get the Diff URL",
@@ -147,9 +147,9 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 4624.000000000002,
-          "y": -556,
-          "collapsed": "expanded"
+          "x": 1498.9999999999995,
+          "y": -1167,
+          "collapsed": "advanced"
         },
         "title": "Fetch the Diff",
         "logLevel": "debug"
@@ -163,8 +163,8 @@
       "type": "specialist",
       "metadata": {
         "visual": {
-          "x": 5296,
-          "y": -173.0000000000001,
+          "x": 2152.609374999997,
+          "y": -783.7109374999995,
           "collapsed": "advanced"
         },
         "title": "Pr Reviewer",
@@ -194,8 +194,8 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 5602,
-          "y": -573,
+          "x": 2458.609374999996,
+          "y": -1183.7109374999995,
           "collapsed": "expanded"
         },
         "title": "Get Cleaned Response",
@@ -217,8 +217,8 @@
       "metadata": {
         "title": "Pop Item Loop",
         "visual": {
-          "x": 6222.999999999998,
-          "y": -518,
+          "x": 3079.6093749999986,
+          "y": -1127.7109374999993,
           "collapsed": "advanced"
         },
         "logLevel": "debug"
@@ -229,8 +229,8 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 6722,
-          "y": -582,
+          "x": 3578.609374999995,
+          "y": -1192.7109374999995,
           "collapsed": "advanced"
         },
         "title": "Get Line Number",
@@ -256,8 +256,8 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 6726.000000000003,
-          "y": -919.0000000000001,
+          "x": 3582.6093749999977,
+          "y": -1529.7109374999993,
           "collapsed": "advanced"
         },
         "title": "Get File Path",
@@ -283,8 +283,8 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 6722.999999999998,
-          "y": -222,
+          "x": 3579.6093749999977,
+          "y": -832.7109374999998,
           "collapsed": "expanded"
         },
         "title": "Get Comment",
@@ -310,8 +310,8 @@
       "type": "urlTemplate",
       "metadata": {
         "visual": {
-          "x": 5935.000000000001,
-          "y": 524.0000000000009,
+          "x": 3069,
+          "y": 129,
           "collapsed": "expanded"
         },
         "title": "Create API URL - Get Pull Request Files",
@@ -326,8 +326,8 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 7719.000000000002,
-          "y": -380.99999999999994,
+          "x": 5742.609374999998,
+          "y": -1061.7109374999993,
           "collapsed": "expanded"
         },
         "title": "Create the Comment",
@@ -343,8 +343,8 @@
       "type": "fetch",
       "metadata": {
         "visual": {
-          "x": 4684.999999999999,
-          "y": -978.9999999999999,
+          "x": 1541.609374999996,
+          "y": -1589.7109374999993,
           "collapsed": "advanced"
         },
         "title": "Fetch the Commits",
@@ -356,8 +356,8 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 4309.000000000004,
-          "y": -794.9999999999998,
+          "x": 1088.9999999999995,
+          "y": -1422.9999999999998,
           "collapsed": "expanded"
         },
         "title": "Get the Commits URL",
@@ -384,41 +384,16 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 4994,
-          "y": -1037.9999999999995,
+          "x": 1850.6093749999968,
+          "y": -1648.7109374999986,
           "collapsed": "expanded"
         },
         "title": "Get Cleaned Response",
         "logLevel": "debug"
       },
       "configuration": {
-        "code": "function run(response) {\n    return response.response[0].sha;\n}"
-      }
-    },
-    {
-      "id": "input-f610812d",
-      "type": "input",
-      "metadata": {
-        "visual": {
-          "x": 3468.0000000000023,
-          "y": -1164,
-          "collapsed": "advanced"
-        },
-        "title": "Enter your Personal Access Token",
-        "logLevel": "debug"
-      },
-      "configuration": {
-        "schema": {
-          "properties": {
-            "content": {
-              "type": "string",
-              "title": "Content",
-              "examples": []
-            }
-          },
-          "type": "object",
-          "required": []
-        }
+        "code": "function run(response) {\n    return response.response[response.response.length-1].sha;\n}",
+        "name": "run"
       }
     },
     {
@@ -426,9 +401,9 @@
       "type": "runJavascript",
       "metadata": {
         "visual": {
-          "x": 3843.000000000002,
-          "y": -1305.9999999999995,
-          "collapsed": "expanded"
+          "x": 16,
+          "y": -1909,
+          "collapsed": "advanced"
         },
         "title": "Create Header",
         "logLevel": "debug"
@@ -466,24 +441,13 @@
       }
     },
     {
-      "id": "passthrough-06e8ba0c",
-      "type": "passthrough",
-      "metadata": {
-        "visual": {
-          "x": 7801.000000000002,
-          "y": 99.99999999999989,
-          "collapsed": "expanded"
-        }
-      }
-    },
-    {
       "id": "content-a259e5dd",
       "type": "content",
       "metadata": {
         "visual": {
-          "x": 5013,
-          "y": -507.00000000000006,
-          "collapsed": "advanced"
+          "x": 1932.6093749999986,
+          "y": -1122.7109374999998,
+          "collapsed": "expanded"
         },
         "title": "Text to Context",
         "logLevel": "debug"
@@ -504,8 +468,8 @@
       "type": "jsonata",
       "metadata": {
         "visual": {
-          "x": 7197,
-          "y": -760,
+          "x": 5041.609374999998,
+          "y": -1416.7109374999993,
           "collapsed": "expanded"
         },
         "title": "Create Body",
@@ -513,6 +477,36 @@
       },
       "configuration": {
         "expression": "{   \"body\": comment,   \"commit_id\": commitid,   \"path\": path,   \"line\": line }"
+      }
+    },
+    {
+      "id": "passthrough-07db27fb",
+      "type": "passthrough",
+      "metadata": {
+        "visual": {
+          "x": 4487.609374999996,
+          "y": -1626.7109374999993,
+          "collapsed": "expanded"
+        },
+        "title": "Passthrough"
+      }
+    },
+    {
+      "id": "secrets-2cab43b6",
+      "type": "secrets",
+      "metadata": {
+        "visual": {
+          "x": -497,
+          "y": -1663,
+          "collapsed": "expanded"
+        },
+        "title": "Secrets",
+        "logLevel": "debug"
+      },
+      "configuration": {
+        "keys": [
+          "GITHUB_PAT"
+        ]
       }
     }
   ],
@@ -548,12 +542,6 @@
       "out": "response"
     },
     {
-      "from": "runJavascript-eb185adf",
-      "to": "fetch-0d1d0f86",
-      "in": "url",
-      "out": "result"
-    },
-    {
       "from": "specialist-c485b394",
       "to": "runJavascript-824161d2",
       "in": "out",
@@ -568,150 +556,199 @@
     {
       "from": "runJavascript-824161d2",
       "to": "fn-19",
-      "out": "result",
-      "in": "array"
+      "in": "array",
+      "out": "result"
     },
     {
       "from": "fn-19",
       "to": "runJavascript-cc650623",
-      "out": "item",
-      "in": "item"
+      "in": "item",
+      "out": "item"
     },
     {
       "from": "fn-19",
       "to": "runJavascript-7d4c7ff2",
-      "out": "item",
-      "in": "item"
+      "in": "item",
+      "out": "item"
     },
     {
       "from": "input-2a3ac976",
       "to": "urlTemplate-ceb1dee3",
-      "out": "context",
-      "in": "owner"
+      "in": "owner",
+      "out": "context"
     },
     {
       "from": "input-119f0a9e",
       "to": "urlTemplate-ceb1dee3",
-      "out": "content",
-      "in": "pull_number"
+      "in": "pull_number",
+      "out": "content"
     },
     {
       "from": "input-f3f2fde4",
       "to": "urlTemplate-ceb1dee3",
-      "out": "context",
-      "in": "repo"
-    },
-    {
-      "from": "urlTemplate-ceb1dee3",
-      "to": "fetch-bcaf8a06",
-      "out": "url",
-      "in": "url"
+      "in": "repo",
+      "out": "context"
     },
     {
       "from": "fetch-ac09ad11",
       "to": "runJavascript-c7dff0f8",
-      "out": "response",
-      "in": "response"
+      "in": "response",
+      "out": "response"
     },
     {
       "from": "runJavascript-c7dff0f8",
       "to": "fetch-3fd35df5",
-      "out": "result",
-      "in": "url"
+      "in": "url",
+      "out": "result"
     },
     {
       "from": "fetch-3fd35df5",
       "to": "runJavascript-7cbd3678",
-      "out": "response",
-      "in": "response"
-    },
-    {
-      "from": "input-f610812d",
-      "to": "runJavascript-67183987",
-      "out": "content",
-      "in": "pat"
+      "in": "response",
+      "out": "response"
     },
     {
       "from": "runJavascript-67183987",
       "to": "fetch-3fd35df5",
-      "out": "result",
-      "in": "headers"
-    },
-    {
-      "from": "runJavascript-67183987",
-      "to": "fetch-bcaf8a06",
-      "out": "result",
-      "in": "headers"
-    },
-    {
-      "from": "fetch-bcaf8a06",
-      "to": "passthrough-06e8ba0c",
-      "out": "response",
-      "in": "response"
-    },
-    {
-      "from": "fn-19",
-      "to": "passthrough-06e8ba0c",
-      "out": "array",
-      "in": "array"
-    },
-    {
-      "from": "passthrough-06e8ba0c",
-      "to": "fn-19",
-      "out": "array",
-      "in": "array"
+      "in": "headers",
+      "out": "result"
     },
     {
       "from": "runJavascript-67183987",
       "to": "fetch-ac09ad11",
-      "out": "result",
-      "in": "headers"
-    },
-    {
-      "from": "content-a259e5dd",
-      "to": "specialist-c485b394",
-      "out": "prompt",
-      "in": "in"
+      "in": "headers",
+      "out": "result"
     },
     {
       "from": "fetch-0d1d0f86",
       "to": "content-a259e5dd",
-      "out": "response",
-      "in": "p-diff"
-    },
-    {
-      "from": "runJavascript-cc650623",
-      "to": "jsonata-4fd539fd",
-      "out": "result",
-      "in": "path"
-    },
-    {
-      "from": "runJavascript-7d40a8cf",
-      "to": "jsonata-4fd539fd",
-      "out": "result",
-      "in": "line"
-    },
-    {
-      "from": "runJavascript-7cbd3678",
-      "to": "jsonata-4fd539fd",
-      "out": "result",
-      "in": "commitid"
+      "in": "p-diff",
+      "out": "response"
     },
     {
       "from": "jsonata-4fd539fd",
       "to": "fetch-bcaf8a06",
-      "out": "result",
-      "in": "body"
+      "in": "body",
+      "out": "result"
+    },
+    {
+      "from": "content-a259e5dd",
+      "to": "specialist-c485b394",
+      "in": "in",
+      "out": "context"
+    },
+    {
+      "from": "runJavascript-cc650623",
+      "to": "passthrough-07db27fb",
+      "in": "filepath",
+      "out": "result"
+    },
+    {
+      "from": "runJavascript-7d40a8cf",
+      "to": "passthrough-07db27fb",
+      "in": "linenum",
+      "out": "result"
     },
     {
       "from": "runJavascript-7d4c7ff2",
+      "to": "passthrough-07db27fb",
+      "in": "comment",
+      "out": "result"
+    },
+    {
+      "from": "runJavascript-7cbd3678",
+      "to": "passthrough-07db27fb",
+      "in": "commit",
+      "out": "result"
+    },
+    {
+      "from": "passthrough-07db27fb",
       "to": "jsonata-4fd539fd",
-      "out": "result",
-      "in": "comment"
+      "in": "comment",
+      "out": "comment"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "jsonata-4fd539fd",
+      "in": "commitid",
+      "out": "commit"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "jsonata-4fd539fd",
+      "in": "path",
+      "out": "filepath"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "jsonata-4fd539fd",
+      "in": "line",
+      "out": "linenum"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "passthrough-07db27fb",
+      "in": "commit",
+      "out": "commit"
+    },
+    {
+      "from": "runJavascript-67183987",
+      "to": "passthrough-07db27fb",
+      "in": "header",
+      "out": "result"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "passthrough-07db27fb",
+      "in": "header",
+      "out": "header"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "fetch-bcaf8a06",
+      "in": "headers",
+      "out": "header"
+    },
+    {
+      "from": "urlTemplate-ceb1dee3",
+      "to": "passthrough-07db27fb",
+      "in": "url",
+      "out": "url"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "passthrough-07db27fb",
+      "in": "url",
+      "out": "url"
+    },
+    {
+      "from": "passthrough-07db27fb",
+      "to": "fetch-bcaf8a06",
+      "in": "url",
+      "out": "url"
+    },
+    {
+      "from": "fn-19",
+      "to": "fn-19",
+      "in": "array",
+      "out": "array"
+    },
+    {
+      "from": "runJavascript-eb185adf",
+      "to": "fetch-0d1d0f86",
+      "in": "url",
+      "out": "result"
+    },
+    {
+      "from": "secrets-2cab43b6",
+      "to": "runJavascript-67183987",
+      "out": "GITHUB_PAT",
+      "in": "pat"
     }
   ],
   "metadata": {
     "comments": [],
     "tags": []
-  }
+  },
+  "url": "file://fsapi~boards/pr-bot-working-public.bgl.json"
 }
