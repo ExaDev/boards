@@ -15,6 +15,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@breadboard-ai/types@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@breadboard-ai/types@npm:0.1.1"
+  checksum: 10c0/e4a537938b292ed00591bc676fef7ff4c9268e62dbc199ba0ac1bbdcc69c1371bd823eff25e17667d4f51d56d544285e0d354d50ab9f82bdd72b6cd2d6c09b3e
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.23.1":
   version: 0.23.1
   resolution: "@esbuild/aix-ppc64@npm:0.23.1"
@@ -190,12 +197,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@google-labs/breadboard-schema@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "@google-labs/breadboard-schema@npm:1.5.1"
+"@google-labs/breadboard-schema@npm:^1.8.1":
+  version: 1.8.1
+  resolution: "@google-labs/breadboard-schema@npm:1.8.1"
   dependencies:
     "@types/json-schema": "npm:^7.0.15"
-  checksum: 10c0/2c4b2de801a8e85b4f7ac1803db700eea4308ed6e087cd81f58da51a7b128023d1c6c02065ecbbe4bc2b4aa28ce5f10384bfd4a3f17076e5a1209463debe3692
+  checksum: 10c0/cb31944f39af4985291108dc618b44109cb5bb6b1a5df32e95f6ec966923d4e9b56ec62c250552b83d5f3b32231b93c6f98adceec4dfe7961efccad373f8b115
   languageName: node
   linkType: hard
 
@@ -208,13 +215,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@google-labs/breadboard@npm:^0.22.0":
-  version: 0.22.0
-  resolution: "@google-labs/breadboard@npm:0.22.0"
+"@google-labs/breadboard@npm:^0.27.3":
+  version: 0.27.3
+  resolution: "@google-labs/breadboard@npm:0.27.3"
   dependencies:
-    "@google-labs/breadboard-schema": "npm:^1.5.1"
+    "@breadboard-ai/types": "npm:0.1.1"
+    "@google-labs/breadboard-schema": "npm:^1.8.1"
     json-schema: "npm:^0.4.0"
-  checksum: 10c0/d7aa4222ec0e2f8a4ae574aa2b4b1602b44442d1ad4bfd89ae57ad548f3c9d96c8174741c289501a1ecfe8c26f6357de408008330f304802f1dfe0c0fe3ac91e
+  checksum: 10c0/02a07b62929f510415d66ce1e51a2c8c22798eecd170a88be6fd2890b89cfd101726bf36546336d9892747d047507f6df02afbd6f1b53bedaf7405c181dcbdc1
   languageName: node
   linkType: hard
 
@@ -368,7 +376,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "boards@workspace:."
   dependencies:
-    "@google-labs/breadboard": "npm:^0.22.0"
+    "@google-labs/breadboard": "npm:^0.27.3"
     "@types/node": "npm:^22.7.2"
     breadboard: "https://github.com/breadboard-ai/breadboard"
     tsx: "npm:^4.19.1"
