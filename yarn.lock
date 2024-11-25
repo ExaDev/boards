@@ -5,6 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@bjorn3/browser_wasi_shim@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@bjorn3/browser_wasi_shim@npm:0.3.0"
+  checksum: 10c0/9627bdcac969176a3cdd9056425bb0be9f79e3bab3458933879bafa9e49e7c80b6417ed3e883cf1787286a0554fca28ccd9983c969e31a38de15aa0435310581
+  languageName: node
+  linkType: hard
+
 "@breadboard-ai/build@npm:0.7.0":
   version: 0.7.0
   resolution: "@breadboard-ai/build@npm:0.7.0"
@@ -12,6 +19,22 @@ __metadata:
     "@google-labs/breadboard": "npm:^0.21.0"
     "@types/json-schema": "npm:^7.0.15"
   checksum: 10c0/c9082253a3a6584be2d61926060257f3d145751ca3b3e4ca46d5247c1a95dcae1b3dab20955e9893793238cf9add526ed780597f78c2efc40bba7b69ad669cdb
+  languageName: node
+  linkType: hard
+
+"@breadboard-ai/jsandbox@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@breadboard-ai/jsandbox@npm:0.2.0"
+  dependencies:
+    "@bjorn3/browser_wasi_shim": "npm:^0.3.0"
+  checksum: 10c0/f81b5a19971f7bdc0436d4f2f0c35ebff612fb0831d220b2978d970da112d264aac9eadd1734e485a92c38273e8e20050bea472a5d896b8e5c4cfadfbea8f4e6
+  languageName: node
+  linkType: hard
+
+"@breadboard-ai/types@npm:0.3.0":
+  version: 0.3.0
+  resolution: "@breadboard-ai/types@npm:0.3.0"
+  checksum: 10c0/ce9965ed5d35fa013fa59250863aa6a5fd58614738ff0540d4b7f13d3ac3370ad28fad1ff6b120d7f554aa29537acc8f0ccfcc14ab1e4bd1db3f8851f2a58bed
   languageName: node
   linkType: hard
 
@@ -183,19 +206,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google-labs/breadboard-schema@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "@google-labs/breadboard-schema@npm:1.10.0"
+  dependencies:
+    "@types/json-schema": "npm:^7.0.15"
+  checksum: 10c0/8e7a2e04b48552f4138eb81dd42f1cb13c6030ef87e59d325be845eaf8fb1dcfdb9ef9c9216e21b1a6305da7a22c5ed4b55fe5ced4d536b656b4788d5867764f
+  languageName: node
+  linkType: hard
+
 "@google-labs/breadboard-schema@npm:^1.5.0":
   version: 1.5.0
   resolution: "@google-labs/breadboard-schema@npm:1.5.0"
   checksum: 10c0/2e49efcbcb7afe7efec8a84cef82946c46f67b2416bcc6be23e498fc8238859c541cdb9230591f6e5f8cf16f0a0891ddf916b52665fd1dc270ffe117bc4bdaa7
-  languageName: node
-  linkType: hard
-
-"@google-labs/breadboard-schema@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "@google-labs/breadboard-schema@npm:1.5.1"
-  dependencies:
-    "@types/json-schema": "npm:^7.0.15"
-  checksum: 10c0/2c4b2de801a8e85b4f7ac1803db700eea4308ed6e087cd81f58da51a7b128023d1c6c02065ecbbe4bc2b4aa28ce5f10384bfd4a3f17076e5a1209463debe3692
   languageName: node
   linkType: hard
 
@@ -208,13 +231,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@google-labs/breadboard@npm:^0.22.0":
-  version: 0.22.0
-  resolution: "@google-labs/breadboard@npm:0.22.0"
+"@google-labs/breadboard@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "@google-labs/breadboard@npm:0.30.0"
   dependencies:
-    "@google-labs/breadboard-schema": "npm:^1.5.1"
+    "@breadboard-ai/jsandbox": "npm:0.2.0"
+    "@breadboard-ai/types": "npm:0.3.0"
+    "@google-labs/breadboard-schema": "npm:^1.10.0"
     json-schema: "npm:^0.4.0"
-  checksum: 10c0/d7aa4222ec0e2f8a4ae574aa2b4b1602b44442d1ad4bfd89ae57ad548f3c9d96c8174741c289501a1ecfe8c26f6357de408008330f304802f1dfe0c0fe3ac91e
+  checksum: 10c0/25977ff94bb9a070746a1c1f7508ff6a5c731e92def5445570e08806514af8c2fa3638f24a837a2d72eca302b39801a9c5a15257789b8904a58ffa0024231fc0
   languageName: node
   linkType: hard
 
@@ -368,7 +393,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "boards@workspace:."
   dependencies:
-    "@google-labs/breadboard": "npm:^0.22.0"
+    "@google-labs/breadboard": "npm:^0.30.0"
     "@types/node": "npm:^22.7.2"
     breadboard: "https://github.com/breadboard-ai/breadboard"
     tsx: "npm:^4.19.1"
